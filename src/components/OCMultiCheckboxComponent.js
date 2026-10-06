@@ -2,7 +2,7 @@
 import { CheckboxControl } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 
-const MulitChekboxes = ({options, values, onChange }) => {
+const OCMulitChekboxes = ({options, values, onChange }) => {
 
     return (
         <ul>
@@ -23,7 +23,7 @@ const MulitChekboxes = ({options, values, onChange }) => {
 };
 
 
-const MultiCheckboxComponent = ({ title, options, values, onChange }) => {
+const OCMultiCheckboxComponent = ({ title, options, values, onChange }) => {
     const [choices, setChoices] = useState(values);
 
     function mcOnChange(opt, check) {
@@ -38,9 +38,9 @@ const MultiCheckboxComponent = ({ title, options, values, onChange }) => {
 	return (
         <>
             <h3>{title}</h3>
-            <MulitChekboxes options={options} values={choices} onChange={mcOnChange} />
+            <OCMulitChekboxes options={options} values={choices} onChange={mcOnChange} />
         </>
 	);
 };
 
-export default MultiCheckboxComponent
+export default OCMultiCheckboxComponent

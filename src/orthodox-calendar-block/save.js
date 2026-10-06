@@ -14,9 +14,10 @@ import { __ } from "@wordpress/i18n";
 import { useBlockProps } from "@wordpress/block-editor";
 
 /**
- * Buttons Bar
+ * Load components
  */
 import OCButtonBar from "../components/OCButtonsBar";
+import OCPopup from "../components/OCPopup";
 
 /**
  * Static props
@@ -27,7 +28,6 @@ import {
 	filterArrayByArray,
 	badStrings,
 } from "../Statics";
-import Popup from "../components/Popup";
 
 /**
  * The save function defines the way in which the different attributes should
@@ -62,7 +62,7 @@ export default function save({ attributes }) {
 		<div {...parsedAtts} className={className}>
 			<OCButtonBar atts={attributes} />
 			<div className="ocContainer">{msgLoading}</div>
-			<Popup displayBoxBtnAtts={displayBoxBtnAtts}/>
+			<OCPopup displayBoxBtnAtts={displayBoxBtnAtts}/>
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-const IconCalendar = ({title}) => {
+const OCIconCalendar = ({title}) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ const IconCalendar = ({title}) => {
 	);
 };
 
-export default IconCalendar;
+export default OCIconCalendar;

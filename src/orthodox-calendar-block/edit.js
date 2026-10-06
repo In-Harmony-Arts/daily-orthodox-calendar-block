@@ -22,10 +22,12 @@ import {
 import { RawHTML, useEffect, useState } from "@wordpress/element";
 
 /**
- * Buttons Bar
+ * Load components
  */
 import OCButtonBar from "../components/OCButtonsBar";
-import Popup from "../components/Popup";
+import OCPopup from "../components/OCPopup";
+import OCMultiCheckboxComponent from "../components/OCMultiCheckboxComponent";
+import OCLoading from "../components/OCLoading.js";
 
 /**
  * Static props
@@ -45,7 +47,7 @@ import {
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import "./editor.scss";
-import MultiCheckboxComponent from "../components/MultiCheckboxComponent";
+
 
 function getPathArgs(dt, hh, ll, tt, ss, li, ln) {
 	const date = new Date();
@@ -130,7 +132,7 @@ export default function Edit({ attributes, setAttributes }) {
 	};
 
 	const [error, setError] = useState(false);
-	const [loadingPosts, setLoadingPosts] = useState(true);
+	const [loadingContent, setLoadingContent] = useState(true);
 	const [info, setInfo] = useState(msgLoading);
 	const [liveinfo, setLiveinfo] = useState(0);
 
@@ -143,7 +145,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const parsedAtts = filterArrayByArray(attributes, badStrings);
 
 	useEffect(() => {
-		setLoadingPosts(true);
+		setLoadingContent(true);
 		const url = oc_data?.url_day ?? false;
 
 		if (!url) {
@@ -166,7 +168,7 @@ export default function Edit({ attributes, setAttributes }) {
 			.catch((err) => {
 				setError(err.message);
 			})
-			.finally(() => setLoadingPosts(false));
+			.finally(() => setLoadingContent(false));
 	}, [dt, hh, ll, ss, tt, ln, dl, liveinfo]);
 
 	return (
@@ -460,7 +462,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<div {...parsedAtts} className={className}>
 				<OCButtonBar atts={attributes} />
 				<div className="ocContainer" id="ocContainer">
-					{loadingPosts && <div>{msgLoading}</div>}
+					<OCLoading isLoading={loadingContent} />
 
 					{error && (
 						<div>
@@ -476,7 +478,7 @@ export default function Edit({ attributes, setAttributes }) {
 
 					{!loadingPosts && !error && <RawHTML>{info}</RawHTML>}
 				</div>
-				<Popup displayBoxBtnAtts={displayBoxBtnAtts}/>
+				<OCPopup displayBoxBtnAtts={displayBoxBtnAtts}/>
 			</div>
 		</>
 	);
