@@ -58,8 +58,11 @@ function orthocalbl_create_block_init() {
 }
 add_action( 'init', 'orthocalbl_create_block_init' );
 
-
-
+/**
+ * Only enqueue block js if block is in content
+ *
+ * @return void
+ */
 function orthocalbl_enqueue_if_block_is_present(){
 	if ( has_block('orthodox-calendar-block/orthodox-calendar-block', get_the_ID()) ) {
 		wp_enqueue_script('orthocalbl-script');
@@ -67,7 +70,6 @@ function orthocalbl_enqueue_if_block_is_present(){
 }
 add_action('wp_enqueue_scripts','orthocalbl_enqueue_if_block_is_present');
 add_action('admin_enqueue_scripts','orthocalbl_enqueue_if_block_is_present');
-
 
 
 /**
@@ -139,6 +141,13 @@ function orthocalbl_get_allowed_html() {
 	);
 }
 
+
+/**
+ * Get remote content url
+ *
+ * @param string $lang
+ * @return string
+ */
 function orthocalbl_get_site_url( $lang ) {
 	$rootPath = "https://" . ORTHODOX_CALENDAR_BLOCK_ALLOWED_HOST . "/";
 	$langPath = ($lang == "en") ? "" :  $lang . "/";
@@ -147,6 +156,13 @@ function orthocalbl_get_site_url( $lang ) {
 	return $rootPath . $langPath . $calendarPath;
 }
 
+
+/**
+ * Get updated remote popup content path based on language
+ *
+ * @param string $lang
+ * @return string
+ */
 function orthocalbl_get_popup_url( $lang ) {
 	// https://www.holytrinityorthodox.com/htc/ocalendar/ru/los/September/20-01.htm
 	$rootPath = "https://" . ORTHODOX_CALENDAR_BLOCK_ALLOWED_HOST . "/";
@@ -155,6 +171,7 @@ function orthocalbl_get_popup_url( $lang ) {
 
 	return $rootPath . $calendarPath . $langPath;
 }
+
 
 /**
  * Convert relative URLs in selected remote tags to absolute safe URLs.
@@ -202,6 +219,7 @@ function orthocalbl_normalize_remote_urls( $html, $lang ) {
 	return is_string( $html ) ? $html : '';
 }
 
+
 /**
  * Return allowed base URL paths for the selected language.
  *
@@ -213,6 +231,7 @@ function orthocalbl_get_allowed_paths( $lang ) {
 	$path   = isset( $parts['path'] ) ? untrailingslashit( $parts['path'] ) : '';
 	return array( $path );
 }
+
 
 /**
  * Determine whether a remote URL is permitted.
@@ -245,6 +264,7 @@ function orthocalbl_is_allowed_remote_url( $url, $lang ) {
 	return false;
 }
 
+
 /**
  * Replace the known popup inline JavaScript with a safe data attribute.
  *
@@ -275,6 +295,16 @@ function orthocalbl_prepare_popup_links( $html ) {
 	return $dom->saveHTML();
 }
 
+
+/**
+ * Check HTML Element tag attribute for valid url
+ *
+ * @param string $html
+ * @param string $tagname
+ * @param string $att
+ * @param string $lang
+ * @return string
+ */
 function orthocalbl_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
 	$regex_tag = '/<' . $tagname . '\b[^>]*>/i';
 	$regex_att = '/\s' . $att . '\s*=\s*(["\'])(.*?)\1/i';
@@ -294,6 +324,7 @@ function orthocalbl_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
 		$html
 	);
 }
+
 
 /**
  * Sanitize remote HTML and remove unapproved URLs.
@@ -316,6 +347,11 @@ function orthocalbl_sanitize_html( $html, $lang ) {
 }
 
 
+/**
+ * Return array of supported languages objects
+ *
+ * @return void
+ */
 function orthocalbl_get_languages() {
 	return [
 		[ "label" => __("English", "orthocalbl"), "code" => "en" ],
@@ -324,6 +360,12 @@ function orthocalbl_get_languages() {
 }
 
 
+/**
+ * Validate the passed language code is supported
+ *
+ * @param string $lang
+ * @return boolean
+ */
 function orthocalbl_validate_languate_code( $lang ) {
 	$langs = orthocalbl_get_languages();
 
@@ -338,10 +380,16 @@ function orthocalbl_validate_languate_code( $lang ) {
 	return false;
 }
 
+
 // For logged-in users
 add_action('wp_ajax_orthocalbl_request', 'orthocalbl_ajax_request');
 // For non-logged-in users
 add_action('wp_ajax_nopriv_orthocalbl_request', 'orthocalbl_ajax_request');
+/**
+ * Hangle request for daily information
+ *
+ * @return JSON
+ */
 function orthocalbl_ajax_request() {
 
     // EXIT & send back error
@@ -516,6 +564,7 @@ function orthocalbl_get_request_var_string($name, $default = "") {
 	return $default;
 }
 
+
 /**
  * Determing if running on a local server
  *
@@ -577,6 +626,7 @@ function orthocalbl_get_static_text($date, $header, $lives, $scripture, $tropari
 	return $contents;
 }
 
+
 /**
  * Get date contents
  *
@@ -590,37 +640,40 @@ function orthocalbl_get_date($date) {
 /**
  * Get header contents
  *
- * @param integer $date
+ * @param integer $header
  * @return string
  */
 function orthocalbl_get_header($header) {
 	return $header ? orthocalbl_get_static_file_text('header') : '';
 }
 
+
 /**
  * Get lives contents
  *
- * @param integer $date
+ * @param integer $lives
  * @return string
  */
 function orthocalbl_get_lives($lives) {
 	return $lives ? orthocalbl_get_static_file_text('lives-' . $lives) : '';
 }
 
+
 /**
  * Get scripture contents
  *
- * @param integer $date
+ * @param integer $scripture
  * @return string
  */
 function orthocalbl_get_scriptures($scripture) {
 	return $scripture ? orthocalbl_get_static_file_text('scripture-' . $scripture) : '';
 }
 
+
 /**
  * Get troparion contents
  *
- * @param integer $date
+ * @param integer $troparion
  * @return string
  */
 function orthocalbl_get_troparion($troparion) {
@@ -628,6 +681,14 @@ function orthocalbl_get_troparion($troparion) {
 }
 
 
+/**
+ * Get correct popup url
+ *
+ * @param string $html
+ * @param string $path
+ * @param string $lang
+ * @return void string
+ */
 function orthocalbl_normalize_popup_urls( $html, $path, $lang ) {
 	
 	if ( ! is_string( $html ) || empty($html) ) {
@@ -639,23 +700,23 @@ function orthocalbl_normalize_popup_urls( $html, $path, $lang ) {
 	// ensure DOMDocument handles UTF-8 encoding correctly - this will get filtered out
 	$html = '<meta http-equiv="content-type" content="text/html; charset=utf-8">' . $html;
 
-	$dom = new DOMDocument;                 			// init new DOMDocument
-	$dom->loadHTML($html, LIBXML_NOERROR);              // load HTML into it
+	$dom = new DOMDocument;                 				// init new DOMDocument
+	$dom->loadHTML($html, LIBXML_NOERROR);              	// load HTML into it
 
-	$images = $dom->getElementsByTagName("img");		// Find image elements
+	$images = $dom->getElementsByTagName("img");			// Find image elements
 
-	foreach ($images as $img) {             			// Iterate over found elements
+	foreach ($images as $img) {             				// Iterate over found elements
 	    $src = $img->getAttribute('src');
 		$hostIndex = strpos($src, $host);
 
-		if ( ! $hostIndex ) {
-			$src = $path . "/" . $src;
-			$img->setAttribute('src', $src);
+		if ( ! $hostIndex ) {								// Check if allowed host is in url
+			$src = $path . "/" . $src;						// Set url to passed path
+			$img->setAttribute('src', $src);				// Update 'src' attribute
 		}
 
 		$parentNode = $img->parentNode;
 		if ($parentNode !== null) {
-			$parentNode->setAttribute('align', 'center');
+			$parentNode->setAttribute('align', 'center');	// Align images horizontally centered
 		}
 	}
 	
@@ -663,6 +724,13 @@ function orthocalbl_normalize_popup_urls( $html, $path, $lang ) {
 }
 
 
+/**
+ * Get updated remote content path
+ *
+ * @param string $url
+ * @param string $lang
+ * @return string
+ */
 function orthocalbl_get_popup_path( $url, $lang ) {
 	// break url path down
 	$path = parse_url($url, PHP_URL_PATH);
@@ -673,9 +741,11 @@ function orthocalbl_get_popup_path( $url, $lang ) {
 	$root_path = orthocalbl_get_popup_url($lang);
 	$parts = explode("/calendar/", $path);
 	$file_path = $parts[1] ?? '';
-
+	
 	// popup content path
-	return $root_path . $file_path;
+	$popup_path = $root_path . $file_path;
+
+	return $popup_path;
 }
 
 
