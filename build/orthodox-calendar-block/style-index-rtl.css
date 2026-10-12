@@ -10,7 +10,7 @@
   font-family: arial, helvetica, sans-serif;
   position: relative;
 }
-.orthodox-calendar-block .ocButtonsBar {
+.orthodox-calendar-block .ocb-buttons-bar {
   position: relative;
   top: 0;
   right: 0;
@@ -22,13 +22,10 @@
   flex-wrap: wrap;
   padding: 5px;
 }
-.orthodox-calendar-block .ocButtonsBar .ocDatePicker {
+.orthodox-calendar-block .ocb-buttons-bar .ocb-dp {
   margin: 4px 2px;
 }
-.orthodox-calendar-block .ocButtonsBar .ocBtnClose {
-  margin: 0 auto 0 0;
-}
-.orthodox-calendar-block .ocButton {
+.orthodox-calendar-block .ocb-button {
   background-color: #808080;
   border: none;
   color: #fff;
@@ -40,12 +37,70 @@
   position: relative;
   cursor: pointer;
 }
-.orthodox-calendar-block .ocButton.day-picker svg {
-  font-size: 32px;
-}
-.orthodox-calendar-block .ocButton.lang-toggle {
+.orthodox-calendar-block .ocb-button.lang-toggle {
   text-transform: uppercase;
   margin: auto auto auto 0;
+}
+.orthodox-calendar-block .ocb-button--svg svg {
+  height: 24px;
+  width: 24px;
+}
+.orthodox-calendar-block .ocb-button-close {
+  margin: 0 auto 0 0;
+}
+.orthodox-calendar-block .popup {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  background: white;
+  border: 1px solid black;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  visibility: visible;
+  opacity: 1;
+}
+.orthodox-calendar-block .popup-loading {
+  display: block;
+}
+.orthodox-calendar-block .popup-content {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  visibility: visible;
+  opacity: 1;
+}
+.orthodox-calendar-block .popup .ocb-buttons-bar {
+  border-bottom: 2px solid #e3e3e3;
+}
+.orthodox-calendar-block .popup .dataheader {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+}
+.orthodox-calendar-block .popup .ofd_los_header {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.orthodox-calendar-block .hidden {
+  display: none;
+}
+.orthodox-calendar-block .fade-in {
+  transition: opacity 0.5s linear;
+  visibility: visible;
+  opacity: 1;
+}
+.orthodox-calendar-block .fade-in.hidden {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 .orthodox-calendar-block .normaltext,
 .orthodox-calendar-block .minortext {
@@ -234,56 +289,4 @@
 }
 .orthodox-calendar-block.is-style-red .troparionseparator {
   background-color: #800000;
-}
-.orthodox-calendar-block .display-box {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  background: white;
-  border: 1px solid black;
-  box-sizing: border-box;
-  overflow: hidden;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: 0;
-  visibility: visible;
-  opacity: 1;
-}
-.orthodox-calendar-block .display-box-loading {
-  display: block;
-}
-.orthodox-calendar-block .display-box-content {
-  opacity: 1;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  padding: 10px;
-  visibility: visible;
-  opacity: 1;
-}
-.orthodox-calendar-block .display-box .ocButtonsBar {
-  border-bottom: 2px solid #e3e3e3;
-}
-.orthodox-calendar-block .display-box .dataheader {
-  font-size: 1.3em;
-  margin-bottom: 1em;
-}
-.orthodox-calendar-block .display-box .ofd_los_header {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-.orthodox-calendar-block .hidden {
-  display: none;
-}
-.orthodox-calendar-block .fade-in {
-  transition: opacity 0.5s linear;
-}
-.orthodox-calendar-block .fade-in.hidden {
-  display: block;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }

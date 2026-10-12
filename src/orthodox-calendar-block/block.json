@@ -6,7 +6,7 @@
 	"title": "Orthodox Calendar",
 	"category": "widgets",
 	"icon": "calendar-alt",
-	"description": "Displays the daily Orthodox Calendar information",
+	"description": "Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar",
 	"example": {},
 	"attributes": {
 		"dp": {
@@ -40,6 +40,14 @@
 		"dl": {
 			"type": "string",
 			"default": "en"
+		},
+		"lang": {
+			"type": "string",
+			"default": "en"
+		},
+		"li": {
+			"type": "integer",
+			"default": 0
 		},
 		"btn_language": {
 			"type": "integer",
@@ -85,22 +93,6 @@
 			"type": "string",
 			"default": "Pick Date"
 		},
-		"text_week_prev": {
-			"type": "string",
-			"default": "❰❰"
-		},
-		"text_week_prev_acc": {
-			"type": "string",
-			"default": "Previous Week"
-		},
-		"text_week_next": {
-			"type": "string",
-			"default": "❱❱"
-		},
-		"text_week_next_acc": {
-			"type": "string",
-			"default": "Previous Week"
-		},
 		"text_language": {
 			"type": "string",
 			"default": "”"
@@ -119,17 +111,29 @@
 		}
 	},
 	"supports": {
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
 		"color": {
+			"background": true,
 			"text": true,
-			"background": true
+			"gradients": false
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": false
 		},
 		"interactivity": true
 	},
-	"textdomain": "orthodox-calendar-block",
-	"viewScript": "file:./view.js",
+	"textdomain": "orthocalbl",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScriptModule": "file:./view.js",
 	"styles": [
 		{
 			"name": "none",

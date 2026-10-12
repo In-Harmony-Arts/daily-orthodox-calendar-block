@@ -1,3 +1,129 @@
+import { store, getContext, getConfig } from '@wordpress/interactivity';
+
+store( 'orthocalbl', {
+	actions: {
+		get calendarDate() {
+			const context = getContext();
+			return context.currentDate ? new Date(context.currentDate) : new Date();
+		},
+		setDate(date) {
+			const context = getContext();
+			const newDate = new Date(date).toLocaleDateString('en-US');
+			context.currentDate = newDate;
+		},
+		dateToday() {
+			const context = getContext();
+			context.currentDate = new Date();
+		},
+		dateNext() {
+			dateIncrement(1);
+		},
+		datePrevious() {
+			dateIncrement(-1);
+		},
+		dateIncrement(days) {
+			const context = getContext();
+			const currentDay = new Date(context.currentDate);
+			const timeOffset = days * oneDay;
+			currentDay.setTime(currentDay.getTime() + timeOffset);
+			setDate(currentDay);
+		},
+		setErrorMesssage(errmsg) {
+			const context = getContext();
+			const { translations } = getConfig();
+			
+			const append = errmsg ? '<br />' + errmsg : '';
+
+			context.errorMessage = translations.errorMessage + append;
+			context.isError = true;
+		}
+	}, // actions
+	callbacks: {
+		fetchCalendarInfo: () => {
+			const context = getContext();
+			const { url_day, sec_req } = getConfig();
+
+			// reasons to not continue
+			if (context.isLoading) {
+				return;
+			}
+
+			// update state
+			context.isError = false;
+			context.isLoading = true;
+
+			const currentDay = context.currentDate;
+
+			// date props
+			const mm = ocGetTwoDigitInt(currentDay.getMonth() + 1);
+			const dd = ocGetTwoDigitInt(currentDay.getDate());
+			const yy = currentDay.getFullYear();
+
+			// content props
+			const dt = ocEl.getAttribute("dt") ?? 1;
+			const hh = ocEl.getAttribute("hh") ?? 1;
+			const ll = ocEl.getAttribute("ll") ?? 1;
+			const tt = ocEl.getAttribute("tt") ?? 1;
+			const ss = ocEl.getAttribute("ss") ?? 1;
+			const lang = ocEl.getAttribute("lang") ?? 'en';
+			
+			const urlParams = new URLSearchParams(window.location.search);
+			const cachebuster = urlParams.get('cachebuster') || 0;
+
+			const phpPath = url_day;
+			const par =
+				phpPath +
+				"&month=" +
+				mm +
+				"&today=" +
+				dd +
+				"&year=" +
+				yy +
+				"&dt=" +
+				dt +
+				"&header=" +
+				hh +
+				"&lives=" +
+				ll +
+				"&trp=" +
+				tt +
+				"&scripture=" +
+				ss +
+				"&language=" +
+				lang +
+				"&sec_req=" +
+				sec_req +
+				"&cachebuster=" +
+				cachebuster
+				"&sid=" +
+				Math.random();
+
+			// Get data fro the server
+			fetch(par, {
+				method: "GET",
+				credentials: "same-origin",
+			})
+				.then((response) => response.json())
+				.then((response) => {
+					if (!response?.success) {
+						setErrorMesssage(response.data);
+					} else {
+						ocSetInfoHtml(ocEl, response.data);
+					}
+				})
+				.catch((error) => {
+					setErrorMesssage();
+				})
+				.finally(() => {
+					context.isLoading = false;
+				});
+		}
+	} // callbacks
+} ); // store
+
+
+/*
+
 // update every 2 hours
 const timerDelay = 2000 * 60 * 60;
 // one day in milliseconds
@@ -450,3 +576,4 @@ if (oCalendars.length) {
 		}
 	}, timerDelay);
 }
+*/

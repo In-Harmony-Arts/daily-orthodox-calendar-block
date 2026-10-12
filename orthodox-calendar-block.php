@@ -22,6 +22,7 @@ define( 'ORTHODOX_CALENDAR_BLOCK_VERSION', "0.10.0" );
 define( 'ORTHODOX_CALENDAR_BLOCK_ALLOWED_HOST', 'www.holytrinityorthodox.com' );
 define( 'ORTHODOX_CALENDAR_BLOCK_NONCE_MESSAGE', '<p>Nonce shall pass.</p>' );
 define( 'ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE', '<p>Blessed is he who comes in the name of the LORD.</p>' );
+define( 'ORTHODOX_CALENDAR_BLOCK_ERROR_MESSAGE', '<p>An error occurred</p>' );
 
 
 /**
@@ -33,25 +34,17 @@ define( 'ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE', '<p>Blessed is he who comes i
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
 function orthocalbl_create_block_init() {
-	// Create a nonce
-    $nonce_req = wp_create_nonce('orthocalbl-request');
-    $nonce_pop= wp_create_nonce('orthocalbl-popup');
-
-    // Register your block script
-    wp_register_script(
-        'orthocalbl-script',
-        plugins_url('./orthocalbl.js', __FILE__),
-        array(),
-        '0.2.0',
-		true
-    );
-
-	wp_localize_script( 'orthocalbl-script', 'oc_data', array(
-        'url_day' => admin_url('admin-ajax.php?action=orthocalbl_request', __FILE__),
-        'url_popup' => admin_url('admin-ajax.php?action=orthocalbl_popup', __FILE__),
-        'sec_req' => $nonce_req,
-        'sec_pop' => $nonce_pop,
-	));
+	// Init config values
+	wp_interactivity_config( 'orthocalbl', array(
+		'url_day'		=> admin_url('admin-ajax.php?action=orthocalbl_request', __FILE__),
+		'url_popup'		=> admin_url('admin-ajax.php?action=orthocalbl_popup', __FILE__),
+		'sec_req'		=> wp_create_nonce('orthocalbl-request'),
+		'sec_pop'		=> wp_create_nonce('orthocalbl-popup'),
+		'translations'		=> array(
+			'loading'		=> __( 'Loading...', 'orthocalbl' ),
+			'error'			=> __( 'An error occurred', 'orthocalbl' ),
+		),
+	) );
 
 
 	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
@@ -397,18 +390,60 @@ function orthocalbl_ajax_request() {
 		wp_send_json_error( wp_kses_post(ORTHODOX_CALENDAR_BLOCK_NONCE_MESSAGE) );
 	}
 
+	$props = array(
+		'month'			=> $_REQUEST['month'],
+		'day'			=> $_REQUEST['today'],
+		'year'			=> $_REQUEST['year'],
+		'editor'		=> $_REQUEST['editor'],
+		'liveinfo'		=> $_REQUEST['liveinfo'],
+		'cachebuster'	=> $_REQUEST['cachebuster'],
+		'dt'			=> $_REQUEST['dt'],
+		'hh'			=> $_REQUEST['header'],
+		'll'			=> $_REQUEST['lives'],
+		'ss'			=> $_REQUEST['scripture'],
+		'tt'			=> $_REQUEST['trp'],
+		'lang'			=> $_REQUEST['language'],
+	);
+
+	$resp = orthocalbl_get_request_content($props);
+
+	if ( !$resp['success'] ) {
+    	wp_send_json_error($resp['data']);
+	}
+
+	// EXIT & send back content
+    wp_send_json_success($resp['data']);
+}
+
+
+function orthocalbl_get_request_content($props) {
+	// get date components
+	$date = getdate();
+	$month = orthocalbl_validate_var_int($props['month'], $date['mon'], 1, 12 );
+	$day = orthocalbl_validate_var_int($props['day'], $date['mday'], 1, 31);
+	$year = orthocalbl_validate_var_int($props['year'], $date['year'], 1900, 2200  );
+
+	// EXIT & send back invalid date error
+	if ( ! checkdate( $month, $day, $year ) ) {
+		return array(
+			'success' => false,
+			'data' => 'Invalid date: ' . $month . '/' . $day . '/' . $year,
+			'code' => 400,
+		);
+	}
+
 
 	$contents = ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE;
-	$editor = orthocalbl_get_request_var_int('editor', 0, 0, 1);
-	$liveinfo = orthocalbl_get_request_var_int('liveinfo', 1, 0, 1);
-	$cachebuster = orthocalbl_get_request_var_int('cachebuster', 0, 0, 1);
+	$editor = orthocalbl_validate_var_int($props['editor'], 0, 0, 1);
+	$liveinfo = orthocalbl_validate_var_int($props['liveinfo'], 1, 0, 1);
+	$cachebuster = orthocalbl_validate_var_int($props['cachebuster'], 0, 0, 1);
 
-	$dt = orthocalbl_get_request_var_int('dt', 1, 0, 1);
-	$header = orthocalbl_get_request_var_int('header', 1, 0, 1);
-	$lives = orthocalbl_get_request_var_int('lives', 3, 0, 1);
-	$scripture = orthocalbl_get_request_var_int('scripture', 1, 0, 1);
-	$trp = orthocalbl_get_request_var_int('trp', 0, 0, 1);
-	$lang = orthocalbl_get_request_var_string('language', 'en');
+	$dt = orthocalbl_validate_var_int($props['dt'], 1, 0, 1);
+	$header = orthocalbl_validate_var_int($props['hh'], 1, 0, 1);
+	$lives = orthocalbl_validate_var_int($props['ll'], 3, 0, 1);
+	$scripture = orthocalbl_validate_var_int($props['ss'], 1, 0, 1);
+	$trp = orthocalbl_validate_var_int($props['tt'], 0, 0, 1);
+	$lang = orthocalbl_validate_var_string($props['lang'], 'en');
 
 	// default to English if bad language code sent
 	if ( ! orthocalbl_validate_languate_code($lang) ) {
@@ -418,18 +453,11 @@ function orthocalbl_ajax_request() {
 	// EXIT & send back our static stored info for editing
 	if ( !$liveinfo ) {
 		$contents = orthocalbl_get_static_text($dt, $header, $lives, $scripture, $trp);
-    	wp_send_json_success($contents);
-	}
-
-	// get date components
-	$date = getdate();
-	$month = orthocalbl_get_request_var_int('month', $date['mon'], 1, 12 );
-	$day = orthocalbl_get_request_var_int('today', $date['mday'], 1, 31);
-	$year = orthocalbl_get_request_var_int('year', $date['year'], 1900, 2200  );
-
-	// EXIT & send back invalid date error
-	if ( ! checkdate( $month, $day, $year ) ) {
-		wp_send_json_error( 'Invalid date: ' . $month . ' ' . $day . ', ' . $year, 400 );
+		return array(
+			'success' => true,
+			'data' => $contents,
+			'code' => 200,
+		);
 	}
 
 	// create unique cache key for reducing remote api calls
@@ -451,8 +479,12 @@ function orthocalbl_ajax_request() {
 		$contents = get_transient( $cache_key );
 
 		// EXIT & return cached content if found
-		if ( $contents !== false ) {
-			wp_send_json_success($contents);
+		if ( ! empty($contents) ) {
+			return array(
+				'success' => true,
+				'data' => $contents,
+				'code' => 200,
+			);
 		}
 	} else {
 		// clear cache
@@ -470,10 +502,10 @@ function orthocalbl_ajax_request() {
 			'today'     => $day,
 			'year'      => $year,
 			'dt'        => $dt,
-			'header'    => $header,
-			'lives'     => $lives,
-			'trp'       => $trp,
-			'scripture' => $scripture,
+			'hh'		=> $header,
+			'll'		=> $lives,
+			'ss'		=> $scripture,
+			'tt'		=> $trp,
 		),
 		$remote_path
 	);
@@ -496,8 +528,22 @@ function orthocalbl_ajax_request() {
 		// make UTF-8 for translations
 		$contents = orthocalbl_content_to_utf8( $body );
 
+		if ( empty($contents) ) {
+			return array(
+				'success' => false,
+				'data' => '<p>Error converting content to UTF-8.</p>',
+				'code' => 500,
+			);
+		}
 		// make sure the content is clean
 		$contents = orthocalbl_sanitize_html( $contents, $lang );
+		if ( empty($contents) ) {
+			return array(
+				'success' => false,
+				'data' => '<p>Error sanitizing content.</p>',
+				'code' => 500,
+			);
+		}
 
 		// store contents to avoid redundant requests
 		set_transient( $cache_key, $contents, DAY_IN_SECONDS );
@@ -506,8 +552,11 @@ function orthocalbl_ajax_request() {
 		$contents = orthocalbl_get_static_text($dt, $header, $lives, $scripture, $trp);
 	}
 
-	// EXIT & send back content
-    wp_send_json_success($contents);
+	return array(
+		'success' => true,
+		'data' => $contents,
+		'code' => 200,
+	);
 }
 
 
@@ -523,30 +572,33 @@ function orthocalbl_get_request_var_int($name, $default, $min, $max) {
 		return $default;
 	}
 
-	$value = absint( wp_unslash($_REQUEST[$name]) );
+	return orthocalbl_validate_var_int( wp_unslash($_REQUEST[$name]) );
+}
+
+function orthocalbl_validate_var_int($value, $default, $min, $max) {
+	if ( !isset( $value ) ) {
+		return $default;
+	}
+
+	$value = absint( $value );
 	$inrang = ( $min <= $value && $value <= $max  );
 
 	return ( $inrang ) ? $value : $default;
 }
 
-
-
-/**
- * Retrieve and validate an integer request value.
- *
- * @param string $key Request parameter.
- * @param int    $default Default value.
- * @param int    $min Minimum value.
- * @param int    $max Maximum value.
- * @return int
- */
-function orthocalbl_get_request_int( $key, $default, $min, $max ) {
-	if ( ! isset( $_POST[ $key ] ) ) {
+function orthocalbl_get_request_var_array($name, $default = array()) {
+	if ( !isset( $_REQUEST[$name] ) ) {
 		return $default;
 	}
 
-	$value = absint( wp_unslash( $_POST[ $key ] ) );
-	return ( $value < $min || $value > $max ) ? $default : $value;
+    return orthocalbl_validate_var_array($_REQUEST[$name]);
+}
+function orthocalbl_validate_var_array($value, $default = array()) {
+	if ( !isset( $value ) ) {
+		return $default;
+	}
+
+    return rest_sanitize_array($value);
 }
 
 
@@ -558,10 +610,14 @@ function orthocalbl_get_request_int( $key, $default, $min, $max ) {
  * @return string
  */
 function orthocalbl_get_request_var_string($name, $default = "") {
-	if (isset( $_REQUEST[$name] )) {
-		return (string)wp_unslash($_REQUEST[$name]);
+	return orthocalbl_validate_var_string(wp_unslash($_REQUEST[$name]), $default);
+}
+
+function orthocalbl_validate_var_string($value, $default = "") {
+	if (empty( $value )) {
+		return $default;
 	}
-	return $default;
+	return (string)$value;
 }
 
 
@@ -617,67 +673,13 @@ function orthocalbl_get_static_file_text($file) {
 function orthocalbl_get_static_text($date, $header, $lives, $scripture, $troparion) {
 	$contents = '';
 
-	$contents .= orthocalbl_get_date($date);
-	$contents .= orthocalbl_get_header($header);
-	$contents .= orthocalbl_get_lives($lives);
-	$contents .= orthocalbl_get_scriptures($scripture);
-	$contents .= orthocalbl_get_troparion($troparion);
+	$contents .= $date ? orthocalbl_get_static_file_text('date') : '';
+	$contents .= $header ? orthocalbl_get_static_file_text('header') : '';
+	$contents .= $lives ? orthocalbl_get_static_file_text('lives-' . $lives) : '';
+	$contents .= $scripture ? orthocalbl_get_static_file_text('scripture-' . $scripture) : '';
+	$contents .= $troparion ? orthocalbl_get_static_file_text('troparion-' . $troparion) : '';
 
 	return $contents;
-}
-
-
-/**
- * Get date contents
- *
- * @param integer $date
- * @return string
- */
-function orthocalbl_get_date($date) {
-	return $date ? orthocalbl_get_static_file_text('date') : '';
-}
-
-/**
- * Get header contents
- *
- * @param integer $header
- * @return string
- */
-function orthocalbl_get_header($header) {
-	return $header ? orthocalbl_get_static_file_text('header') : '';
-}
-
-
-/**
- * Get lives contents
- *
- * @param integer $lives
- * @return string
- */
-function orthocalbl_get_lives($lives) {
-	return $lives ? orthocalbl_get_static_file_text('lives-' . $lives) : '';
-}
-
-
-/**
- * Get scripture contents
- *
- * @param integer $scripture
- * @return string
- */
-function orthocalbl_get_scriptures($scripture) {
-	return $scripture ? orthocalbl_get_static_file_text('scripture-' . $scripture) : '';
-}
-
-
-/**
- * Get troparion contents
- *
- * @param integer $troparion
- * @return string
- */
-function orthocalbl_get_troparion($troparion) {
-	return $troparion ? orthocalbl_get_static_file_text('troparion-' . $troparion) : '';
 }
 
 
