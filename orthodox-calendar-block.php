@@ -572,7 +572,7 @@ function orthocalbl_get_request_var_int($name, $default, $min, $max) {
 		return $default;
 	}
 
-	return orthocalbl_validate_var_int( wp_unslash($_REQUEST[$name]) );
+	return orthocalbl_validate_var_int( wp_unslash($_REQUEST[$name]), $default, $min, $max );
 }
 
 function orthocalbl_validate_var_int($value, $default, $min, $max) {
@@ -591,7 +591,7 @@ function orthocalbl_get_request_var_array($name, $default = array()) {
 		return $default;
 	}
 
-    return orthocalbl_validate_var_array($_REQUEST[$name]);
+    return orthocalbl_validate_var_array($_REQUEST[$name], $default);
 }
 function orthocalbl_validate_var_array($value, $default = array()) {
 	if ( !isset( $value ) ) {

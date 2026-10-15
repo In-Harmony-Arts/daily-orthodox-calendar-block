@@ -594,7 +594,7 @@ __webpack_require__.r(__webpack_exports__);
    */
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   /**
-   * @see ./save.js
+   * Using render.php for all output
    */
   save: () => {
     return null;

@@ -30,7 +30,7 @@ registerBlockType( metadata.name, {
 	edit: Edit,
 
 	/**
-	 * @see ./save.js
+	 * Using render.php for all output
 	 */
 	save: () => { return null; },
 } );

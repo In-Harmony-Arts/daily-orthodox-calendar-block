@@ -6,13 +6,13 @@
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "npm run copy-assets && wp-scripts build --blocks-manifest",
+		"build": "npm run copy-assets && wp-scripts build --experimental-modules --blocks-manifest",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "npm run copy-assets && wp-scripts plugin-zip",
-		"start": "npm run copy-assets && wp-scripts start --blocks-manifest",
+		"start": "npm run copy-assets && wp-scripts start --experimental-modules --blocks-manifest",
 		"copy-assets": "node src/build/copy-assets.js"
 	},
 	"dependencies": {

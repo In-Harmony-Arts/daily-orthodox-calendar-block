@@ -54,12 +54,28 @@
 		}
 	}
 
-	.popup {
+	.fetch-container {
+		display: block;
+		width: 100%;
+		overflow-y: scroll;
+
+		.content {
+			padding: 0 20px 10px 10px;
+
+			table {
+				td {
+					vertical-align: top; // align verse numbers to gop
+				}
+			}
+		}
+	}
+
+	.ocb-popup {
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-start;
 		flex-direction: column;
-		background: white;
+		background: #fff;
 		border: 1px solid black;
 		box-sizing: border-box;
 		overflow: hidden;
@@ -78,9 +94,6 @@
 		&-content {
 			opacity: 1;
 			width: 100%;
-			height: 100%;
-			overflow-y: scroll;
-			padding: 10px;
 			visibility: visible;
 			opacity: 1;
 		}
@@ -94,10 +107,17 @@
   			margin-bottom: 1em;
 		}
 
-		.ofd {
-			&_los_header {
+		.ofd_los_ {
+			&header {
+				position: sticky;
+				top: 0;
+				border-bottom: 1px solid black;
+				background: #fff;
 				font-weight: bold;
 				font-size: 1.2em;
+			}
+			&body {
+				// min-width: 2em; // so verse numbers don't wrap
 			}
 		}
 	}
@@ -116,6 +136,7 @@
 			visibility: hidden;
 			opacity: 0;
 			transition: visibility 0s 0.5s, opacity 0.5s linear;
+			pointer-events: none; // allow clicks to pass through
 		}
 	}
 
