@@ -31,7 +31,9 @@ import OCInspectorControls from "../components/OCInspectorControls.js";
  * Static props
  */
 import {
+	badStrings,
 	containerClassName,
+	filterArrayByArray,
 } from "../Statics";
 
 /**
@@ -64,7 +66,10 @@ export default function Edit({ attributes, setAttributes }) {
 		'attributes': attributes,
 		'useState': useState,
 		'setAttributes': setAttributes,
-	}
+	};
+
+	let parsedAtts = filterArrayByArray(attributes, []);
+	parsedAtts['editor'] = 1;
 
 	return (
 		<>
@@ -74,7 +79,7 @@ export default function Edit({ attributes, setAttributes }) {
 					<ServerSideRender
 						block={ metadata.name }
 						skipBlockSupportAttributes
-						attributes={ attributes }
+						attributes={ parsedAtts }
 					/>
 				</Disabled>
 			</div>

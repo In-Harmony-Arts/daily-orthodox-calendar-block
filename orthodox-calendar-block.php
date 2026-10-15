@@ -394,8 +394,8 @@ function orthocalbl_ajax_request() {
 		'month'			=> $_REQUEST['month'],
 		'day'			=> $_REQUEST['today'],
 		'year'			=> $_REQUEST['year'],
-		'editor'		=> $_REQUEST['editor'],
-		'liveinfo'		=> $_REQUEST['liveinfo'],
+		'editor'		=> $_REQUEST['editor'] ?? 0,
+		'liveinfo'		=> $_REQUEST['li'] ?? 1,
 		'cachebuster'	=> $_REQUEST['cachebuster'],
 		'dt'			=> $_REQUEST['dt'],
 		'hh'			=> $_REQUEST['header'],
@@ -436,7 +436,7 @@ function orthocalbl_get_request_content($props) {
 	$contents = ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE;
 	$editor = orthocalbl_validate_var_int($props['editor'], 0, 0, 1);
 	$liveinfo = orthocalbl_validate_var_int($props['liveinfo'], 1, 0, 1);
-	$cachebuster = orthocalbl_validate_var_int($props['cachebuster'], 0, 0, 1);
+	$cachebuster = orthocalbl_validate_var_int($props['cachebuster'] ?? 0, 0, 0, 1);
 
 	$dt = orthocalbl_validate_var_int($props['dt'], 1, 0, 1);
 	$header = orthocalbl_validate_var_int($props['hh'], 1, 0, 1);

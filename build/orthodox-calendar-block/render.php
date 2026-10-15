@@ -5,6 +5,7 @@
     $dp_date = $date['year'] . "-" . $date['mon'] . "-" . $date['mday'];
 
     $is_editor = (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
+    $liveinfo = orthocalbl_validate_var_int($attributes['li'], 1, 0, 1);
 
     $dt = orthocalbl_validate_var_int($attributes['dt'], 1, 0, 1);
 	$header = orthocalbl_validate_var_int($attributes['hh'], 1, 0, 1);
@@ -17,16 +18,16 @@
     $lang = orthocalbl_validate_var_string($attributes['lang'], $default_lang);
 
     // fetching context props
-    $fetch_context = [
+    $fetch_context = array(
         'isLoading'         => false,
         'contentHtml'       => "",
         'errorHtml'         => "",
         'oldQsps'           => "",
         'loadingText'       => "Loading...",
-    ];
+    );
 
     // instance context
-    $context = array_merge($fetch_context, [
+    $context = array(
         'currentDate'           => $str_date,
         'dpDate'                => $dp_date,
         'showDatePicker'        => false,
@@ -38,7 +39,32 @@
         'tt'			        => $trp,
         'ln'                    => $langs,
         'lang'			        => $lang,
-    ]);
+    );
+
+    $props = array(
+		'month'			=> $date['mon'],
+		'day'			=> $date['mday'],
+		'year'			=> $date['year'],
+		'editor'		=> $is_editor ? 1 : 0,
+		'liveinfo'		=> $liveinfo ? 1 : 0,
+        'dt'			        => $dt,
+        'hh'			        => $header,
+        'll'			        => $lives,
+        'ss'			        => $scripture,
+        'tt'			        => $trp,
+        'ln'                    => $langs,
+        'lang'			        => $lang,
+	);
+
+    $editor_context = array_slice($fetch_context, 0);
+
+    if ( $is_editor ) {
+       $resp = orthocalbl_get_request_content($props);
+       if ($resp['success'] === true) {
+            $editor_context['contentHtml'] = $resp['data'];
+            $editor_context['cachebuster'] = 0;
+       }
+    }
 
 ?>
 <div
@@ -49,7 +75,7 @@
     <div
         class="ocb-info"
         data-wp-watch="callbacks.fetchCalendarInfo"
-        <?php echo wp_interactivity_data_wp_context( $fetch_context ); ?>
+        <?php echo wp_interactivity_data_wp_context( $editor_context ); ?>
     >
         <div
             class="ocb-buttons-bar"
@@ -130,10 +156,10 @@
             ></div>
             <div
                 class="ocb-info-content content"
-                data-wp-html="context.content"
-                data-wp-bind--hidden="!state.hasContent"
+                data-wp-html="context.contentHtml"
+                data-wp-bind--hidden="<?php echo $is_editor ? "false" : "!state.hasContent"; ?>"
                 data-wp-on--click="actions.handleLinkClick"
-            ></div>
+            ><?php echo $editor_context['contentHtml']; ?></div>
         </div>
     </div>
     <div

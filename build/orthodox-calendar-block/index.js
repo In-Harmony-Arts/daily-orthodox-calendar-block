@@ -532,6 +532,8 @@ function Edit({
     'useState': _wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState,
     'setAttributes': setAttributes
   };
+  let parsedAtts = (0,_Statics__WEBPACK_IMPORTED_MODULE_7__.filterArrayByArray)(attributes, []);
+  parsedAtts['editor'] = 1;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_OCInspectorControls_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
       props: ocicProps
@@ -542,7 +544,7 @@ function Edit({
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_2___default()), {
           block: _block_json__WEBPACK_IMPORTED_MODULE_5__.name,
           skipBlockSupportAttributes: true,
-          attributes: attributes
+          attributes: parsedAtts
         })
       })
     })]
