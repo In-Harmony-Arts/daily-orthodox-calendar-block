@@ -35,14 +35,14 @@ define( 'ORTHODOX_CALENDAR_BLOCK_ERROR_MESSAGE', '<p>An error occurred</p>' );
  */
 function orthocalbl_create_block_init() {
 	// Init config values
-	wp_interactivity_config( 'orthocalbl', array(
+	wp_interactivity_config( 'orthodox-calendar-block', array(
 		'url_day'		=> admin_url('admin-ajax.php?action=orthocalbl_request', __FILE__),
 		'url_popup'		=> admin_url('admin-ajax.php?action=orthocalbl_popup', __FILE__),
 		'sec_req'		=> wp_create_nonce('orthocalbl-request'),
 		'sec_pop'		=> wp_create_nonce('orthocalbl-popup'),
 		'translations'		=> array(
-			'loading'		=> __( 'Loading...', 'orthocalbl' ),
-			'error'			=> __( 'An error occurred', 'orthocalbl' ),
+			'loading'		=> __( 'Loading...', 'orthodox-calendar-block' ),
+			'error'			=> __( 'An error occurred', 'orthodox-calendar-block' ),
 		),
 	) );
 
@@ -347,8 +347,8 @@ function orthocalbl_sanitize_html( $html, $lang ) {
  */
 function orthocalbl_get_languages() {
 	return [
-		[ "label" => __("English", "orthocalbl"), "code" => "en" ],
-		[ "label" => __("Russian", "orthocalbl"), "code" => "ru" ]
+		[ "label" => __("English", "orthodox-calendar-block"), "code" => "en" ],
+		[ "label" => __("Russian", "orthodox-calendar-block"), "code" => "ru" ]
 	];
 }
 

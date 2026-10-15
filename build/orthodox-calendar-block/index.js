@@ -26,15 +26,15 @@ __webpack_require__.r(__webpack_exports__);
 // supported languages
 
 const languages = [{
-  "label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("English", "orthocalbl"),
+  "label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("English", "orthodox-calendar-block"),
   "value": "en"
 }, {
-  "label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Russian", "orthocalbl"),
+  "label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Russian", "orthodox-calendar-block"),
   "value": "ru"
 }];
 
 // loading message
-const msgLoading = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Loading...", "orthocalbl");
+const msgLoading = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Loading...", "orthodox-calendar-block");
 
 // outermost container class
 const containerClassName = "orthodox-calendar-block";
@@ -161,10 +161,10 @@ const OCInspectorControls = ({
   const multipleLanguages = ln.length > 1;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Settings", "orthocalbl"),
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Settings", "orthodox-calendar-block"),
       initialOpen: true,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Edit with live info", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Edit with live info", "orthodox-calendar-block"),
         checked: li,
         onChange: value => setAttributes({
           li: value ? 1 : 0
@@ -177,7 +177,7 @@ const OCInspectorControls = ({
           ln: value
         })
       }), multipleLanguages && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Default Language", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Default Language", "orthodox-calendar-block"),
         value: dl,
         onChange: value => setAttributes({
           dl: value
@@ -185,46 +185,46 @@ const OCInspectorControls = ({
         help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("The language to show when first loaded", "orthodox-calendar"),
         options: [{
           value: "en",
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("English", "orthocalbl"),
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("English", "orthodox-calendar-block"),
           disabled: !ln.includes("en")
         }, {
           value: "ru",
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Russian", "orthocalbl"),
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Russian", "orthodox-calendar-block"),
           disabled: !ln.includes("ru")
         }]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show today button", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show today button", "orthodox-calendar-block"),
         checked: btn_today,
         onChange: value => setAttributes({
           btn_today: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show day button", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show day button", "orthodox-calendar-block"),
         checked: btn_day,
         onChange: value => setAttributes({
           btn_day: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show date picker", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show date picker", "orthodox-calendar-block"),
         checked: dp,
         onChange: datepick => setAttributes({
           dp: datepick ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show date", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show date", "orthodox-calendar-block"),
         checked: dt,
         onChange: value => setAttributes({
           dt: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show a heading before", "orthocalbl"),
-        help: hh ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display header", "orthocalbl") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("No header", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show a heading before", "orthodox-calendar-block"),
+        help: hh ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display header", "orthodox-calendar-block") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("No header", "orthodox-calendar-block"),
         checked: hh,
         onChange: value => setAttributes({
           hh: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display Lives of Saints", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display Lives of Saints", "orthodox-calendar-block"),
         value: ll,
         onChange: value => setAttributes({
           ll: value
@@ -232,7 +232,7 @@ const OCInspectorControls = ({
         help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the lives of the saints", "orthodox-calendar"),
         options: [{
           value: 0,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "orthodox-calendar-block")
         }, {
           value: 1,
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("all Saints in separate paragraphs", "orthocalbl")
@@ -253,7 +253,7 @@ const OCInspectorControls = ({
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("major Saints and New Martyrs in one paragraph", "orthocalbl")
         }]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Scripture Readings", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Scripture Readings", "orthodox-calendar-block"),
         value: ss,
         onChange: value => setAttributes({
           ss: value
@@ -261,13 +261,13 @@ const OCInspectorControls = ({
         help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the Scripture Readings", "orthodox-calendar"),
         options: [{
           value: 0,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "orthodox-calendar-block")
         }, {
           value: 1,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header", "orthodox-calendar-block")
         }, {
           value: 2,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header", "orthodox-calendar-block")
         }, {
           value: 3,
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header and wtih verses", "orthocalbl")
@@ -276,28 +276,28 @@ const OCInspectorControls = ({
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header and with verses", "orthocalbl")
         }]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display Troparion", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display Troparion", "orthodox-calendar-block"),
         value: tt,
         onChange: value => setAttributes({
           tt: value
         }),
-        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the Troparion", "orthocalbl"),
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the Troparion", "orthodox-calendar-block"),
         options: [{
           value: 0,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "orthodox-calendar-block")
         }, {
           value: 1,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header", "orthodox-calendar-block")
         }, {
           value: 2,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header", "orthodox-calendar-block")
         }]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Text", "orthocalbl"),
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Text", "orthodox-calendar-block"),
       initialOpen: false,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Previous Button Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Previous Button Text", "orthodox-calendar-block"),
         value: text_prev,
         onChange: value => setAttributes({
           text_prev: value
@@ -309,7 +309,7 @@ const OCInspectorControls = ({
           text_prev_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Current Button Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Current Button Text", "orthodox-calendar-block"),
         value: text_curr,
         onChange: value => setAttributes({
           text_curr: value
@@ -321,7 +321,7 @@ const OCInspectorControls = ({
           text_curr_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Next Button Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Next Button Text", "orthodox-calendar-block"),
         value: text_next,
         onChange: value => setAttributes({
           text_next: value
@@ -333,13 +333,13 @@ const OCInspectorControls = ({
           text_next_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Text", "orthodox-calendar-block"),
         value: text_date,
         onChange: value => setAttributes({
           text_date: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Text", "orthodox-calendar-block"),
         value: text_date,
         onChange: value => setAttributes({
           text_date: value
