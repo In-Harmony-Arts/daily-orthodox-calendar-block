@@ -1,75 +1,81 @@
 
 <?php
-    $date = getdate();
-    $str_date = $date['mon'] . "/" . $date['mday'] . "/" . $date['year'];
-    $dp_date = $date['year'] . "-" . $date['mon'] . "-" . $date['mday'];
 
-    $is_editor = (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
-    $liveinfo = orthocalbl_validate_var_int($attributes['li'], 1, 0, 1);
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-    $dt = orthocalbl_validate_var_int($attributes['dt'], 1, 0, 1);
-	$header = orthocalbl_validate_var_int($attributes['hh'], 1, 0, 1);
-	$lives = orthocalbl_validate_var_int($attributes['ll'], 3, 0, 6);
-	$scripture = orthocalbl_validate_var_int($attributes['ss'], 1, 0, 4);
-	$trp = orthocalbl_validate_var_int($attributes['tt'], 0, 0, 2);
-	$default_lang = orthocalbl_validate_var_string($attributes['dl'], 'en');
-	$langs = orthocalbl_validate_var_array($attributes['ln'], array($default_lang));
-    $lang_toggle = count($langs) > 1;
-    $lang = orthocalbl_validate_var_string($attributes['lang'], $default_lang);
+$date = getdate();
+$str_date = $date['mon'] . "/" . $date['mday'] . "/" . $date['year'];
+$dp_date = $date['year'] . "-" . $date['mon'] . "-" . $date['mday'];
 
-    // fetching context props
-    $fetch_context = array(
-        'isLoading'         => false,
-        'contentHtml'       => "",
-        'errorHtml'         => "",
-        'oldQsps'           => "",
-        'loadingText'       => "Loading...",
-    );
+$is_editor = (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
+$liveinfo = orthodox_calendar_block_validate_var_int($attributes['li'], 1, 0, 1);
 
-    // instance context
-    $context = array(
-        'currentDate'           => $str_date,
-        'dpDate'                => $dp_date,
-        'showDatePicker'        => false,
-        'popupUrl'              => false,
-        'dt'			        => $dt,
-        'hh'			        => $header,
-        'll'			        => $lives,
-        'ss'			        => $scripture,
-        'tt'			        => $trp,
-        'ln'                    => $langs,
-        'lang'			        => $lang,
-    );
+$dt = orthodox_calendar_block_validate_var_int($attributes['dt'], 1, 0, 1);
+$header = orthodox_calendar_block_validate_var_int($attributes['hh'], 1, 0, 1);
+$lives = orthodox_calendar_block_validate_var_int($attributes['ll'], 3, 0, 6);
+$scripture = orthodox_calendar_block_validate_var_int($attributes['ss'], 1, 0, 4);
+$trp = orthodox_calendar_block_validate_var_int($attributes['tt'], 0, 0, 2);
+$langs = orthodox_calendar_block_validate_var_array($attributes['ln'], array($default_lang));
+$multi_langs = isset($langs[1]); // just need to know that more than 1 value is set
+$default_lang = !$multi_langs ? $langs[0] : orthodox_calendar_block_validate_var_string($attributes['dl'], 'en');
+$lang = !$multi_langs ? $langs[0] : orthodox_calendar_block_validate_var_string($attributes['lang'], $default_lang);
 
-    $props = array(
-		'month'			=> $date['mon'],
-		'day'			=> $date['mday'],
-		'year'			=> $date['year'],
-		'editor'		=> $is_editor ? 1 : 0,
-		'liveinfo'		=> $liveinfo ? 1 : 0,
-        'dt'			        => $dt,
-        'hh'			        => $header,
-        'll'			        => $lives,
-        'ss'			        => $scripture,
-        'tt'			        => $trp,
-        'ln'                    => $langs,
-        'lang'			        => $lang,
-	);
+// fetching context props
+$fetch_context = array(
+    'isLoading'         => false,
+    'contentHtml'       => "",
+    'errorHtml'         => "",
+    'oldQsps'           => "",
+    'loadingText'       => "Loading...",
+);
 
-    $editor_context = array_slice($fetch_context, 0);
+// instance context
+$context = array(
+    'currentDate'           => $str_date,
+    'dpDate'                => $dp_date,
+    'showDatePicker'        => false,
+    'popupUrl'              => false,
+    'dt'			        => $dt,
+    'hh'			        => $header,
+    'll'			        => $lives,
+    'ss'			        => $scripture,
+    'tt'			        => $trp,
+    'ln'                    => $langs,
+    'lang'			        => $lang,
+);
 
-    if ( $is_editor ) {
-       $resp = orthocalbl_get_request_content($props);
-       if ($resp['success'] === true) {
-            $editor_context['contentHtml'] = $resp['data'];
-            $editor_context['cachebuster'] = 0;
-       }
+$props = array(
+    'month'			=> $date['mon'],
+    'day'			=> $date['mday'],
+    'year'			=> $date['year'],
+    'editor'		=> $is_editor ? 1 : 0,
+    'liveinfo'		=> $liveinfo ? 1 : 0,
+    'dt'			=> $dt,
+    'hh'			=> $header,
+    'll'			=> $lives,
+    'ss'			=> $scripture,
+    'tt'			=> $trp,
+    'ln'            => $langs,
+    'lang'			=> $lang,
+    'dl'			=> $default_lang,
+);
+
+$editor_context = array_slice($fetch_context, 0);
+
+if ( $is_editor ) {
+    $resp = orthodox_calendar_block_get_request_content($props);
+    if ($resp['success'] === true) {
+        $editor_context['contentHtml'] = $resp['data'];
+        $editor_context['cachebuster'] = 0;
     }
+}
 
 ?>
 <div
     <?php echo get_block_wrapper_attributes(); ?>
-    data-wp-interactive="orthocalbl"
+    data-wp-interactive="orthodox-calendar-block"
     <?php echo wp_interactivity_data_wp_context( $context ); ?>
 >
     <div
@@ -135,7 +141,7 @@
                 </div>
             <?php } ?>
             <?php // button -- language toggle
-            if ($lang_toggle) { ?>
+            if ($multi_langs) { ?>
                 <button
                     type="button"
                     class="ocb-button lang-toggle"

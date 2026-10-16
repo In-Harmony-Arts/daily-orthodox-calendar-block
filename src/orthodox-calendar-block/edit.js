@@ -31,7 +31,6 @@ import OCInspectorControls from "../components/OCInspectorControls.js";
  * Static props
  */
 import {
-	badStrings,
 	containerClassName,
 	filterArrayByArray,
 } from "../Statics";

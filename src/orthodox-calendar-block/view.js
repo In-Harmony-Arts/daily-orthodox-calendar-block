@@ -50,7 +50,7 @@ const setElementChildHtmlByClass = (element, selector, html) => {
 	}
 }
 
-const orthocalblStore = store("orthocalbl", {
+const orthocalblStore = store("orthodox-calendar-block", {
 	state: {
 		get hasContent() {
 			const context = getContext();
@@ -201,7 +201,7 @@ const orthocalblStore = store("orthocalbl", {
 		},
 		fetchCalendarInfo: () => {
 			const context = getContext();
-			const { sec_req, url_day } = getConfig();
+			const config = getConfig();
 
 			// wait for current request to finish
 			if (context.isLoading) {
@@ -237,11 +237,11 @@ const orthocalblStore = store("orthocalbl", {
 				"&language=" +
 				context.lang +
 				"&sec_req=" +
-				sec_req +
+				config.sec_req +
 				"&cachebuster=" +
 				cachebuster;
 
-			orthocalblStore.actions.fetchData(url_day, qsps);
+			orthocalblStore.actions.fetchData(config.url_day, qsps);
 		},
 		fetchPopupInfo: () => {
 			const {isLoading, popupUrl, lang } = getContext();

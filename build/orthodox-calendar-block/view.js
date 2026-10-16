@@ -93,7 +93,7 @@ const setElementChildHtmlByClass = (element, selector, html) => {
     child.scrollTop = 0;
   }
 };
-const orthocalblStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("orthocalbl", {
+const orthocalblStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("orthodox-calendar-block", {
   state: {
     get hasContent() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
@@ -219,10 +219,7 @@ const orthocalblStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
     },
     fetchCalendarInfo: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      const {
-        sec_req,
-        url_day
-      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
+      const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
 
       // wait for current request to finish
       if (context.isLoading) {
@@ -235,8 +232,8 @@ const orthocalblStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       const dd = ocGetTwoDigitInt(currentDay.getDate());
       const yy = currentDay.getFullYear();
       const cachebuster = getCacheBuster();
-      const qsps = "&month=" + mm + "&today=" + dd + "&year=" + yy + "&dt=" + context.dt + "&header=" + context.hh + "&lives=" + context.ll + "&trp=" + context.tt + "&scripture=" + context.ss + "&language=" + context.lang + "&sec_req=" + sec_req + "&cachebuster=" + cachebuster;
-      orthocalblStore.actions.fetchData(url_day, qsps);
+      const qsps = "&month=" + mm + "&today=" + dd + "&year=" + yy + "&dt=" + context.dt + "&header=" + context.hh + "&lives=" + context.ll + "&trp=" + context.tt + "&scripture=" + context.ss + "&language=" + context.lang + "&sec_req=" + config.sec_req + "&cachebuster=" + cachebuster;
+      orthocalblStore.actions.fetchData(config.url_day, qsps);
     },
     fetchPopupInfo: () => {
       const {

@@ -1,6 +1,6 @@
 === Orthodox Calendar Block ===
 Contributors:      Dustin Vietzke, Holy Trinity Orthodox Church
-Tags:              orthodox, calendar, saints, scripture, troparion
+Tags:              orthodox,dailly,calendar,saints,scripture
 Requires at least: 6.8.0
 Tested up to:      7.1
 Stable tag:        1.0.0

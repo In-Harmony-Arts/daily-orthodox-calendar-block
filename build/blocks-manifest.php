@@ -136,7 +136,7 @@ return array(
 			),
 			'interactivity' => true
 		),
-		'textdomain' => 'orthocalbl',
+		'textdomain' => 'orthodox-calendar-block',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',

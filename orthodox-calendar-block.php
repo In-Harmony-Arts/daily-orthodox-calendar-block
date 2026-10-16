@@ -33,7 +33,7 @@ define( 'ORTHODOX_CALENDAR_BLOCK_ERROR_MESSAGE', '<p>An error occurred</p>' );
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
-function orthocalbl_create_block_init() {
+function orthodox_calendar_block_create_block_init() {
 	// Init config values
 	wp_interactivity_config( 'orthodox-calendar-block', array(
 		'url_day'		=> admin_url('admin-ajax.php?action=orthocalbl_request', __FILE__),
@@ -49,20 +49,20 @@ function orthocalbl_create_block_init() {
 
 	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
 }
-add_action( 'init', 'orthocalbl_create_block_init' );
+add_action( 'init', 'orthodox_calendar_block_create_block_init' );
 
 /**
  * Only enqueue block js if block is in content
  *
  * @return void
  */
-function orthocalbl_enqueue_if_block_is_present(){
+function orthodox_calendar_block_enqueue_if_block_is_present(){
 	if ( has_block('orthodox-calendar-block/orthodox-calendar-block', get_the_ID()) ) {
 		wp_enqueue_script('orthocalbl-script');
 	}
 }
-add_action('wp_enqueue_scripts','orthocalbl_enqueue_if_block_is_present');
-add_action('admin_enqueue_scripts','orthocalbl_enqueue_if_block_is_present');
+add_action('wp_enqueue_scripts','orthodox_calendar_block_enqueue_if_block_is_present');
+add_action('admin_enqueue_scripts','orthodox_calendar_block_enqueue_if_block_is_present');
 
 
 /**
@@ -71,7 +71,7 @@ add_action('admin_enqueue_scripts','orthocalbl_enqueue_if_block_is_present');
  * @param string $content string to convert
  * @return string
  */
-function orthocalbl_content_to_utf8( $content ) {
+function orthodox_calendar_block_content_to_utf8( $content ) {
 	if ( !is_string( $content ) || empty($content) ) {
 		return '';
 	}
@@ -99,7 +99,7 @@ function orthocalbl_content_to_utf8( $content ) {
  *
  * @return array
  */
-function orthocalbl_get_allowed_html() {
+function orthodox_calendar_block_get_allowed_html() {
 	return array(
 		'p'      => array(
 			'class' => true,
@@ -141,7 +141,7 @@ function orthocalbl_get_allowed_html() {
  * @param string $lang
  * @return string
  */
-function orthocalbl_get_site_url( $lang ) {
+function orthodox_calendar_block_get_site_url( $lang ) {
 	$rootPath = "https://" . ORTHODOX_CALENDAR_BLOCK_ALLOWED_HOST . "/";
 	$langPath = ($lang == "en") ? "" :  $lang . "/";
 	$calendarPath = "calendar/";
@@ -156,7 +156,7 @@ function orthocalbl_get_site_url( $lang ) {
  * @param string $lang
  * @return string
  */
-function orthocalbl_get_popup_url( $lang ) {
+function orthodox_calendar_block_get_popup_url( $lang ) {
 	// https://www.holytrinityorthodox.com/htc/ocalendar/ru/los/September/20-01.htm
 	$rootPath = "https://" . ORTHODOX_CALENDAR_BLOCK_ALLOWED_HOST . "/";
 	$calendarPath = "htc/ocalendar/";
@@ -172,8 +172,8 @@ function orthocalbl_get_popup_url( $lang ) {
  * @param string $html Remote HTML.
  * @return string
  */
-function orthocalbl_normalize_remote_urls( $html, $lang ) {
-	$site_url = orthocalbl_get_site_url( $lang );
+function orthodox_calendar_block_normalize_remote_urls( $html, $lang ) {
+	$site_url = orthodox_calendar_block_get_site_url( $lang );
 
 	foreach ( array( 'href', 'src' ) as $attribute ) {
 		$html = preg_replace_callback(
@@ -193,7 +193,7 @@ function orthocalbl_normalize_remote_urls( $html, $lang ) {
 					$absolute = trailingslashit( $site_url ) . ltrim( $url, '/' );
 				}
 
-				if ( '' === $absolute || ! orthocalbl_is_allowed_remote_url( $absolute, $lang ) ) {
+				if ( '' === $absolute || ! orthodox_calendar_block_is_allowed_remote_url( $absolute, $lang ) ) {
 					return preg_replace( '/\\s' . preg_quote( $attribute, '/' ) . '\\s*=\\s*(["\'])(.*?)\\1/i', '', $matches[0] );
 				}
 
@@ -218,8 +218,8 @@ function orthocalbl_normalize_remote_urls( $html, $lang ) {
  *
  * @return array
  */
-function orthocalbl_get_allowed_paths( $lang ) {
-	$site_url = orthocalbl_get_site_url( $lang );
+function orthodox_calendar_block_get_allowed_paths( $lang ) {
+	$site_url = orthodox_calendar_block_get_site_url( $lang );
 	$parts  = wp_parse_url( $site_url );
 	$path   = isset( $parts['path'] ) ? untrailingslashit( $parts['path'] ) : '';
 	return array( $path );
@@ -232,7 +232,7 @@ function orthocalbl_get_allowed_paths( $lang ) {
  * @param string $url URL.
  * @return bool
  */
-function orthocalbl_is_allowed_remote_url( $url, $lang ) {
+function orthodox_calendar_block_is_allowed_remote_url( $url, $lang ) {
 	$url = esc_url_raw( $url );
 	if ( '' === $url ) {
 		return false;
@@ -248,7 +248,7 @@ function orthocalbl_is_allowed_remote_url( $url, $lang ) {
 	}
 
 	$path = isset( $parts['path'] ) ? $parts['path'] : '/';
-	foreach ( orthocalbl_get_allowed_paths( $lang ) as $allowed_path ) {
+	foreach ( orthodox_calendar_block_get_allowed_paths( $lang ) as $allowed_path ) {
 		if ( 0 === strpos( untrailingslashit( $path ), $allowed_path ) ) {
 			return true;
 		}
@@ -264,7 +264,7 @@ function orthocalbl_is_allowed_remote_url( $url, $lang ) {
  * @param string $html Calendar HTML.
  * @return string
  */
-function orthocalbl_prepare_popup_links( $html ) {
+function orthodox_calendar_block_prepare_popup_links( $html ) {
 	if ( ! is_string( $html ) || '' === $html ) {
 		return '';
 	}
@@ -298,7 +298,7 @@ function orthocalbl_prepare_popup_links( $html ) {
  * @param string $lang
  * @return string
  */
-function orthocalbl_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
+function orthodox_calendar_block_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
 	$regex_tag = '/<' . $tagname . '\b[^>]*>/i';
 	$regex_att = '/\s' . $att . '\s*=\s*(["\'])(.*?)\1/i';
 
@@ -308,7 +308,7 @@ function orthocalbl_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
 			$tag = $matches[0];
 			if ( preg_match( $regex_att, $tag, $href ) ) {
 				$url = html_entity_decode( $href[2], ENT_QUOTES, 'UTF-8' );
-				if ( ! orthocalbl_is_allowed_remote_url( $url, $lang ) ) {
+				if ( ! orthodox_calendar_block_is_allowed_remote_url( $url, $lang ) ) {
 					$tag = preg_replace( $regex_att, '', $tag );
 				}
 			}
@@ -325,16 +325,16 @@ function orthocalbl_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
  * @param string $html Calendar HTML.
  * @return string
  */
-function orthocalbl_sanitize_html( $html, $lang ) {
+function orthodox_calendar_block_sanitize_html( $html, $lang ) {
 	if ( empty($html) ||  ! is_string( $html ) ) {
 		return '';
 	}
 
-	$html = orthocalbl_prepare_popup_links( $html );
-	// $html = orthocalbl_normalize_remote_urls( $html, $lang );
-	$html = orthocalbl_check_tag_attribute_urls( $html, 'a', 'href', $lang );
-	// $html = orthocalbl_check_tag_attribute_urls( $html, 'img', 'src', $lang );
-	$html = wp_kses( $html, orthocalbl_get_allowed_html() );
+	$html = orthodox_calendar_block_prepare_popup_links( $html );
+	// $html = orthodox_calendar_block_normalize_remote_urls( $html, $lang );
+	$html = orthodox_calendar_block_check_tag_attribute_urls( $html, 'a', 'href', $lang );
+	// $html = orthodox_calendar_block_check_tag_attribute_urls( $html, 'img', 'src', $lang );
+	$html = wp_kses( $html, orthodox_calendar_block_get_allowed_html() );
 
 	return is_string( $html ) ? $html : '';
 }
@@ -345,7 +345,7 @@ function orthocalbl_sanitize_html( $html, $lang ) {
  *
  * @return void
  */
-function orthocalbl_get_languages() {
+function orthodox_calendar_block_get_languages() {
 	return [
 		[ "label" => __("English", "orthodox-calendar-block"), "code" => "en" ],
 		[ "label" => __("Russian", "orthodox-calendar-block"), "code" => "ru" ]
@@ -359,8 +359,8 @@ function orthocalbl_get_languages() {
  * @param string $lang
  * @return boolean
  */
-function orthocalbl_validate_languate_code( $lang ) {
-	$langs = orthocalbl_get_languages();
+function orthodox_calendar_block_validate_languate_code( $lang ) {
+	$langs = orthodox_calendar_block_get_languages();
 
 	foreach ( $langs as $data ) {
 		foreach ( $data as $key => $value ) {
@@ -375,37 +375,37 @@ function orthocalbl_validate_languate_code( $lang ) {
 
 
 // For logged-in users
-add_action('wp_ajax_orthocalbl_request', 'orthocalbl_ajax_request');
+add_action('wp_ajax_orthocalbl_request', 'orthodox_calendar_block_ajax_request');
 // For non-logged-in users
-add_action('wp_ajax_nopriv_orthocalbl_request', 'orthocalbl_ajax_request');
+add_action('wp_ajax_nopriv_orthocalbl_request', 'orthodox_calendar_block_ajax_request');
 /**
  * Hangle request for daily information
  *
  * @return JSON
  */
-function orthocalbl_ajax_request() {
+function orthodox_calendar_block_ajax_request() {
 
     // EXIT & send back error
-	if ( !isset( $_REQUEST['sec_req'] ) || !wp_verify_nonce( $_REQUEST['sec_req'], 'orthocalbl-request' ) ) {
+	if ( !isset( $_REQUEST['sec_req'] ) || !wp_verify_nonce( wp_unslash($_REQUEST['sec_req']), 'orthocalbl-request' ) ) {
 		wp_send_json_error( wp_kses_post(ORTHODOX_CALENDAR_BLOCK_NONCE_MESSAGE) );
 	}
 
 	$props = array(
-		'month'			=> $_REQUEST['month'],
-		'day'			=> $_REQUEST['today'],
-		'year'			=> $_REQUEST['year'],
-		'editor'		=> $_REQUEST['editor'] ?? 0,
-		'liveinfo'		=> $_REQUEST['li'] ?? 1,
-		'cachebuster'	=> $_REQUEST['cachebuster'],
-		'dt'			=> $_REQUEST['dt'],
-		'hh'			=> $_REQUEST['header'],
-		'll'			=> $_REQUEST['lives'],
-		'ss'			=> $_REQUEST['scripture'],
-		'tt'			=> $_REQUEST['trp'],
-		'lang'			=> $_REQUEST['language'],
+		'month'			=> wp_unslash($_REQUEST['month']),
+		'day'			=> wp_unslash($_REQUEST['today']),
+		'year'			=> wp_unslash($_REQUEST['year']),
+		'editor'		=> wp_unslash($_REQUEST['editor'] ?? 0),
+		'liveinfo'		=> wp_unslash($_REQUEST['li'] ?? 1),
+		'cachebuster'	=> wp_unslash($_REQUEST['cachebuster']),
+		'dt'			=> wp_unslash($_REQUEST['dt']),
+		'hh'			=> wp_unslash($_REQUEST['header']),
+		'll'			=> wp_unslash($_REQUEST['lives']),
+		'ss'			=> wp_unslash($_REQUEST['scripture']),
+		'tt'			=> wp_unslash($_REQUEST['trp']),
+		'lang'			=> wp_unslash($_REQUEST['language']),
 	);
 
-	$resp = orthocalbl_get_request_content($props);
+	$resp = orthodox_calendar_block_get_request_content($props);
 
 	if ( !$resp['success'] ) {
     	wp_send_json_error($resp['data']);
@@ -416,12 +416,12 @@ function orthocalbl_ajax_request() {
 }
 
 
-function orthocalbl_get_request_content($props) {
+function orthodox_calendar_block_get_request_content($props) {
 	// get date components
 	$date = getdate();
-	$month = orthocalbl_validate_var_int($props['month'], $date['mon'], 1, 12 );
-	$day = orthocalbl_validate_var_int($props['day'], $date['mday'], 1, 31);
-	$year = orthocalbl_validate_var_int($props['year'], $date['year'], 1900, 2200  );
+	$month = orthodox_calendar_block_validate_var_int($props['month'], $date['mon'], 1, 12 );
+	$day = orthodox_calendar_block_validate_var_int($props['day'], $date['mday'], 1, 31);
+	$year = orthodox_calendar_block_validate_var_int($props['year'], $date['year'], 1900, 2200  );
 
 	// EXIT & send back invalid date error
 	if ( ! checkdate( $month, $day, $year ) ) {
@@ -434,25 +434,25 @@ function orthocalbl_get_request_content($props) {
 
 
 	$contents = ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE;
-	$editor = orthocalbl_validate_var_int($props['editor'], 0, 0, 1);
-	$liveinfo = orthocalbl_validate_var_int($props['liveinfo'], 1, 0, 1);
-	$cachebuster = orthocalbl_validate_var_int($props['cachebuster'] ?? 0, 0, 0, 1);
+	$editor = orthodox_calendar_block_validate_var_int($props['editor'], 0, 0, 1);
+	$liveinfo = orthodox_calendar_block_validate_var_int($props['liveinfo'], 1, 0, 1);
+	$cachebuster = orthodox_calendar_block_validate_var_int($props['cachebuster'] ?? 0, 0, 0, 1);
 
-	$dt = orthocalbl_validate_var_int($props['dt'], 1, 0, 1);
-	$header = orthocalbl_validate_var_int($props['hh'], 1, 0, 1);
-	$lives = orthocalbl_validate_var_int($props['ll'], 3, 0, 1);
-	$scripture = orthocalbl_validate_var_int($props['ss'], 1, 0, 1);
-	$trp = orthocalbl_validate_var_int($props['tt'], 0, 0, 1);
-	$lang = orthocalbl_validate_var_string($props['lang'], 'en');
+	$dt = orthodox_calendar_block_validate_var_int($props['dt'], 1, 0, 1);
+	$header = orthodox_calendar_block_validate_var_int($props['hh'], 1, 0, 1);
+	$lives = orthodox_calendar_block_validate_var_int($props['ll'], 3, 0, 1);
+	$scripture = orthodox_calendar_block_validate_var_int($props['ss'], 1, 0, 1);
+	$trp = orthodox_calendar_block_validate_var_int($props['tt'], 0, 0, 1);
+	$lang = orthodox_calendar_block_validate_var_string($props['lang'], 'en');
 
 	// default to English if bad language code sent
-	if ( ! orthocalbl_validate_languate_code($lang) ) {
+	if ( ! orthodox_calendar_block_validate_languate_code($lang) ) {
 		$lang = "en";
 	}
 
 	// EXIT & send back our static stored info for editing
 	if ( !$liveinfo ) {
-		$contents = orthocalbl_get_static_text($dt, $header, $lives, $scripture, $trp);
+		$contents = orthodox_calendar_block_get_static_text($dt, $header, $lives, $scripture, $trp);
 		return array(
 			'success' => true,
 			'data' => $contents,
@@ -462,7 +462,7 @@ function orthocalbl_get_request_content($props) {
 
 	// create unique cache key for reducing remote api calls
 	$cache_key = sprintf(
-		'orthocalbl_%s_%04d_%02d_%02d_%d_%d_%d_%d_%d',
+		'orthodox_calendar_block_%s_%04d_%02d_%02d_%d_%d_%d_%d_%d',
 		$lang,
 		$year,
 		$month,
@@ -492,7 +492,7 @@ function orthocalbl_get_request_content($props) {
 	}
 
 	// create path for remote content
-	$root_path = orthocalbl_get_site_url($lang);
+	$root_path = orthodox_calendar_block_get_site_url($lang);
 	$remote_path = $root_path . "calendar2.php";
 
 	// add query params to remote path
@@ -526,7 +526,7 @@ function orthocalbl_get_request_content($props) {
     // good response from remote server
 	if ( !empty($body) ) {
 		// make UTF-8 for translations
-		$contents = orthocalbl_content_to_utf8( $body );
+		$contents = orthodox_calendar_block_content_to_utf8( $body );
 
 		if ( empty($contents) ) {
 			return array(
@@ -536,7 +536,7 @@ function orthocalbl_get_request_content($props) {
 			);
 		}
 		// make sure the content is clean
-		$contents = orthocalbl_sanitize_html( $contents, $lang );
+		$contents = orthodox_calendar_block_sanitize_html( $contents, $lang );
 		if ( empty($contents) ) {
 			return array(
 				'success' => false,
@@ -549,7 +549,7 @@ function orthocalbl_get_request_content($props) {
 		set_transient( $cache_key, $contents, DAY_IN_SECONDS );
 	} else if ( $editor ) {
 		// make sure we send something back if admin editing
-		$contents = orthocalbl_get_static_text($dt, $header, $lives, $scripture, $trp);
+		$contents = orthodox_calendar_block_get_static_text($dt, $header, $lives, $scripture, $trp);
 	}
 
 	return array(
@@ -567,15 +567,15 @@ function orthocalbl_get_request_content($props) {
  * @param integer $default
  * @return integer
  */
-function orthocalbl_get_request_var_int($name, $default, $min, $max) {
+function orthodox_calendar_block_get_request_var_int($name, $default, $min, $max) {
 	if ( !isset( $_REQUEST[$name] ) ) {
 		return $default;
 	}
 
-	return orthocalbl_validate_var_int( wp_unslash($_REQUEST[$name]), $default, $min, $max );
+	return orthodox_calendar_block_validate_var_int( wp_unslash($_REQUEST[$name]), $default, $min, $max );
 }
 
-function orthocalbl_validate_var_int($value, $default, $min, $max) {
+function orthodox_calendar_block_validate_var_int($value, $default, $min, $max) {
 	if ( !isset( $value ) ) {
 		return $default;
 	}
@@ -586,14 +586,14 @@ function orthocalbl_validate_var_int($value, $default, $min, $max) {
 	return ( $inrang ) ? $value : $default;
 }
 
-function orthocalbl_get_request_var_array($name, $default = array()) {
+function orthodox_calendar_block_get_request_var_array($name, $default = array()) {
 	if ( !isset( $_REQUEST[$name] ) ) {
 		return $default;
 	}
 
-    return orthocalbl_validate_var_array($_REQUEST[$name], $default);
+    return orthodox_calendar_block_validate_var_array($_REQUEST[$name], $default);
 }
-function orthocalbl_validate_var_array($value, $default = array()) {
+function orthodox_calendar_block_validate_var_array($value, $default = array()) {
 	if ( !isset( $value ) ) {
 		return $default;
 	}
@@ -609,11 +609,11 @@ function orthocalbl_validate_var_array($value, $default = array()) {
  * @param string $default
  * @return string
  */
-function orthocalbl_get_request_var_string($name, $default = "") {
-	return orthocalbl_validate_var_string(wp_unslash($_REQUEST[$name]), $default);
+function orthodox_calendar_block_get_request_var_string($name, $default = "") {
+	return orthodox_calendar_block_validate_var_string(wp_unslash($_REQUEST[$name]), $default);
 }
 
-function orthocalbl_validate_var_string($value, $default = "") {
+function orthodox_calendar_block_validate_var_string($value, $default = "") {
 	if (empty( $value )) {
 		return $default;
 	}
@@ -626,7 +626,7 @@ function orthocalbl_validate_var_string($value, $default = "") {
  *
  * @return boolean
  */
-function orthocalbl_is_local() {
+function orthodox_calendar_block_is_local() {
   $whitelist = array(
     '127.0.0.1',
     '::1'
@@ -646,7 +646,7 @@ function orthocalbl_is_local() {
  * @param string $file
  * @return string
  */
-function orthocalbl_get_static_file_text($file) {
+function orthodox_calendar_block_get_static_file_text($file) {
 	$path = ORTHOCAL_DIR . '/build/static-text/' . $file . '.html';
 	$contents = '';
 
@@ -670,14 +670,14 @@ function orthocalbl_get_static_file_text($file) {
  * @param integer $troparion
  * @return string
  */
-function orthocalbl_get_static_text($date, $header, $lives, $scripture, $troparion) {
+function orthodox_calendar_block_get_static_text($date, $header, $lives, $scripture, $troparion) {
 	$contents = '';
 
-	$contents .= $date ? orthocalbl_get_static_file_text('date') : '';
-	$contents .= $header ? orthocalbl_get_static_file_text('header') : '';
-	$contents .= $lives ? orthocalbl_get_static_file_text('lives-' . $lives) : '';
-	$contents .= $scripture ? orthocalbl_get_static_file_text('scripture-' . $scripture) : '';
-	$contents .= $troparion ? orthocalbl_get_static_file_text('troparion-' . $troparion) : '';
+	$contents .= $date ? orthodox_calendar_block_get_static_file_text('date') : '';
+	$contents .= $header ? orthodox_calendar_block_get_static_file_text('header') : '';
+	$contents .= $lives ? orthodox_calendar_block_get_static_file_text('lives-' . $lives) : '';
+	$contents .= $scripture ? orthodox_calendar_block_get_static_file_text('scripture-' . $scripture) : '';
+	$contents .= $troparion ? orthodox_calendar_block_get_static_file_text('troparion-' . $troparion) : '';
 
 	return $contents;
 }
@@ -691,13 +691,13 @@ function orthocalbl_get_static_text($date, $header, $lives, $scripture, $tropari
  * @param string $lang
  * @return void string
  */
-function orthocalbl_normalize_popup_urls( $html, $path, $lang ) {
+function orthodox_calendar_block_normalize_popup_urls( $html, $path, $lang ) {
 	
 	if ( ! is_string( $html ) || empty($html) ) {
 		return '';
 	}
 
-	$host = orthocalbl_get_allowed_paths( $lang )[0];
+	$host = orthodox_calendar_block_get_allowed_paths( $lang )[0];
 
 	// ensure DOMDocument handles UTF-8 encoding correctly - this will get filtered out
 	$html = '<meta http-equiv="content-type" content="text/html; charset=utf-8">' . $html;
@@ -733,14 +733,14 @@ function orthocalbl_normalize_popup_urls( $html, $path, $lang ) {
  * @param string $lang
  * @return string
  */
-function orthocalbl_get_popup_path( $url, $lang ) {
+function orthodox_calendar_block_get_popup_path( $url, $lang ) {
 	// break url path down
-	$path = parse_url($url, PHP_URL_PATH);
+	$path = wp_parse_url($url, PHP_URL_PATH);
 	$info = pathinfo($path);
 	$file = $info['basename'];
 
 	// create path for remote content
-	$root_path = orthocalbl_get_popup_url($lang);
+	$root_path = orthodox_calendar_block_get_popup_url($lang);
 	$parts = explode("/calendar/", $path);
 	$file_path = $parts[1] ?? '';
 	
@@ -752,10 +752,10 @@ function orthocalbl_get_popup_path( $url, $lang ) {
 
 
 // For logged-in users
-add_action('wp_ajax_orthocalbl_popup', 'orthocalbl_ajax_popup_content');
+add_action('wp_ajax_orthocalbl_popup', 'orthodox_calendar_block_ajax_popup_content');
 // For non-logged-in users
-add_action('wp_ajax_nopriv_orthocalbl_popup', 'orthocalbl_ajax_popup_content');
-function orthocalbl_ajax_popup_content() {
+add_action('wp_ajax_nopriv_orthocalbl_popup', 'orthodox_calendar_block_ajax_popup_content');
+function orthodox_calendar_block_ajax_popup_content() {
 
     // EXIT & send back error
 	if ( !isset( $_REQUEST['sec_pop'] ) || !wp_verify_nonce( $_REQUEST['sec_pop'], 'orthocalbl-popup' ) ) {
@@ -764,18 +764,18 @@ function orthocalbl_ajax_popup_content() {
 
 	$contents = ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE;
 
-	$cachebuster = orthocalbl_get_request_var_int('cachebuster', 0, 0, 1);
-	$lang = orthocalbl_get_request_var_string('language', 'en');
-	$popup = orthocalbl_get_request_var_string('popup', '');
+	$cachebuster = orthodox_calendar_block_get_request_var_int('cachebuster', 0, 0, 1);
+	$lang = orthodox_calendar_block_get_request_var_string('language', 'en');
+	$popup = orthodox_calendar_block_get_request_var_string('popup', '');
 
 	// popup content path
-	$remote_path = orthocalbl_get_popup_path( $popup, $lang );
+	$remote_path = orthodox_calendar_block_get_popup_path( $popup, $lang );
 
 	// create unique cache key for reducing remote api calls
 	$cache_key = sprintf(
-		'orthocalbl_%s_%s',
+		'orthodox_calendar_block_%s_%s',
 		$lang,
-		parse_url($remote_path, PHP_URL_PATH)
+		wp_parse_url($remote_path, PHP_URL_PATH)
 	);
 
 	// check if we already requested this info
@@ -816,9 +816,9 @@ function orthocalbl_ajax_popup_content() {
 		$srcPath = join("/", $parts);			// combine parts
 
 		// fix relative urls
-		$contents = orthocalbl_normalize_popup_urls( $contents, $srcPath, $lang );
+		$contents = orthodox_calendar_block_normalize_popup_urls( $contents, $srcPath, $lang );
 		// make sure the content is clean
-		$contents = orthocalbl_sanitize_html( $contents, $lang );
+		$contents = orthodox_calendar_block_sanitize_html( $contents, $lang );
 
 		// store contents to avoid redundant requests
 		set_transient( $cache_key, $contents, DAY_IN_SECONDS );
