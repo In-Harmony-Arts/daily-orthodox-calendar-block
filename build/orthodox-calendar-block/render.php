@@ -82,7 +82,7 @@ if ( $is_editor ) {
     <div
         class="ocb-info"
         data-wp-watch="callbacks.fetchCalendarInfo"
-        <?php echo wp_interactivity_data_wp_context( esc_html($editor_context) ); ?>
+        <?php echo wp_interactivity_data_wp_context( $editor_context ); ?>
     >
         <div
             class="ocb-buttons-bar"
@@ -166,7 +166,7 @@ if ( $is_editor ) {
                 data-wp-html="context.contentHtml"
                 data-wp-bind--hidden="<?php echo $is_editor ? "false" : "!state.hasContent"; ?>"
                 data-wp-on--click="actions.handleLinkClick"
-            ><?php echo $editor_context['contentHtml']; ?></div>
+            ><?php echo esc_html($editor_context['contentHtml']); ?></div>
         </div>
     </div>
     <div
