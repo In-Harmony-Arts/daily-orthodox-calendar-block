@@ -391,18 +391,18 @@ function orthodox_calendar_block_ajax_request() {
 	}
 
 	$props = array(
-		'month'			=> wp_unslash($_REQUEST['month']),
-		'day'			=> wp_unslash($_REQUEST['today']),
-		'year'			=> wp_unslash($_REQUEST['year']),
-		'editor'		=> wp_unslash($_REQUEST['editor'] ?? 0),
-		'liveinfo'		=> wp_unslash($_REQUEST['li'] ?? 1),
-		'cachebuster'	=> wp_unslash($_REQUEST['cachebuster']),
-		'dt'			=> wp_unslash($_REQUEST['dt']),
-		'hh'			=> wp_unslash($_REQUEST['header']),
-		'll'			=> wp_unslash($_REQUEST['lives']),
-		'ss'			=> wp_unslash($_REQUEST['scripture']),
-		'tt'			=> wp_unslash($_REQUEST['trp']),
-		'lang'			=> wp_unslash($_REQUEST['language']),
+		'month'			=> wp_unslash($_request['month']),
+		'day'			=> wp_unslash($_request['today']),
+		'year'			=> wp_unslash($_request['year']),
+		'editor'		=> wp_unslash($_request['editor']),
+		'liveinfo'		=> wp_unslash($_request['li']),
+		'cachebuster'	=> wp_unslash($_request['cachebuster']),
+		'dt'			=> wp_unslash($_request['dt']),
+		'hh'			=> wp_unslash($_request['header']),
+		'll'			=> wp_unslash($_request['lives']),
+		'ss'			=> wp_unslash($_request['scripture']),
+		'tt'			=> wp_unslash($_request['trp']),
+		'lang'			=> wp_unslash($_request['language']),
 	);
 
 	$resp = orthodox_calendar_block_get_request_content($props);
@@ -591,7 +591,7 @@ function orthodox_calendar_block_get_request_var_array($name, $default = array()
 		return $default;
 	}
 
-    return orthodox_calendar_block_validate_var_array($_REQUEST[$name], $default);
+    return orthodox_calendar_block_validate_var_array( wp_unslash($_REQUEST[$name]), $default );
 }
 function orthodox_calendar_block_validate_var_array($value, $default = array()) {
 	if ( !isset( $value ) ) {
@@ -610,6 +610,10 @@ function orthodox_calendar_block_validate_var_array($value, $default = array()) 
  * @return string
  */
 function orthodox_calendar_block_get_request_var_string($name, $default = "") {
+	if ( !isset( $_REQUEST[$name] ) ) {
+		return $default;
+	}
+
 	return orthodox_calendar_block_validate_var_string(wp_unslash($_REQUEST[$name]), $default);
 }
 
@@ -758,7 +762,7 @@ add_action('wp_ajax_nopriv_orthocalbl_popup', 'orthodox_calendar_block_ajax_popu
 function orthodox_calendar_block_ajax_popup_content() {
 
     // EXIT & send back error
-	if ( !isset( $_REQUEST['sec_pop'] ) || !wp_verify_nonce( $_REQUEST['sec_pop'], 'orthocalbl-popup' ) ) {
+	if ( !isset( $_REQUEST['sec_pop'] ) || !wp_verify_nonce( wp_unslash($_REQUEST['sec_pop']), 'orthocalbl-popup' ) ) {
 		wp_send_json_error( wp_kses_post(ORTHODOX_CALENDAR_BLOCK_NONCE_MESSAGE) );
 	}
 
