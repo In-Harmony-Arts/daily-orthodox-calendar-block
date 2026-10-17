@@ -18,7 +18,7 @@
 		justify-content: start;
 		margin-bottom: 1em;
 		flex-wrap: wrap;
-  		padding: 5px;
+		padding: 5px;
 
 		.ocb-dp {
 			margin: 4px 2px;
@@ -43,6 +43,7 @@
 		}
 
 		&--svg {
+
 			svg {
 				height: 24px;
 				width: 24px;
@@ -63,6 +64,7 @@
 			padding: 0 20px 10px 10px;
 
 			table {
+
 				td {
 					vertical-align: top; // align verse numbers to gop
 				}
@@ -76,7 +78,7 @@
 		align-items: flex-start;
 		flex-direction: column;
 		background: #fff;
-		border: 1px solid black;
+		border: 1px solid #000;
 		box-sizing: border-box;
 		overflow: hidden;
 		position: absolute;
@@ -92,7 +94,6 @@
 		}
 
 		&-content {
-			opacity: 1;
 			width: 100%;
 			visibility: visible;
 			opacity: 1;
@@ -104,20 +105,18 @@
 
 		.dataheader {
 			font-size: 1.3em;
-  			margin-bottom: 1em;
+			margin-bottom: 1em;
 		}
 
 		.ofd_los_ {
+
 			&header {
 				position: sticky;
 				top: 0;
-				border-bottom: 1px solid black;
+				border-bottom: 1px solid #fff;
 				background: #fff;
-				font-weight: bold;
+				font-weight: 700;
 				font-size: 1.2em;
-			}
-			&body {
-				// min-width: 2em; // so verse numbers don't wrap
 			}
 		}
 	}

@@ -65,7 +65,7 @@
   align-items: flex-start;
   flex-direction: column;
   background: #fff;
-  border: 1px solid black;
+  border: 1px solid #000;
   box-sizing: border-box;
   overflow: hidden;
   position: absolute;
@@ -80,7 +80,6 @@
   display: block;
 }
 .orthodox-calendar-block .ocb-popup-content {
-  opacity: 1;
   width: 100%;
   visibility: visible;
   opacity: 1;
@@ -95,9 +94,9 @@
 .orthodox-calendar-block .ocb-popup .ofd_los_header {
   position: sticky;
   top: 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #fff;
   background: #fff;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.2em;
 }
 .orthodox-calendar-block .hidden {
