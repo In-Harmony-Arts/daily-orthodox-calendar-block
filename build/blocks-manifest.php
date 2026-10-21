@@ -1,12 +1,12 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
-	'orthodox-calendar-block' => array(
+	'daily-orthodox-calendar-block' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'name' => 'orthodox-calendar-block/orthodox-calendar-block',
+		'name' => 'orthodox-resources/daily-calendar',
 		'version' => '1.0.0',
-		'title' => 'Orthodox Calendar',
+		'title' => 'Daily Orthodox Calendar',
 		'category' => 'widgets',
 		'icon' => 'calendar-alt',
 		'description' => 'Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar',
@@ -136,7 +136,7 @@ return array(
 			),
 			'interactivity' => true
 		),
-		'textdomain' => 'orthodox-calendar-block',
+		'textdomain' => 'orthores',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',

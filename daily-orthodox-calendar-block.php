@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Orthodox Calendar Block
- * Description:       Displays daily Orthodox Calendar information from 
+ * Plugin Name:       Orthodox Resources - Daily Orthodox Calendar Block
+ * Description:       Displays daily Orthodox Calendar information
  * Version:           1.0.0
  * Requires at least: 6.8.0
  * Requires PHP:      7.4
  * Author:            Dustin Vietzke, David Leselidze
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       orthodox-calendar-block
+ * Text Domain:       docb
  *
  * @package OrthodoxCalendar
  */
@@ -35,14 +35,14 @@ define( 'ORTHODOX_CALENDAR_BLOCK_ERROR_MESSAGE', '<p>An error occurred</p>' );
  */
 function orthodox_calendar_block_create_block_init() {
 	// Init config values
-	wp_interactivity_config( 'orthodox-calendar-block', array(
+	wp_interactivity_config( 'orthores/daily-calendar', array(
 		'url_day'		=> admin_url('admin-ajax.php?action=orthocalbl_request', __FILE__),
 		'url_popup'		=> admin_url('admin-ajax.php?action=orthocalbl_popup', __FILE__),
 		'sec_req'		=> wp_create_nonce('orthocalbl-request'),
 		'sec_pop'		=> wp_create_nonce('orthocalbl-popup'),
 		'translations'		=> array(
-			'loading'		=> __( 'Loading...', 'orthodox-calendar-block' ),
-			'error'			=> __( 'An error occurred', 'orthodox-calendar-block' ),
+			'loading'		=> __( 'Loading...', 'orthores' ),
+			'error'			=> __( 'An error occurred', 'orthores' ),
 		),
 	) );
 
@@ -57,7 +57,7 @@ add_action( 'init', 'orthodox_calendar_block_create_block_init' );
  * @return void
  */
 function orthodox_calendar_block_enqueue_if_block_is_present(){
-	if ( has_block('orthodox-calendar-block/orthodox-calendar-block', get_the_ID()) ) {
+	if ( has_block('orthodox-resources/daily-calendar', get_the_ID()) ) {
 		wp_enqueue_script('orthocalbl-script');
 	}
 }
@@ -347,8 +347,8 @@ function orthodox_calendar_block_sanitize_html( $html, $lang ) {
  */
 function orthodox_calendar_block_get_languages() {
 	return [
-		[ "label" => __("English", "orthodox-calendar-block"), "code" => "en" ],
-		[ "label" => __("Russian", "orthodox-calendar-block"), "code" => "ru" ]
+		[ "label" => __("English", "orthores"), "code" => "en" ],
+		[ "label" => __("Russian", "orthores"), "code" => "ru" ]
 	];
 }
 
@@ -391,18 +391,18 @@ function orthodox_calendar_block_ajax_request() {
 	}
 
 	$props = array(
-		'month'			=> wp_unslash($_request['month']),
-		'day'			=> wp_unslash($_request['today']),
-		'year'			=> wp_unslash($_request['year']),
-		'editor'		=> wp_unslash($_request['editor']),
-		'liveinfo'		=> wp_unslash($_request['li']),
-		'cachebuster'	=> wp_unslash($_request['cachebuster']),
-		'dt'			=> wp_unslash($_request['dt']),
-		'hh'			=> wp_unslash($_request['header']),
-		'll'			=> wp_unslash($_request['lives']),
-		'ss'			=> wp_unslash($_request['scripture']),
-		'tt'			=> wp_unslash($_request['trp']),
-		'lang'			=> wp_unslash($_request['language']),
+		'month'			=> wp_unslash($_REQUEST['month']),
+		'day'			=> wp_unslash($_REQUEST['today']),
+		'year'			=> wp_unslash($_REQUEST['year']),
+		'editor'		=> wp_unslash($_REQUEST['editor'] ?? 0),
+		'liveinfo'		=> wp_unslash($_REQUEST['li'] ?? 1),
+		'cachebuster'	=> wp_unslash($_REQUEST['cachebuster']),
+		'dt'			=> wp_unslash($_REQUEST['dt']),
+		'hh'			=> wp_unslash($_REQUEST['header']),
+		'll'			=> wp_unslash($_REQUEST['lives']),
+		'ss'			=> wp_unslash($_REQUEST['scripture']),
+		'tt'			=> wp_unslash($_REQUEST['trp']),
+		'lang'			=> wp_unslash($_REQUEST['language']),
 	);
 
 	$resp = orthodox_calendar_block_get_request_content($props);
@@ -771,6 +771,14 @@ function orthodox_calendar_block_ajax_popup_content() {
 	$cachebuster = orthodox_calendar_block_get_request_var_int('cachebuster', 0, 0, 1);
 	$lang = orthodox_calendar_block_get_request_var_string('language', 'en');
 	$popup = orthodox_calendar_block_get_request_var_string('popup', '');
+
+	if ( empty($popup) ) {
+		wp_send_json_error(array(
+			'success' => false,
+			'data' => '<p>Ivalid path</p>',
+			'code' => 403,
+		));
+	}
 
 	// popup content path
 	$remote_path = orthodox_calendar_block_get_popup_path( $popup, $lang );

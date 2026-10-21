@@ -31,9 +31,8 @@ import OCInspectorControls from "../components/OCInspectorControls.js";
  * Static props
  */
 import {
-	containerClassName,
 	filterArrayByArray,
-} from "../Statics";
+} from "../Statics.js";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -56,11 +55,6 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
-	const blockProps = useBlockProps({
-		className: containerClassName,
-	});
-	const className = blockProps.className;
-
 	const ocicProps = {
 		'attributes': attributes,
 		'useState': useState,
@@ -70,10 +64,11 @@ export default function Edit({ attributes, setAttributes }) {
 	let parsedAtts = filterArrayByArray(attributes, []);
 	parsedAtts['editor'] = 1;
 
+
 	return (
 		<>
 			<OCInspectorControls props={ocicProps}/>
-			<div { ...blockProps } className={className}>
+			<div { ...blockProps }>
 				<Disabled>
 					<ServerSideRender
 						block={ metadata.name }

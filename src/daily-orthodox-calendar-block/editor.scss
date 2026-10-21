@@ -1,8 +1,8 @@
-.orthodox-calendar-block {
+.wp-block-orthodox-resources-daily-calendar {
 	font-family: arial, helvetica, sans-serif;
 	position: relative;
 
-	.ocb-buttons-bar {
+	.ordc-buttons-bar {
 		position: relative;
 		top: 0;
 		left: 0;
@@ -14,12 +14,12 @@
 		flex-wrap: wrap;
 		padding: 5px;
 
-		.ocb-dp {
+		.ordc-dp {
 			margin: 4px 2px;
 		}
 	}
 
-	.ocb-button {
+	.ordc-button {
 		background-color: #808080;
 		border: none;
 		color: #fff;

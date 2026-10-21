@@ -52,11 +52,11 @@ const OCInspectorControls = ( { props }) => {
     return (
         <InspectorControls>
             <PanelBody
-                title={__("Settings", "orthodox-calendar-block")}
+                title={__("Settings", "orthores")}
                 initialOpen={true}
             >
                 <ToggleControl
-                    label={__("Edit with live info", "orthodox-calendar-block")}
+                    label={__("Edit with live info", "orthores")}
                     checked={li}
                     onChange={(value) => setAttributes({ li: value ? 1 : 0 })}
                 />
@@ -68,7 +68,7 @@ const OCInspectorControls = ( { props }) => {
                 />
                 {multipleLanguages && (
                     <SelectControl
-                        label={__("Default Language", "orthodox-calendar-block")}
+                        label={__("Default Language", "orthores")}
                         value={dl}
                         onChange={(value) => setAttributes({ dl: value })}
                         help={__(
@@ -78,49 +78,51 @@ const OCInspectorControls = ( { props }) => {
                         options={[
                             {
                                 value: "en",
-                                label: __("English", "orthodox-calendar-block"),
+                                label: __("English", "orthores"),
                                 disabled: !ln.includes("en"),
                             },
                             {
                                 value: "ru",
-                                label: __("Russian", "orthodox-calendar-block"),
+                                label: __("Russian", "orthores"),
                                 disabled: !ln.includes("ru"),
                             },
                         ]}
                     />
                 )}
+                <h3>Control Buttons</h3>
                 <ToggleControl
-                    label={__("Show today button", "orthodox-calendar-block")}
+                    label={__("Show today button", "orthores")}
                     checked={btn_today}
                     onChange={(value) => setAttributes({ btn_today: value ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show day button", "orthodox-calendar-block")}
+                    label={__("Show day button", "orthores")}
                     checked={btn_day}
                     onChange={(value) => setAttributes({ btn_day: value ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show date picker", "orthodox-calendar-block")}
+                    label={__("Show date picker", "orthores")}
                     checked={dp}
                     onChange={(datepick) => setAttributes({ dp: datepick ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show date", "orthodox-calendar-block")}
+                    label={__("Show date", "orthores")}
                     checked={dt}
                     onChange={(value) => setAttributes({ dt: value ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show a heading before", "orthodox-calendar-block")}
+                    label={__("Show a heading before", "orthores")}
                     help={
                         hh
-                            ? __("Display header", "orthodox-calendar-block")
-                            : __("No header", "orthodox-calendar-block")
+                            ? __("Display header", "orthores")
+                            : __("No header", "orthores")
                     }
                     checked={hh}
                     onChange={(value) => setAttributes({ hh: value ? 1 : 0 })}
                 />
+                <h3>Content options</h3>
                 <SelectControl
-                    label={__("Display Lives of Saints", "orthodox-calendar-block")}
+                    label={__("Display Lives of Saints", "orthores")}
                     value={ll}
                     onChange={(value) => setAttributes({ ll: value })}
                     help={__(
@@ -130,7 +132,7 @@ const OCInspectorControls = ( { props }) => {
                     options={[
                         {
                             value: 0,
-                            label: __("Do not display", "orthodox-calendar-block"),
+                            label: __("Do not display", "orthores"),
                         },
                         {
                             value: 1,
@@ -177,7 +179,7 @@ const OCInspectorControls = ( { props }) => {
                     ]}
                 />
                 <SelectControl
-                    label={__("Scripture Readings", "orthodox-calendar-block")}
+                    label={__("Scripture Readings", "orthores")}
                     value={ss}
                     onChange={(value) => setAttributes({ ss: value })}
                     help={__(
@@ -187,15 +189,15 @@ const OCInspectorControls = ( { props }) => {
                     options={[
                         {
                             value: 0,
-                            label: __("Do not display", "orthodox-calendar-block"),
+                            label: __("Do not display", "orthores"),
                         },
                         {
                             value: 1,
-                            label: __("display with header", "orthodox-calendar-block"),
+                            label: __("display with header", "orthores"),
                         },
                         {
                             value: 2,
-                            label: __("display without header", "orthodox-calendar-block"),
+                            label: __("display without header", "orthores"),
                         },
                         {
                             value: 3,
@@ -214,32 +216,32 @@ const OCInspectorControls = ( { props }) => {
                     ]}
                 />
                 <SelectControl
-                    label={__("Display Troparion", "orthodox-calendar-block")}
+                    label={__("Display Troparion", "orthores")}
                     value={tt}
                     onChange={(value) => setAttributes({ tt: value })}
-                    help={__("How to display the Troparion", "orthodox-calendar-block")}
+                    help={__("How to display the Troparion", "orthores")}
                     options={[
                         {
                             value: 0,
-                            label: __("Do not display", "orthodox-calendar-block"),
+                            label: __("Do not display", "orthores"),
                         },
                         {
                             value: 1,
-                            label: __("display with header", "orthodox-calendar-block"),
+                            label: __("display with header", "orthores"),
                         },
                         {
                             value: 2,
-                            label: __("display without header", "orthodox-calendar-block"),
+                            label: __("display without header", "orthores"),
                         },
                     ]}
                 />
             </PanelBody>
             <PanelBody
-                title={__("Text", "orthodox-calendar-block")}
+                title={__("Text", "orthores")}
                 initialOpen={false}
             >
                 <TextControl
-                    label={__("Previous Button Text", "orthodox-calendar-block")}
+                    label={__("Previous Button Text", "orthores")}
                     value={text_prev}
                     onChange={(value) => setAttributes({ text_prev: value })}
                 />
@@ -252,7 +254,7 @@ const OCInspectorControls = ( { props }) => {
                     onChange={(value) => setAttributes({ text_prev_acc: value })}
                 />
                 <TextControl
-                    label={__("Current Button Text", "orthodox-calendar-block")}
+                    label={__("Current Button Text", "orthores")}
                     value={text_curr}
                     onChange={(value) => setAttributes({ text_curr: value })}
                 />
@@ -265,7 +267,7 @@ const OCInspectorControls = ( { props }) => {
                     onChange={(value) => setAttributes({ text_curr_acc: value })}
                 />
                 <TextControl
-                    label={__("Next Button Text", "orthodox-calendar-block")}
+                    label={__("Next Button Text", "orthores")}
                     value={text_next}
                     onChange={(value) => setAttributes({ text_next: value })}
                 />
@@ -278,12 +280,12 @@ const OCInspectorControls = ( { props }) => {
                     onChange={(value) => setAttributes({ text_next_acc: value })}
                 />
                 <TextControl
-                    label={__("Date Picker Text", "orthodox-calendar-block")}
+                    label={__("Date Picker Text", "orthores")}
                     value={text_date}
                     onChange={(value) => setAttributes({ text_date: value })}
                 />
                 <TextControl
-                    label={__("Date Picker Text", "orthodox-calendar-block")}
+                    label={__("Date Picker Text", "orthores")}
                     value={text_date}
                     onChange={(value) => setAttributes({ text_date: value })}
                 />

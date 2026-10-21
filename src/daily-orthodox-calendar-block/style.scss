@@ -4,54 +4,111 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.orthodox-calendar-block {
+.wp-block-orthodox-resources-daily-calendar {
 	font-family: arial, helvetica, sans-serif;
 	position: relative;
+	height: 100%;
 
-	.ocb-buttons-bar {
-		position: relative;
-		top: 0;
-		left: 0;
-		width: 100%;
-		text-align: left;
-		display: flex;
-		justify-content: start;
-		margin-bottom: 1em;
-		flex-wrap: wrap;
-		padding: 5px;
+	.ordc {
 
-		.ocb-dp {
-			margin: 4px 2px;
-		}
-	}
+		&-buttons-bar {
+			position: relative;
+			top: 0;
+			left: 0;
+			width: 100%;
+			text-align: left;
+			display: flex;
+			justify-content: start;
+			margin-bottom: 1em;
+			flex-wrap: wrap;
+			padding: 5px;
 
-	.ocb-button {
-		background-color: #808080;
-		border: none;
-		color: #fff;
-		margin: 4px 2px;
-		min-width: 32px;
-		min-height: 32px;
-		font-size: 12pt;
-		text-decoration: none;
-		position: relative;
-		cursor: pointer;
-
-		&.lang-toggle {
-			text-transform: uppercase;
-			margin: auto 0 auto auto;
-		}
-
-		&--svg {
-
-			svg {
-				height: 24px;
-				width: 24px;
+			.ocb-dp {
+				margin: 4px 2px;
 			}
 		}
 
-		&-close {
-			margin: 0 0 0 auto;
+		&-button {
+			background-color: #808080;
+			border: none;
+			color: #fff;
+			margin: 4px 2px;
+			min-width: 32px;
+			min-height: 32px;
+			font-size: 12pt;
+			text-decoration: none;
+			position: relative;
+			cursor: pointer;
+
+			&.lang-toggle {
+				text-transform: uppercase;
+				margin: auto 0 auto auto;
+			}
+
+			&--svg {
+
+				svg {
+					height: 24px;
+					width: 24px;
+				}
+			}
+
+			&-close {
+				margin: 0 0 0 auto;
+			}
+		}
+
+		&-popup {
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			flex-direction: column;
+			background: #fff;
+			border: 1px solid #000;
+			box-sizing: border-box;
+			overflow: hidden;
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+			visibility: visible;
+			opacity: 1;
+
+			&-loading {
+				display: block;
+			}
+
+			&-content {
+				width: 100%;
+				visibility: visible;
+				opacity: 1;
+			}
+
+			.ordc-buttons-bar {
+				border-bottom: 2px solid #e3e3e3;
+			}
+
+			.dataheader {
+				font-size: 1.3em;
+				margin-bottom: 1em;
+			}
+
+			.ofd_los {
+
+				&_header {
+					position: sticky;
+					top: 0;
+					border-bottom: 1px solid #fff;
+					background: #fff;
+					font-weight: 700;
+					font-size: 1.2em;
+				}
+
+				&_body {
+					min-width: 1em;
+				}
+			}
 		}
 	}
 
@@ -59,64 +116,15 @@
 		display: block;
 		width: 100%;
 		overflow-y: scroll;
+		padding: 0 20px 10px 10px;
 
 		.content {
-			padding: 0 20px 10px 10px;
 
 			table {
 
 				td {
 					vertical-align: top; // align verse numbers to gop
 				}
-			}
-		}
-	}
-
-	.ocb-popup {
-		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
-		flex-direction: column;
-		background: #fff;
-		border: 1px solid #000;
-		box-sizing: border-box;
-		overflow: hidden;
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		top: 0;
-		left: 0;
-		visibility: visible;
-		opacity: 1;
-
-		&-loading {
-			display: block;
-		}
-
-		&-content {
-			width: 100%;
-			visibility: visible;
-			opacity: 1;
-		}
-
-		.ocb-buttons-bar {
-			border-bottom: 2px solid #e3e3e3;
-		}
-
-		.dataheader {
-			font-size: 1.3em;
-			margin-bottom: 1em;
-		}
-
-		.ofd_los_ {
-
-			&header {
-				position: sticky;
-				top: 0;
-				border-bottom: 1px solid #fff;
-				background: #fff;
-				font-weight: 700;
-				font-size: 1.2em;
 			}
 		}
 	}
@@ -239,17 +247,17 @@
 			margin-top: 1.5em;
 		}
 
-		.ocButton {
+		.ordc-button {
 			color: #656565;
 			background-color: transparent;
 		}
 
-		.ocButton:hover {
+		.ordc-button:hover {
 			background-color: transparent;
 			color: #8c8c8c;
 		}
 
-		.ocButton:active {
+		.ordc-button:active {
 			position: relative;
 			top: 1pt;
 		}

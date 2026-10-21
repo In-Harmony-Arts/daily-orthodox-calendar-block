@@ -1,6 +1,6 @@
-=== Orthodox Calendar Block ===
+=== Orthodox Resources - Daily Orthodox Calendar Block ===
 Contributors:      Dustin Vietzke, Holy Trinity Orthodox Church
-Tags:              orthodox,dailly,calendar,saints,scripture
+Tags:              daily,orthodox,calendar,saints,scripture
 Requires at least: 6.8.0
 Tested up to:      7.1
 Stable tag:        1.0.0
@@ -17,7 +17,7 @@ There are settings for all of the options for the calendar as well as options fo
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/orthodox-calendar-block` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/orthores-daily-calendar-block` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' screen in WordPress
 
 == Screenshots ==
@@ -76,3 +76,6 @@ There are settings for all of the options for the calendar as well as options fo
 
 = 0.11.1 =
 * Uninstall react-resizable
+
+= 1.0.0 =
+* Overhaul to use render.php and WP Interactivity API

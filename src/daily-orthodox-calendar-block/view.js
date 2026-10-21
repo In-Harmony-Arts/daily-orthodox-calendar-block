@@ -50,17 +50,30 @@ const setElementChildHtmlByClass = (element, selector, html) => {
 	}
 }
 
-const orthocalblStore = store("orthodox-calendar-block", {
+const getContextContainer = (context, ref) => {
+	if (!context || !ref) return false;
+
+	const isinfo = ref.classList.contains('ordc-info-content');
+	const container = isinfo ? 'content' : 'popup';
+
+	return context[container];
+}
+
+const orthoresDcStore = store("orthores/daily-calendar", {
 	state: {
 		get hasContent() {
 			const context = getContext();
+			const { ref } = getElement();
+			const container = getContextContainer(context, ref);
 
-			return context.contentHtml != "";
+			return container?.contentHtml != "";
 		},
 		get hasError() {
 			const context = getContext();
+			const { ref } = getElement();
+			const container = getContextContainer(context, ref);
 
-			return context.errorHtml != "";
+			return container?.errorHtml != "";
 		},
 		get showPopup() {
 			const context = getContext();
@@ -85,7 +98,7 @@ const orthocalblStore = store("orthodox-calendar-block", {
 		datepickerOnChange(event) {
 			const context = getContext();
 
-			if (context.isLoading) return;
+			if (context.content.isLoading) return;
 
 			const value = event.target.value;
 
@@ -104,8 +117,14 @@ const orthocalblStore = store("orthodox-calendar-block", {
 
 			setLang(ln[nextIndex]);
 		},
+		setPopupUrl(url) {
+			const context = getContext();
+
+			context.popupUrl = url;
+		},
 		handleLinkClick: withSyncEvent(function (event) {
 			const context = getContext();
+			const { ref } = getElement();
 
 			event.preventDefault();
 
@@ -113,25 +132,55 @@ const orthocalblStore = store("orthodox-calendar-block", {
 
 			if (!link?.href) return;
 
-			context.popupUrl = link.href;
+			orthoresDcStore.actions.setPopupUrl(link.href);
+
+			window.addEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
+
+			// const orcd = event.target.closest('.wp-block-orthodox-resources-daily-calendar');
+
+			// // need dela so popup becomes visible
+			// setTimeout(() => {
+			// 	const popup = orcd.getElementsByClassName('ordc-popup')[0];
+			// 	popup?.focus();
+			// }, 1000);
 		}),
+		handleKeyDown: (event) => {
+			if (event.key === "Escape") {
+				const { ref } = getElement();
+				const orcd = ref.closest('.wp-block-orthodox-resources-daily-calendar');
+				const close = orcd.getElementsByClassName('ordc-button-close')[0];
+
+				close.click();
+			}
+		},
 		closePopup() {
-			const context = getContext();
+			const { popup } = getContext();
 			const { ref } = getElement();
 
-			context.popupUrl = "";
+			orthoresDcStore.actions.setPopupUrl("");
 
-			const popup = ref.closest(".ocb-popup");
+			const orcd = ref.closest('.wp-block-orthodox-resources-daily-calendar');
+
+			window.removeEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
 
 			setTimeout(
                 withScope( () => {
-                    orthocalblStore.actions.setContentHtml("", context, popup);
+					if (popup.isLoading) return;
+
+					const popupEl = orcd.getElementsByClassName('ordc-popup')[0];
+					const info = orcd.getElementsByClassName('ordc-info')[0];
+
+                    orthoresDcStore.actions.setContentHtml("", popup, popupEl);
                 } ),
-                2000
+                200
             );
 		},
 		setContentHtml(html, context, ref) {
 			context.contentHtml = html;
+
+			if (html == "") {
+				context.oldQsps = "";
+			}
 
 			setElementChildHtmlByClass(ref, "content", html);
 		},
@@ -149,18 +198,19 @@ const orthocalblStore = store("orthodox-calendar-block", {
 			// update status
 			context.oldQsps = "";
 		},
-		fetchData(url, qsps) {
-			const context = getContext();
-			const { ref } = getElement();
+		fetchData(url, qsps, container, ref) {
+			if (!container) {
+				return;
+			}
 
-			if (qsps === context.oldQsps) {
+			if (qsps === container.oldQsps) {
 				return;
 			}
 
 			// update context
-			context.isLoading = true;
-			context.contentHtml = false;
-			context.oldQsps = qsps;
+			container.isLoading = true;
+			container.contentHtml = "";
+			container.oldQsps = qsps;
 
 			const path = url + qsps;
 
@@ -172,16 +222,16 @@ const orthocalblStore = store("orthodox-calendar-block", {
 				.then((response) => response.json())
 				.then((response) => {
 					if (response?.success && response?.data) {
-						orthocalblStore.actions.setContentHtml(response.data, context, ref);
+						orthoresDcStore.actions.setContentHtml(response.data, container, ref);
 					} else {
-						orthocalblStore.actions.setFetchErrorMesssage('Error loading content', context, ref);
+						orthoresDcStore.actions.setFetchErrorMesssage('Error loading content', container, ref);
 					}
 				})
 				.catch((error) => {
-					orthocalblStore.actions.setFetchErrorMesssage("Error loading content", context, ref);
+					orthoresDcStore.actions.setFetchErrorMesssage("Error loading content", container, ref);
 				})
 				.finally(() => {
-					context.isLoading = false;
+					container.isLoading = false;
 				});
 		}
 	}, // actions
@@ -204,9 +254,11 @@ const orthocalblStore = store("orthodox-calendar-block", {
 			const config = getConfig();
 
 			// wait for current request to finish
-			if (context.isLoading) {
+			if (context.content.isLoading) {
 				return;
 			}
+
+			const { ref } = getElement();
 
 			const currentDay = new Date(context.currentDate);
 
@@ -241,14 +293,15 @@ const orthocalblStore = store("orthodox-calendar-block", {
 				"&cachebuster=" +
 				cachebuster;
 
-			orthocalblStore.actions.fetchData(config.url_day, qsps);
+			orthoresDcStore.actions.fetchData(config.url_day, qsps, context.content, ref);
 		},
 		fetchPopupInfo: () => {
-			const {isLoading, popupUrl, lang } = getContext();
+			const {popup, popupUrl, lang } = getContext();
 			const {sec_pop, url_popup } = getConfig();
+			const { ref } = getElement();
 
 			// wait for current request to finish
-			if (!orthocalblStore.state.showPopup || isLoading) {
+			if (popup.contentHtml != "" || popup.isLoading || popupUrl == "") {
 				return;
 			}
 
@@ -257,7 +310,7 @@ const orthocalblStore = store("orthodox-calendar-block", {
 				"&sec_pop=" + sec_pop +
 				"&cachebuster=" + getCacheBuster();
 
-			orthocalblStore.actions.fetchData(url_popup, qsps)
+			orthoresDcStore.actions.fetchData(url_popup, qsps, popup, ref);
 		},
 	}, // callbacks
 }); // store

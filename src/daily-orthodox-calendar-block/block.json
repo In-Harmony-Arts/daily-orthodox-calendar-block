@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "orthodox-calendar-block/orthodox-calendar-block",
+	"name": "orthodox-resources/daily-calendar",
 	"version": "1.0.0",
-	"title": "Orthodox Calendar",
+	"title": "Daily Orthodox Calendar",
 	"category": "widgets",
 	"icon": "calendar-alt",
 	"description": "Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar",
@@ -128,7 +128,7 @@
 		},
 		"interactivity": true
 	},
-	"textdomain": "orthodox-calendar-block",
+	"textdomain": "orthores",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
