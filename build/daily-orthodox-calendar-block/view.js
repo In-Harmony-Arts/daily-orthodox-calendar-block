@@ -283,7 +283,7 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       const dd = ocGetTwoDigitInt(currentDay.getDate());
       const yy = currentDay.getFullYear();
       const cachebuster = getCacheBuster();
-      const qsps = "&month=" + mm + "&today=" + dd + "&year=" + yy + "&dt=" + context.dt + "&header=" + context.hh + "&lives=" + context.ll + "&trp=" + context.tt + "&scripture=" + context.ss + "&language=" + context.lang + "&sec_req=" + config.sec_req + "&cachebuster=" + cachebuster;
+      const qsps = "&month=" + mm + "&today=" + dd + "&year=" + yy + "&dt=" + context.dt + "&hh=" + context.hh + "&ll=" + context.ll + "&tt=" + context.tt + "&ss=" + context.ss + "&lang=" + context.lang + "&sec_req=" + config.sec_req + "&cachebuster=" + cachebuster;
       orthoresDcStore.actions.fetchData(config.url_day, qsps, context.content, ref);
     },
     fetchPopupInfo: () => {

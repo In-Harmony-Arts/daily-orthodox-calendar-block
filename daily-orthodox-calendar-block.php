@@ -392,17 +392,17 @@ function orthodox_calendar_block_ajax_request() {
 
 	$props = array(
 		'month'			=> wp_unslash($_REQUEST['month']),
-		'day'			=> wp_unslash($_REQUEST['today']),
+		'today'			=> wp_unslash($_REQUEST['today']),
 		'year'			=> wp_unslash($_REQUEST['year']),
 		'editor'		=> wp_unslash($_REQUEST['editor'] ?? 0),
-		'liveinfo'		=> wp_unslash($_REQUEST['li'] ?? 1),
+		'li'			=> wp_unslash($_REQUEST['li'] ?? 1),
 		'cachebuster'	=> wp_unslash($_REQUEST['cachebuster']),
 		'dt'			=> wp_unslash($_REQUEST['dt']),
-		'hh'			=> wp_unslash($_REQUEST['header']),
-		'll'			=> wp_unslash($_REQUEST['lives']),
-		'ss'			=> wp_unslash($_REQUEST['scripture']),
-		'tt'			=> wp_unslash($_REQUEST['trp']),
-		'lang'			=> wp_unslash($_REQUEST['language']),
+		'hh'			=> wp_unslash($_REQUEST['hh']),
+		'll'			=> wp_unslash($_REQUEST['ll']),
+		'ss'			=> wp_unslash($_REQUEST['ss']),
+		'tt'			=> wp_unslash($_REQUEST['tt']),
+		'lang'			=> wp_unslash($_REQUEST['lang']),
 	);
 
 	$resp = orthodox_calendar_block_get_request_content($props);
@@ -420,7 +420,7 @@ function orthodox_calendar_block_get_request_content($props) {
 	// get date components
 	$date = getdate();
 	$month = orthodox_calendar_block_validate_var_int($props['month'], $date['mon'], 1, 12 );
-	$day = orthodox_calendar_block_validate_var_int($props['day'], $date['mday'], 1, 31);
+	$day = orthodox_calendar_block_validate_var_int($props['today'], $date['mday'], 1, 31);
 	$year = orthodox_calendar_block_validate_var_int($props['year'], $date['year'], 1900, 2200  );
 
 	// EXIT & send back invalid date error
@@ -434,9 +434,9 @@ function orthodox_calendar_block_get_request_content($props) {
 
 
 	$contents = ORTHODOX_CALENDAR_BLOCK_DEFAULT_MESSAGE;
-	$editor = orthodox_calendar_block_validate_var_int($props['editor'], 0, 0, 1);
-	$liveinfo = orthodox_calendar_block_validate_var_int($props['liveinfo'], 1, 0, 1);
 	$cachebuster = orthodox_calendar_block_validate_var_int($props['cachebuster'] ?? 0, 0, 0, 1);
+	$editor = orthodox_calendar_block_validate_var_int($props['editor'], 0, 0, 1);
+	$liveinfo = orthodox_calendar_block_validate_var_int($props['li'], 1, 0, 1);
 
 	$dt = orthodox_calendar_block_validate_var_int($props['dt'], 1, 0, 1);
 	$header = orthodox_calendar_block_validate_var_int($props['hh'], 1, 0, 1);

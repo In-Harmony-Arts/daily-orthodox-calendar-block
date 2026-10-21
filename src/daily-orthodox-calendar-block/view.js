@@ -278,15 +278,15 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 				yy +
 				"&dt=" +
 				context.dt +
-				"&header=" +
+				"&hh=" +
 				context.hh +
-				"&lives=" +
+				"&ll=" +
 				context.ll +
-				"&trp=" +
+				"&tt=" +
 				context.tt +
-				"&scripture=" +
+				"&ss=" +
 				context.ss +
-				"&language=" +
+				"&lang=" +
 				context.lang +
 				"&sec_req=" +
 				config.sec_req +
