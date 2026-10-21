@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name:       Orthodox Resources - Daily Orthodox Calendar Block
- * Description:       Displays daily Orthodox Calendar information
+ * Plugin Name:       Orthodox Resources - Daily Orthodox Calendar
+ * Description:       "Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar"
  * Version:           1.0.0
  * Requires at least: 6.8.0
  * Requires PHP:      7.4
- * Author:            Dustin Vietzke, David Leselidze
+ * Author:            In Harmony Arts
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       docb
+ * Text Domain:       orthores
  *
- * @package OrthodoxCalendar
+ * @package OrthoRes/OrthodoxCalendar
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

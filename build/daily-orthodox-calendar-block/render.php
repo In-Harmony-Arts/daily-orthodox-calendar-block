@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+$orthores_atts = rest_sanitize_array( $attributes );
+
 
 $date = getdate();
 $str_date = $date['mon'] . "/" . $date['mday'] . "/" . $date['year'];
@@ -13,8 +15,8 @@ $dp_date = $date['year'] . "-" . $date['mon'] . "-" . $date['mday'];
 $is_editor = (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
 $liveinfo = orthodox_calendar_block_validate_var_int(intval($attributes['li']), 1, 0, 1);
 
-$dt = orthodox_calendar_block_validate_var_int(intval($attributes['dt']), 1, 0, 1);
-$header = orthodox_calendar_block_validate_var_int(intval($attributes['hh']), 1, 0, 1);
+$dt = orthodox_calendar_block_validate_var_int($orthores_atts['dt'], 1, 0, 1);
+$header = orthodox_calendar_block_validate_var_int($orthores_atts['hh'], 1, 0, 1);
 $lives = orthodox_calendar_block_validate_var_int(intval($attributes['ll']), 3, 0, 6);
 $scripture = orthodox_calendar_block_validate_var_int(intval($attributes['ss']), 1, 0, 4);
 $trp = orthodox_calendar_block_validate_var_int(intval($attributes['tt']), 0, 0, 2);

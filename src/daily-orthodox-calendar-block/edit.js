@@ -55,6 +55,8 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
+	const blockProps = useBlockProps();
+
 	const ocicProps = {
 		'attributes': attributes,
 		'useState': useState,

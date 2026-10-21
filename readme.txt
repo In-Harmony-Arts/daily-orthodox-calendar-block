@@ -1,5 +1,5 @@
-=== Orthodox Resources - Daily Orthodox Calendar Block ===
-Contributors:      Dustin Vietzke, Holy Trinity Orthodox Church
+=== Orthodox Resources - Daily Orthodox Calendar ===
+Contributors:      In Harmony Arts
 Tags:              daily,orthodox,calendar,saints,scripture
 Requires at least: 6.8.0
 Tested up to:      7.1

@@ -523,6 +523,7 @@ function Edit({
   attributes,
   setAttributes
 }) {
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const ocicProps = {
     'attributes': attributes,
     'useState': _wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState,
