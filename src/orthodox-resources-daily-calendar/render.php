@@ -13,19 +13,19 @@ $str_date = $date['mon'] . "/" . $date['mday'] . "/" . $date['year'];
 $dp_date = $date['year'] . "-" . $date['mon'] . "-" . $date['mday'];
 
 $is_editor = (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
-$liveinfo = orthodox_calendar_block_validate_var_int(intval($attributes['li']), 1, 0, 1);
+$liveinfo = orthores_daily_calendar_validate_var_int(intval($attributes['li']), 1, 0, 1);
 
-$dt = orthodox_calendar_block_validate_var_int($orthores_atts['dt'], 1, 0, 1);
-$header = orthodox_calendar_block_validate_var_int($orthores_atts['hh'], 1, 0, 1);
-$lives = orthodox_calendar_block_validate_var_int(intval($attributes['ll']), 3, 0, 6);
-$scripture = orthodox_calendar_block_validate_var_int(intval($attributes['ss']), 1, 0, 4);
-$trp = orthodox_calendar_block_validate_var_int(intval($attributes['tt']), 0, 0, 2);
+$dt = orthores_daily_calendar_validate_var_int($orthores_atts['dt'] ?? 1, 1, 0, 1);
+$header = orthores_daily_calendar_validate_var_int($orthores_atts['hh'] ?? 1, 1, 0, 1);
+$lives = orthores_daily_calendar_validate_var_int(intval($attributes['ll']), 3, 0, 6);
+$scripture = orthores_daily_calendar_validate_var_int(intval($attributes['ss']), 1, 0, 4);
+$trp = orthores_daily_calendar_validate_var_int(intval($attributes['tt']), 0, 0, 2);
 $default_langs = array('en', 'ru');
-$langs = orthodox_calendar_block_validate_var_array($attributes['ln'], $default_langs);
+$langs = orthores_daily_calendar_validate_var_array($attributes['ln'], $default_langs);
 $multi_langs = isset($langs[1]); // just need to know that more than 1 value is set
 $default_lang = 'en';
-$default_lang = !$multi_langs ? $langs[0] : orthodox_calendar_block_validate_var_string(esc_html($attributes['dl']), $default_lang);
-$lang = !$multi_langs ? $langs[0] : orthodox_calendar_block_validate_var_string(esc_html($attributes['lang']), $default_lang);
+$default_lang = !$multi_langs ? $langs[0] : orthores_daily_calendar_validate_var_string(esc_html($attributes['dl']), $default_lang);
+$lang = !$multi_langs ? $langs[0] : orthores_daily_calendar_validate_var_string(esc_html($attributes['lang']), $default_lang);
 
 // fetching context props
 $fetch_context = array(
@@ -55,7 +55,7 @@ $context = array(
 
 $props = array(
     'month'			=> $date['mon'],
-    'day'			=> $date['mday'],
+    'today'			=> $date['mday'],
     'year'			=> $date['year'],
     'editor'		=> $is_editor ? 1 : 0,
     'liveinfo'		=> $liveinfo ? 1 : 0,
@@ -71,9 +71,14 @@ $props = array(
 
 // $editor_context = array_slice($fetch_context, 0);
 
+$resp = array(
+    'success'   => false,
+    'data'      => "",
+);
+
 if ( $is_editor ) {
-    $resp = orthodox_calendar_block_get_request_content($props);
-    if ($resp['success'] === true) {
+    $resp = orthores_daily_calendar_get_request_content($props);
+    if ($resp['success'] == true) {
         $context['content']['contentHtml'] = $resp['data'];
         $context['cachebuster'] = 0;
     }
@@ -159,7 +164,7 @@ if ( $is_editor ) {
         <div class="ordc-info-container fetch-container">
             <div
                 class="ordc-info-loading loading"
-                data-wp-bind--hidden="!context.content.isLoading"
+                data-wp-bind--hidden="!actions.getIsLoading"
                 data-wp-text="context.loadingText"
             ></div>
             <div
@@ -170,9 +175,9 @@ if ( $is_editor ) {
             <div
                 class="ordc-info-content content"
                 data-wp-html="context.content.contentHtml"
-                data-wp-bind--hidden="<?php echo $is_editor ? "false" : "!state.hasContent"; ?>"
+                data-wp-bind--hidden="<?php echo $is_editor ? "false" : "!state.showContent"; ?>"
                 data-wp-on--click="actions.handleLinkClick"
-            ><?php echo $context['content']['contentHtml']; ?></div>
+            ><?php echo ($resp['success'] === true) ? $resp['data'] : ""; ?></div>
         </div>
     </div>
     <div
@@ -192,7 +197,7 @@ if ( $is_editor ) {
         <div class="ordc-popup-container fetch-container" >
             <div
                 class="ordc-popup-loading loading"
-                data-wp-bind--hidden="!context.popup.isLoading"
+                data-wp-bind--hidden="!state.isLoading"
                 data-wp-text="context.popup.loadingText"
             ></div>
             <div
@@ -202,7 +207,7 @@ if ( $is_editor ) {
             ></div>
             <div
                 class="ordc-popup-content content"
-                data-wp-bind--hidden="!state.hasContent"
+                data-wp-bind--hidden="!state.showContent"
                 data-wp-html="context.popup.contentHtml"
             ></div>
         </div>

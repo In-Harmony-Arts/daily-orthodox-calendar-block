@@ -55,9 +55,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
 let __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!***************************************************!*\
-  !*** ./src/daily-orthodox-calendar-block/view.js ***!
-  \***************************************************/
+/*!*******************************************************!*\
+  !*** ./src/orthodox-resources-daily-calendar/view.js ***!
+  \*******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
 

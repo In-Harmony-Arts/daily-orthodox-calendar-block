@@ -441,10 +441,10 @@ const OCMultiCheckboxComponent = ({
 
 /***/ },
 
-/***/ "./src/daily-orthodox-calendar-block/edit.js"
-/*!***************************************************!*\
-  !*** ./src/daily-orthodox-calendar-block/edit.js ***!
-  \***************************************************/
+/***/ "./src/orthodox-resources-daily-calendar/edit.js"
+/*!*******************************************************!*\
+  !*** ./src/orthodox-resources-daily-calendar/edit.js ***!
+  \*******************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -461,10 +461,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/daily-orthodox-calendar-block/block.json");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/orthodox-resources-daily-calendar/block.json");
 /* harmony import */ var _components_OCInspectorControls_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/OCInspectorControls.js */ "./src/components/OCInspectorControls.js");
 /* harmony import */ var _Statics_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Statics.js */ "./src/Statics.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor.scss */ "./src/daily-orthodox-calendar-block/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor.scss */ "./src/orthodox-resources-daily-calendar/editor.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__);
 /**
@@ -549,18 +549,18 @@ function Edit({
 
 /***/ },
 
-/***/ "./src/daily-orthodox-calendar-block/index.js"
-/*!****************************************************!*\
-  !*** ./src/daily-orthodox-calendar-block/index.js ***!
-  \****************************************************/
+/***/ "./src/orthodox-resources-daily-calendar/index.js"
+/*!********************************************************!*\
+  !*** ./src/orthodox-resources-daily-calendar/index.js ***!
+  \********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/daily-orthodox-calendar-block/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/daily-orthodox-calendar-block/edit.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/daily-orthodox-calendar-block/block.json");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/orthodox-resources-daily-calendar/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/orthodox-resources-daily-calendar/edit.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/orthodox-resources-daily-calendar/block.json");
 /* harmony import */ var _Statics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Statics */ "./src/Statics.js");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
@@ -601,10 +601,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ },
 
-/***/ "./src/daily-orthodox-calendar-block/editor.scss"
-/*!*******************************************************!*\
-  !*** ./src/daily-orthodox-calendar-block/editor.scss ***!
-  \*******************************************************/
+/***/ "./src/orthodox-resources-daily-calendar/editor.scss"
+/*!***********************************************************!*\
+  !*** ./src/orthodox-resources-daily-calendar/editor.scss ***!
+  \***********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -613,10 +613,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ },
 
-/***/ "./src/daily-orthodox-calendar-block/style.scss"
-/*!******************************************************!*\
-  !*** ./src/daily-orthodox-calendar-block/style.scss ***!
-  \******************************************************/
+/***/ "./src/orthodox-resources-daily-calendar/style.scss"
+/*!**********************************************************!*\
+  !*** ./src/orthodox-resources-daily-calendar/style.scss ***!
+  \**********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -695,10 +695,10 @@ module.exports = window["wp"]["serverSideRender"];
 
 /***/ },
 
-/***/ "./src/daily-orthodox-calendar-block/block.json"
-/*!******************************************************!*\
-  !*** ./src/daily-orthodox-calendar-block/block.json ***!
-  \******************************************************/
+/***/ "./src/orthodox-resources-daily-calendar/block.json"
+/*!**********************************************************!*\
+  !*** ./src/orthodox-resources-daily-calendar/block.json ***!
+  \**********************************************************/
 (module) {
 
 module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"orthodox-resources/daily-calendar","version":"1.0.0","title":"Daily Orthodox Calendar","category":"widgets","icon":"calendar-alt","description":"Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar","example":{},"attributes":{"dp":{"type":"integer","default":0},"dt":{"type":"integer","default":1},"hh":{"type":"integer","default":1},"ll":{"type":"integer","default":3},"ss":{"type":"integer","default":1},"tt":{"type":"integer","default":1},"ln":{"type":"array","default":["en","ru"]},"dl":{"type":"string","default":"en"},"lang":{"type":"string","default":"en"},"li":{"type":"integer","default":0},"btn_language":{"type":"integer","default":"0"},"btn_today":{"type":"integer","default":"1"},"btn_day":{"type":"integer","default":"1"},"text_prev":{"type":"string","default":"❰"},"text_prev_acc":{"type":"string","default":"Previous Day"},"text_curr":{"type":"string","default":"⬤"},"text_curr_acc":{"type":"string","default":"Today"},"text_next":{"type":"string","default":"❱"},"text_next_acc":{"type":"string","default":"Next Day"},"text_date":{"type":"string","default":"Show Date Picker"},"text_date_acc":{"type":"string","default":"Pick Date"},"text_language":{"type":"string","default":"”"},"text_language_acc":{"type":"string","default":"Switch Language"},"text_close":{"type":"string","default":"X"},"text_close_acc":{"type":"string","default":"Close popup"}},"supports":{"html":false,"spacing":{"margin":true,"padding":true,"blockGap":true},"color":{"background":true,"text":true,"gradients":false},"typography":{"fontSize":true,"lineHeight":false},"interactivity":true},"textdomain":"orthores","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScriptModule":"file:./view.js","styles":[{"name":"none","label":"None","isDefault":true},{"name":"blue","label":"Blue"},{"name":"grey","label":"Grey"},{"name":"red","label":"Red"}]}');
@@ -807,8 +807,8 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		const installedChunks = {
-/******/ 			"daily-orthodox-calendar-block/index": 0,
-/******/ 			"daily-orthodox-calendar-block/style-index": 0
+/******/ 			"orthodox-resources-daily-calendar/index": 0,
+/******/ 			"orthodox-resources-daily-calendar/style-index": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -858,7 +858,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	let __webpack_exports__ = __webpack_require__.O(undefined, ["daily-orthodox-calendar-block/style-index"], () => (__webpack_require__("./src/daily-orthodox-calendar-block/index.js")))
+/******/ 	let __webpack_exports__ = __webpack_require__.O(undefined, ["orthodox-resources-daily-calendar/style-index"], () => (__webpack_require__("./src/orthodox-resources-daily-calendar/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

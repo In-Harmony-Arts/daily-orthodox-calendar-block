@@ -17,7 +17,7 @@ There are settings for all of the options for the calendar as well as options fo
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/orthores-daily-calendar-block` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/orthodox-resources-daily-calendar` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' screen in WordPress
 
 == Screenshots ==

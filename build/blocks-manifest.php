@@ -1,7 +1,7 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
-	'daily-orthodox-calendar-block' => array(
+	'orthodox-resources-daily-calendar' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'orthodox-resources/daily-calendar',
