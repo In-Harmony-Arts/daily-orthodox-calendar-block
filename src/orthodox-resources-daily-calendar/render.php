@@ -103,7 +103,7 @@ if ( $is_editor ) {
                 <button
                     type="button"
                     class="ordc-button day-previous"
-                    data-wp-bind--disabled="context.content.isLoadingDay"
+                    data-wp-bind--disabled="context.content.isLoading"
                     data-wp-on--click="actions.datePrevious"
                 ><span class="screen-reader-text"><?php echo esc_html($attributes['text_prev_acc']); ?></span><?php echo esc_html($attributes['text_prev']); ?></button>
             <?php } ?>
@@ -112,7 +112,7 @@ if ( $is_editor ) {
                 <button
                     type="button"
                     class="ordc-button day-current"
-                    data-wp-bind--disabled="context.content.isLoadingDay"
+                    data-wp-bind--disabled="context.content.isLoading"
                     data-wp-on--click="actions.dateToday"
                 ><span class="screen-reader-text"><?php echo esc_html($attributes['text_curr_acc']); ?></span><?php echo esc_html($attributes['text_curr']); ?></button>
             <?php } ?>
@@ -121,7 +121,7 @@ if ( $is_editor ) {
                 <button
                     type="button"
                     class="ordc-button day-next"
-                    data-wp-bind--disabled="context.content.isLoadingDay"
+                    data-wp-bind--disabled="context.content.isLoading"
                     data-wp-on--click="actions.dateNext"
                 ><span class="screen-reader-text"><?php echo esc_html($attributes['text_next_acc']); ?></span><?php echo esc_html($attributes['text_next']); ?></button>
             <?php } ?>
@@ -134,7 +134,7 @@ if ( $is_editor ) {
                     <button
                         type="button"
                         class="ordc-button ordc-button-dp ordc-button--svg"
-                        data-wp-bind--disabled="context.content.isLoadingDay"
+                        data-wp-bind--disabled="context.content.isLoading"
                         data-wp-bind--aria-expanded="context.showDatePickers"
                         data-wp-on--click="actions.toggleDatePicker"
                     >
@@ -146,7 +146,7 @@ if ( $is_editor ) {
                         aria-label="<?php echo esc_html($attributes['text_date_acc']); ?>"
                         type="date"
                         data-wp-bind--hidden="!context.showDatePicker"
-                        data-wp-bind--disabled="context.content.isLoadingDay"
+                        data-wp-bind--disabled="context.content.isLoading"
                         data-wp-bind--value="context.datePickerFormatedDate"
                         data-wp-on--change="actions.datepickerOnChange"
                     />
@@ -164,7 +164,7 @@ if ( $is_editor ) {
         <div class="ordc-info-container fetch-container">
             <div
                 class="ordc-info-loading loading"
-                data-wp-bind--hidden="!actions.getIsLoading"
+                data-wp-bind--hidden="!state.isLoading"
                 data-wp-text="context.loadingText"
             ></div>
             <div
@@ -190,7 +190,7 @@ if ( $is_editor ) {
             <button
                 type="button"
                 class="ordc-button ordc-button-close"
-                data-wp-bind--disabled="context.popup.isLoading"
+                data-wp-bind--disabled="state.isLoading"
                 data-wp-on--click="actions.closePopup"
             ><span class="screen-reader-text"><?php echo esc_html($attributes['text_close_acc']); ?></span><?php echo esc_html($attributes['text_close']); ?></button>
         </div>

@@ -59,6 +59,10 @@ const getContextContainer = (context, ref) => {
 	return context[container];
 }
 
+const isEmpty = (value) => {
+	return value === undefined || value === null || value === false || value === "";
+}
+
 const orthoresDcStore = store("orthores/daily-calendar", {
 	state: {
 		get hasContent() {
@@ -66,19 +70,29 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const { ref } = getElement();
 			const container = getContextContainer(context, ref);
 
-			return container?.contentHtml != "";
+			return !isEmpty(container?.contentHtml);
 		},
 		get hasError() {
 			const context = getContext();
 			const { ref } = getElement();
 			const container = getContextContainer(context, ref);
 
-			return container?.errorHtml != "";
+			return !isEmpty(container?.errorHtml);
+		},
+		get isLoading() {
+			const context = getContext();
+			const element = getElement();
+			const container = getContextContainer(context, ref);
+			console.log('isLoading() context', context);
+			console.log('isLoading() element', element);
+			console.log('isLoading() ref', ref);
+			console.log('isLoading() container', container);
+			return !!container?.isLoading;
 		},
 		get showPopup() {
 			const context = getContext();
 
-			return context.popupUrl != "";
+			return !isEmpty(context.popupUrl);
 		}
 	},
 	actions: {

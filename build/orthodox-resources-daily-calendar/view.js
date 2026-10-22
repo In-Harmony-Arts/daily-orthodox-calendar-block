@@ -99,6 +99,9 @@ const getContextContainer = (context, ref) => {
   const container = isinfo ? 'content' : 'popup';
   return context[container];
 };
+const isEmpty = value => {
+  return value === undefined || value === null || value === false || value === "";
+};
 const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.store)("orthores/daily-calendar", {
   state: {
     get hasContent() {
@@ -107,7 +110,7 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
         ref
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
       const container = getContextContainer(context, ref);
-      return container?.contentHtml != "";
+      return !isEmpty(container?.contentHtml);
     },
     get hasError() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
@@ -115,11 +118,21 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
         ref
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
       const container = getContextContainer(context, ref);
-      return container?.errorHtml != "";
+      return !isEmpty(container?.errorHtml);
+    },
+    get isLoading() {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+      const container = getContextContainer(context, ref);
+      console.log('isLoading() context', context);
+      console.log('isLoading() element', element);
+      console.log('isLoading() ref', ref);
+      console.log('isLoading() container', container);
+      return !!container?.isLoading;
     },
     get showPopup() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      return context.popupUrl != "";
+      return !isEmpty(context.popupUrl);
     }
   },
   actions: {
