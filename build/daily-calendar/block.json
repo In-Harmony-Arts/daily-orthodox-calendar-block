@@ -131,7 +131,7 @@
     },
     "interactivity": true
   },
-  "textdomain": "orthores",
+  "textdomain": "iha-orthodox-resources",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

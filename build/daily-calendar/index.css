@@ -1,6 +1,6 @@
-/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/orthodox-resources-daily-calendar/editor.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/daily-calendar/editor.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
 .wp-block-orthodox-resources-daily-calendar {
   font-family: arial, helvetica, sans-serif;
   position: relative;
@@ -8,9 +8,9 @@
 .wp-block-orthodox-resources-daily-calendar .ordc-buttons-bar {
   position: relative;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
-  text-align: right;
+  text-align: left;
   display: flex;
   justify-content: start;
   margin-bottom: 1em;
@@ -39,15 +39,17 @@
 }
 .wp-block-orthodox-resources-daily-calendar .ordc-button.lang-toggle {
   text-transform: uppercase;
-  margin: auto auto auto 0;
+  margin: auto 0 auto auto;
 }
 .wp-block-orthodox-resources-daily-calendar .ordc-button--svg svg {
   height: 24px;
   width: 24px;
 }
 .wp-block-orthodox-resources-daily-calendar .ordc-button-close {
-  margin: 0 auto 0 0;
+  margin: 0 0 0 auto;
 }
 .wp-block-orthodox-resources-daily-calendar .hidden {
   display: none;
 }
+
+/*# sourceMappingURL=index.css.map*/

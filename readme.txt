@@ -1,4 +1,4 @@
-=== Orthodox Resources - Daily Orthodox Calendar ===
+=== IHA Orthodox Resources ===
 Contributors:      In Harmony Arts
 Tags:              daily,orthodox,calendar,saints,scripture
 Requires at least: 6.8.0

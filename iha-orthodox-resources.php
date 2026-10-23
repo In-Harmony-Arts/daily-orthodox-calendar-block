@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Orthodox Resources - Daily Orthodox Calendar
+ * Plugin Name:       IHA Orthodox Resources
  * Description:       "Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar"
  * Version:           1.0.0
  * Requires at least: 6.8.0
@@ -8,21 +8,22 @@
  * Author:            In Harmony Arts
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       orthores
+ * Text Domain:       iha-orthodox-resources
  *
- * @package OrthoRes/OrthodoxCalendar
+ * @package IHAOrthoRes/OrthodoxCalendar
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'ORTHORES_DAILY_CALENDAR_DIR', __DIR__ );
-define( 'ORTHORES_DAILY_CALENDAR_VERSION', "0.10.0" );
-define( 'ORTHORES_DAILY_CALENDAR_ALLOWED_HOST', 'www.holytrinityorthodox.com' );
-define( 'ORTHORES_DAILY_CALENDAR_NONCE_MESSAGE', '<p>Nonce shall pass.</p>' );
-define( 'ORTHORES_DAILY_CALENDAR_DEFAULT_MESSAGE', '<p>Blessed is he who comes in the name of the LORD.</p>' );
-define( 'ORTHORES_DAILY_CALENDAR_ERROR_MESSAGE', '<p>An error occurred</p>' );
+define( 'IHA_ORTHODOX_RESOURCES_DIR', __DIR__ );
+define( 'IHA_ORTHODOX_RESOURCES_VERSION', "0.10.0" );
+define( 'IHA_ORTHODOX_RESOURCES_ALLOWED_HOST', 'www.holytrinityorthodox.com' );
+define( 'IHA_ORTHODOX_RESOURCES_NONCE_MESSAGE', '<p>Nonce shall pass.</p>' );
+define( 'IHA_ORTHODOX_RESOURCES_DEFAULT_MESSAGE', '<p>Blessed is he who comes in the name of the LORD.</p>' );
+define( 'IHA_ORTHODOX_RESOURCES_ERROR_MESSAGE', '<p>An error occurred</p>' );
+define( 'IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE', 'en' );
 
 
 /**
@@ -33,36 +34,35 @@ define( 'ORTHORES_DAILY_CALENDAR_ERROR_MESSAGE', '<p>An error occurred</p>' );
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
-function orthores_daily_calendar_create_block_init() {
+function iha_orthodox_resources_create_block_init() {
 	// Init config values
 	wp_interactivity_config( 'orthores/daily-calendar', array(
-		'url_day'		=> admin_url('admin-ajax.php?action=orthocalbl_request', __FILE__),
-		'url_popup'		=> admin_url('admin-ajax.php?action=orthocalbl_popup', __FILE__),
-		'sec_req'		=> wp_create_nonce('orthocalbl-request'),
-		'sec_pop'		=> wp_create_nonce('orthocalbl-popup'),
+		'url_day'		=> admin_url('admin-ajax.php?action=orthores_daily_calendar_request', __FILE__),
+		'url_popup'		=> admin_url('admin-ajax.php?action=orthores_daily_calendar_popup', __FILE__),
+		'sec_req'		=> wp_create_nonce('orthores-daily-calendar-request'),
+		'sec_pop'		=> wp_create_nonce('orthores-daily-calendar-popup'),
 		'translations'		=> array(
-			'loading'		=> __( 'Loading...', 'orthores' ),
-			'error'			=> __( 'An error occurred', 'orthores' ),
+			'loading'		=> __( 'Loading...', 'iha-orthodox-resources' ),
+			'error'			=> __( 'An error occurred', 'iha-orthodox-resources' ),
 		),
 	) );
 
 
 	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
 }
-add_action( 'init', 'orthores_daily_calendar_create_block_init' );
+add_action( 'init', 'iha_orthodox_resources_create_block_init' );
 
 /**
  * Only enqueue block js if block is in content
  *
  * @return void
  */
-function orthores_daily_calendar_enqueue_if_block_is_present(){
-	if ( has_block('orthodox-resources-daily-calendar', get_the_ID()) ) {
-		wp_enqueue_script('orthocalbl-script');
+function iha_orthodox_resources_enqueue_if_block_is_present(){
+	if ( has_block('orthodox-resources/daily-calendar', get_the_ID()) ) {
 	}
 }
-add_action('wp_enqueue_scripts','orthores_daily_calendar_enqueue_if_block_is_present');
-add_action('admin_enqueue_scripts','orthores_daily_calendar_enqueue_if_block_is_present');
+// add_action('wp_enqueue_scripts','iha_orthodox_resources_enqueue_if_block_is_present');
+// add_action('admin_enqueue_scripts','iha_orthodox_resources_enqueue_if_block_is_present');
 
 
 /**
@@ -71,7 +71,7 @@ add_action('admin_enqueue_scripts','orthores_daily_calendar_enqueue_if_block_is_
  * @param string $content string to convert
  * @return string
  */
-function orthores_daily_calendar_content_to_utf8( $content ) {
+function iha_orthodox_resources_content_to_utf8( $content ) {
 	if ( !is_string( $content ) || empty($content) ) {
 		return '';
 	}
@@ -99,7 +99,7 @@ function orthores_daily_calendar_content_to_utf8( $content ) {
  *
  * @return array
  */
-function orthores_daily_calendar_get_allowed_html() {
+function iha_orthodox_resources_get_allowed_html() {
 	return array(
 		'p'      => array(
 			'class' => true,
@@ -141,9 +141,9 @@ function orthores_daily_calendar_get_allowed_html() {
  * @param string $lang
  * @return string
  */
-function orthores_daily_calendar_get_site_url( $lang ) {
-	$rootPath = "https://" . ORTHORES_DAILY_CALENDAR_ALLOWED_HOST . "/";
-	$langPath = ($lang == "en") ? "" :  $lang . "/";
+function iha_orthodox_resources_get_site_url( $lang ) {
+	$rootPath = "https://" . IHA_ORTHODOX_RESOURCES_ALLOWED_HOST . "/";
+	$langPath = ($lang == IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE) ? "" :  $lang . "/";
 	$calendarPath = "calendar/";
 
 	return $rootPath . $langPath . $calendarPath;
@@ -156,11 +156,11 @@ function orthores_daily_calendar_get_site_url( $lang ) {
  * @param string $lang
  * @return string
  */
-function orthores_daily_calendar_get_popup_url( $lang ) {
+function iha_orthodox_resources_get_popup_url( $lang ) {
 	// https://www.holytrinityorthodox.com/htc/ocalendar/ru/los/September/20-01.htm
-	$rootPath = "https://" . ORTHORES_DAILY_CALENDAR_ALLOWED_HOST . "/";
+	$rootPath = "https://" . IHA_ORTHODOX_RESOURCES_ALLOWED_HOST . "/";
 	$calendarPath = "htc/ocalendar/";
-	$langPath = ($lang == "en") ? "" :  $lang . "/";
+	$langPath = ($lang == "IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE") ? "" :  $lang . "/";
 
 	return $rootPath . $calendarPath . $langPath;
 }
@@ -172,8 +172,8 @@ function orthores_daily_calendar_get_popup_url( $lang ) {
  * @param string $html Remote HTML.
  * @return string
  */
-function orthores_daily_calendar_normalize_remote_urls( $html, $lang ) {
-	$site_url = orthores_daily_calendar_get_site_url( $lang );
+function iha_orthodox_resources_normalize_remote_urls( $html, $lang ) {
+	$site_url = iha_orthodox_resources_get_site_url( $lang );
 
 	foreach ( array( 'href', 'src' ) as $attribute ) {
 		$html = preg_replace_callback(
@@ -193,7 +193,7 @@ function orthores_daily_calendar_normalize_remote_urls( $html, $lang ) {
 					$absolute = trailingslashit( $site_url ) . ltrim( $url, '/' );
 				}
 
-				if ( '' === $absolute || ! orthores_daily_calendar_is_allowed_remote_url( $absolute, $lang ) ) {
+				if ( '' === $absolute || ! iha_orthodox_resources_is_allowed_remote_url( $absolute, $lang ) ) {
 					return preg_replace( '/\\s' . preg_quote( $attribute, '/' ) . '\\s*=\\s*(["\'])(.*?)\\1/i', '', $matches[0] );
 				}
 
@@ -218,8 +218,8 @@ function orthores_daily_calendar_normalize_remote_urls( $html, $lang ) {
  *
  * @return array
  */
-function orthores_daily_calendar_get_allowed_paths( $lang ) {
-	$site_url = orthores_daily_calendar_get_site_url( $lang );
+function iha_orthodox_resources_get_allowed_paths( $lang ) {
+	$site_url = iha_orthodox_resources_get_site_url( $lang );
 	$parts  = wp_parse_url( $site_url );
 	$path   = isset( $parts['path'] ) ? untrailingslashit( $parts['path'] ) : '';
 	return array( $path );
@@ -232,7 +232,7 @@ function orthores_daily_calendar_get_allowed_paths( $lang ) {
  * @param string $url URL.
  * @return bool
  */
-function orthores_daily_calendar_is_allowed_remote_url( $url, $lang ) {
+function iha_orthodox_resources_is_allowed_remote_url( $url, $lang ) {
 	$url = esc_url_raw( $url );
 	if ( '' === $url ) {
 		return false;
@@ -243,12 +243,12 @@ function orthores_daily_calendar_is_allowed_remote_url( $url, $lang ) {
 		return false;
 	}
 
-	if ( 'https' !== strtolower( $parts['scheme'] ) || ORTHORES_DAILY_CALENDAR_ALLOWED_HOST !== strtolower( $parts['host'] ) ) {
+	if ( 'https' !== strtolower( $parts['scheme'] ) || IHA_ORTHODOX_RESOURCES_ALLOWED_HOST !== strtolower( $parts['host'] ) ) {
 		return false;
 	}
 
 	$path = isset( $parts['path'] ) ? $parts['path'] : '/';
-	foreach ( orthores_daily_calendar_get_allowed_paths( $lang ) as $allowed_path ) {
+	foreach ( iha_orthodox_resources_get_allowed_paths( $lang ) as $allowed_path ) {
 		if ( 0 === strpos( untrailingslashit( $path ), $allowed_path ) ) {
 			return true;
 		}
@@ -264,7 +264,7 @@ function orthores_daily_calendar_is_allowed_remote_url( $url, $lang ) {
  * @param string $html Calendar HTML.
  * @return string
  */
-function orthores_daily_calendar_prepare_popup_links( $html ) {
+function iha_orthodox_resources_prepare_popup_links( $html ) {
 	if ( ! is_string( $html ) || '' === $html ) {
 		return '';
 	}
@@ -298,7 +298,7 @@ function orthores_daily_calendar_prepare_popup_links( $html ) {
  * @param string $lang
  * @return string
  */
-function orthores_daily_calendar_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
+function iha_orthodox_resources_check_tag_attribute_urls( $html, $tagname, $att, $lang ) {
 	$regex_tag = '/<' . $tagname . '\b[^>]*>/i';
 	$regex_att = '/\s' . $att . '\s*=\s*(["\'])(.*?)\1/i';
 
@@ -308,7 +308,7 @@ function orthores_daily_calendar_check_tag_attribute_urls( $html, $tagname, $att
 			$tag = $matches[0];
 			if ( preg_match( $regex_att, $tag, $href ) ) {
 				$url = html_entity_decode( $href[2], ENT_QUOTES, 'UTF-8' );
-				if ( ! orthores_daily_calendar_is_allowed_remote_url( $url, $lang ) ) {
+				if ( ! iha_orthodox_resources_is_allowed_remote_url( $url, $lang ) ) {
 					$tag = preg_replace( $regex_att, '', $tag );
 				}
 			}
@@ -325,16 +325,16 @@ function orthores_daily_calendar_check_tag_attribute_urls( $html, $tagname, $att
  * @param string $html Calendar HTML.
  * @return string
  */
-function orthores_daily_calendar_sanitize_html( $html, $lang ) {
+function iha_orthodox_resources_sanitize_html( $html, $lang ) {
 	if ( empty($html) ||  ! is_string( $html ) ) {
 		return '';
 	}
 
-	$html = orthores_daily_calendar_prepare_popup_links( $html );
-	// $html = orthores_daily_calendar_normalize_remote_urls( $html, $lang );
-	$html = orthores_daily_calendar_check_tag_attribute_urls( $html, 'a', 'href', $lang );
-	// $html = orthores_daily_calendar_check_tag_attribute_urls( $html, 'img', 'src', $lang );
-	$html = wp_kses( $html, orthores_daily_calendar_get_allowed_html() );
+	$html = iha_orthodox_resources_prepare_popup_links( $html );
+	// $html = iha_orthodox_resources_normalize_remote_urls( $html, $lang );
+	$html = iha_orthodox_resources_check_tag_attribute_urls( $html, 'a', 'href', $lang );
+	// $html = iha_orthodox_resources_check_tag_attribute_urls( $html, 'img', 'src', $lang );
+	$html = wp_kses( $html, iha_orthodox_resources_get_allowed_html() );
 
 	return is_string( $html ) ? $html : '';
 }
@@ -343,13 +343,60 @@ function orthores_daily_calendar_sanitize_html( $html, $lang ) {
 /**
  * Return array of supported languages objects
  *
- * @return void
+ * @return array
  */
-function orthores_daily_calendar_get_languages() {
+function iha_orthodox_resources_get_languages() {
 	return [
-		[ "label" => __("English", "orthores"), "code" => "en" ],
-		[ "label" => __("Russian", "orthores"), "code" => "ru" ]
+		[ "label" => __("English", "iha-orthodox-resources"), "code" => "en" ],
+		[ "label" => __("Russian", "iha-orthodox-resources"), "code" => "ru" ]
 	];
+}
+
+
+/**
+ * Return array of supported languages code array
+ *
+ * @return array
+ */
+function iha_orthodox_resources_get_language_codes() {
+	$langs = iha_orthodox_resources_get_languages();
+	$codes = array();
+
+	foreach ( $langs as $data ) {
+		foreach ( $data as $key => $value ) {
+			$codes[] = $key;
+		}
+	}
+
+	return $codes;
+}
+
+
+/**
+ * Return init language from attributes
+ *
+ * @param array $atts block properties.
+ * @return string
+ */
+function iha_orthodox_resources_get_language_default($atts) {
+	$langs = iha_orthodox_resources_validate_var_array($atts['ln'], iha_orthodox_resources_get_language_codes());
+	$multi_langs = isset($langs[1]); // just need to know that more than 1 value is set
+	$default_lang = !$multi_langs ? $langs[0] : iha_orthodox_resources_validate_var_string(esc_html($atts['dl']), IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE);
+	$initlang = !$multi_langs ? $langs[0] : iha_orthodox_resources_validate_var_string(esc_html($atts['lang']), IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE);
+
+	return $initlang;
+}
+
+
+/**
+ * Return init language from attributes
+ *
+ * @param array $atts block properties.
+ * @return string
+ */
+function iha_orthodox_resources_get_multiple_languages($atts) {
+	$langs = iha_orthodox_resources_validate_var_array($atts['ln'], iha_orthodox_resources_get_language_codes());
+	return isset($langs[1]); // just need to know that more than 1 value is set
 }
 
 
@@ -359,8 +406,8 @@ function orthores_daily_calendar_get_languages() {
  * @param string $lang
  * @return boolean
  */
-function orthores_daily_calendar_validate_languate_code( $lang ) {
-	$langs = orthores_daily_calendar_get_languages();
+function iha_orthodox_resources_validate_languate_code( $lang ) {
+	$langs = iha_orthodox_resources_get_languages();
 
 	foreach ( $langs as $data ) {
 		foreach ( $data as $key => $value ) {
@@ -374,38 +421,54 @@ function orthores_daily_calendar_validate_languate_code( $lang ) {
 }
 
 
+function iha_orthodox_resources_get_fetch_context() {
+	return array(
+		'isLoading'         => false,
+		'contentHtml'       => "",
+		'errorHtml'         => "",
+		'oldQsps'           => "",
+		'loadingText'       => __("Loading...", 'iha-orthodox-resources'),
+	);
+}
+
+
+function iha_orthodox_resources_is_editor() {
+	return (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
+}
+
+
 // For logged-in users
-add_action('wp_ajax_orthocalbl_request', 'orthores_daily_calendar_ajax_request');
+add_action('wp_ajax_orthores_daily_calendar_request', 'iha_orthodox_resources_ajax_request');
 // For non-logged-in users
-add_action('wp_ajax_nopriv_orthocalbl_request', 'orthores_daily_calendar_ajax_request');
+add_action('wp_ajax_nopriv_orthores_daily_calendar_request', 'iha_orthodox_resources_ajax_request');
 /**
  * Hangle request for daily information
  *
  * @return JSON
  */
-function orthores_daily_calendar_ajax_request() {
+function iha_orthodox_resources_ajax_request() {
 
     // EXIT & send back error
-	if ( !isset( $_REQUEST['sec_req'] ) || !wp_verify_nonce( wp_unslash($_REQUEST['sec_req']), 'orthocalbl-request' ) ) {
-		wp_send_json_error( wp_kses_post(ORTHORES_DAILY_CALENDAR_NONCE_MESSAGE) );
+	if ( !isset( $_REQUEST['sec_req'] ) || !wp_verify_nonce( sanitize_title(wp_unslash($_REQUEST['sec_req'])), 'orthores-daily-calendar-request' ) ) {
+		wp_send_json_error( wp_kses_post(IHA_ORTHODOX_RESOURCES_NONCE_MESSAGE) );
 	}
 
 	$props = array(
-		'month'			=> wp_unslash($_REQUEST['month']),
-		'today'			=> wp_unslash($_REQUEST['today']),
-		'year'			=> wp_unslash($_REQUEST['year']),
-		'editor'		=> wp_unslash($_REQUEST['editor'] ?? 0),
-		'li'			=> wp_unslash($_REQUEST['li'] ?? 1),
-		'cachebuster'	=> wp_unslash($_REQUEST['cachebuster']),
-		'dt'			=> wp_unslash($_REQUEST['dt']),
-		'hh'			=> wp_unslash($_REQUEST['hh']),
-		'll'			=> wp_unslash($_REQUEST['ll']),
-		'ss'			=> wp_unslash($_REQUEST['ss']),
-		'tt'			=> wp_unslash($_REQUEST['tt']),
-		'lang'			=> wp_unslash($_REQUEST['lang']),
+		'month'			=> intval(wp_unslash($_REQUEST['month'] ?? 0)),
+		'today'			=> intval(wp_unslash($_REQUEST['today']?? 0)),
+		'year'			=> intval(wp_unslash($_REQUEST['year']?? 0)),
+		'editor'		=> intval(wp_unslash($_REQUEST['editor'] ?? 0)),
+		'li'			=> intval(wp_unslash($_REQUEST['li'] ?? 1)),
+		'cb'			=> intval(wp_unslash($_REQUEST['cb'] ?? 0)),
+		'dt'			=> intval(wp_unslash($_REQUEST['dt']?? 0)),
+		'hh'			=> intval(wp_unslash($_REQUEST['hh']?? 0)),
+		'll'			=> intval(wp_unslash($_REQUEST['ll']?? 0)),
+		'ss'			=> intval(wp_unslash($_REQUEST['ss']?? 0)),
+		'tt'			=> intval(wp_unslash($_REQUEST['tt']?? 0)),
+		'lang'			=> sanitize_key(wp_unslash($_REQUEST['lang'] ?? IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE)),
 	);
 
-	$resp = orthores_daily_calendar_get_request_content($props);
+	$resp = iha_orthodox_resources_get_request_content($props);
 
 	if ( !$resp['success'] ) {
     	wp_send_json_error($resp['data']);
@@ -416,12 +479,12 @@ function orthores_daily_calendar_ajax_request() {
 }
 
 
-function orthores_daily_calendar_get_request_content($props) {
+function iha_orthodox_resources_get_request_content($props) {
 	// get date components
 	$date = getdate();
-	$month = orthores_daily_calendar_validate_var_int($props['month'], $date['mon'], 1, 12 );
-	$day = orthores_daily_calendar_validate_var_int($props['today'], $date['mday'], 1, 31);
-	$year = orthores_daily_calendar_validate_var_int($props['year'], $date['year'], 1900, 2200  );
+	$month = iha_orthodox_resources_validate_var_int($props['month'], $date['mon'], 1, 12 );
+	$day = iha_orthodox_resources_validate_var_int($props['today'], $date['mday'], 1, 31);
+	$year = iha_orthodox_resources_validate_var_int($props['year'], $date['year'], 1900, 2200  );
 
 	// EXIT & send back invalid date error
 	if ( ! checkdate( $month, $day, $year ) ) {
@@ -433,26 +496,26 @@ function orthores_daily_calendar_get_request_content($props) {
 	}
 
 
-	$contents = ORTHORES_DAILY_CALENDAR_DEFAULT_MESSAGE;
-	$cachebuster = orthores_daily_calendar_validate_var_int($props['cachebuster'] ?? 0, 0, 0, 1);
-	$editor = orthores_daily_calendar_validate_var_int($props['editor'], 0, 0, 1);
-	$liveinfo = orthores_daily_calendar_validate_var_int($props['li'] ?? 1, 1, 0, 1);
+	$contents = IHA_ORTHODOX_RESOURCES_DEFAULT_MESSAGE;
+	$cachebuster = iha_orthodox_resources_validate_var_int($props['cb'] ?? 0, 0, 0, 1);
+	$editor = iha_orthodox_resources_validate_var_int($props['editor'], 0, 0, 1);
+	$liveinfo = iha_orthodox_resources_validate_var_int($props['li'] ?? 1, 1, 0, 1);
 
-	$dt = orthores_daily_calendar_validate_var_int($props['dt'], 1, 0, 1);
-	$header = orthores_daily_calendar_validate_var_int($props['hh'], 1, 0, 1);
-	$lives = orthores_daily_calendar_validate_var_int($props['ll'], 3, 0, 1);
-	$scripture = orthores_daily_calendar_validate_var_int($props['ss'], 1, 0, 1);
-	$trp = orthores_daily_calendar_validate_var_int($props['tt'], 0, 0, 1);
-	$lang = orthores_daily_calendar_validate_var_string($props['lang'], 'en');
+	$dt = iha_orthodox_resources_validate_var_int($props['dt'], 1, 0, 1);
+	$header = iha_orthodox_resources_validate_var_int($props['hh'], 1, 0, 1);
+	$lives = iha_orthodox_resources_validate_var_int($props['ll'], 3, 0, 1);
+	$scripture = iha_orthodox_resources_validate_var_int($props['ss'], 1, 0, 1);
+	$trp = iha_orthodox_resources_validate_var_int($props['tt'], 0, 0, 1);
+	$lang = iha_orthodox_resources_validate_var_string($props['lang'], IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE);
 
 	// default to English if bad language code sent
-	if ( ! orthores_daily_calendar_validate_languate_code($lang) ) {
-		$lang = "en";
+	if ( ! iha_orthodox_resources_validate_languate_code($lang) ) {
+		$lang = "IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE";
 	}
 
 	// EXIT & send back our static stored info for editing
 	if ( !$liveinfo ) {
-		$contents = orthores_daily_calendar_get_static_text($dt, $header, $lives, $scripture, $trp);
+		$contents = iha_orthodox_resources_get_static_text($dt, $header, $lives, $scripture, $trp);
 		return array(
 			'success' => true,
 			'data' => $contents,
@@ -462,7 +525,7 @@ function orthores_daily_calendar_get_request_content($props) {
 
 	// create unique cache key for reducing remote api calls
 	$cache_key = sprintf(
-		'orthores_daily_calendar_%s_%04d_%02d_%02d_%d_%d_%d_%d_%d',
+		'iha_orthodox_resources_%s_%04d_%02d_%02d_%d_%d_%d_%d_%d',
 		$lang,
 		$year,
 		$month,
@@ -492,7 +555,7 @@ function orthores_daily_calendar_get_request_content($props) {
 	}
 
 	// create path for remote content
-	$root_path = orthores_daily_calendar_get_site_url($lang);
+	$root_path = iha_orthodox_resources_get_site_url($lang);
 	$remote_path = $root_path . "calendar2.php";
 
 	// add query params to remote path
@@ -516,7 +579,7 @@ function orthores_daily_calendar_get_request_content($props) {
 		array(
 			'timeout'     => 15,
 			'redirection' => 3,
-			'user-agent'  => 'Orthodox Resources Daily Calendar/' . ORTHORES_DAILY_CALENDAR_VERSION . '; ' . home_url( '/' ),
+			'user-agent'  => 'Orthodox Resources Daily Calendar/' . IHA_ORTHODOX_RESOURCES_VERSION . '; ' . home_url( '/' ),
 		)
 	);
 
@@ -526,7 +589,7 @@ function orthores_daily_calendar_get_request_content($props) {
     // good response from remote server
 	if ( !empty($body) ) {
 		// make UTF-8 for translations
-		$contents = orthores_daily_calendar_content_to_utf8( $body );
+		$contents = iha_orthodox_resources_content_to_utf8( $body );
 
 		if ( empty($contents) ) {
 			return array(
@@ -536,7 +599,7 @@ function orthores_daily_calendar_get_request_content($props) {
 			);
 		}
 		// make sure the content is clean
-		$contents = orthores_daily_calendar_sanitize_html( $contents, $lang );
+		$contents = iha_orthodox_resources_sanitize_html( $contents, $lang );
 		if ( empty($contents) ) {
 			return array(
 				'success' => false,
@@ -549,7 +612,7 @@ function orthores_daily_calendar_get_request_content($props) {
 		set_transient( $cache_key, $contents, DAY_IN_SECONDS );
 	} else if ( $editor ) {
 		// make sure we send something back if admin editing
-		$contents = orthores_daily_calendar_get_static_text($dt, $header, $lives, $scripture, $trp);
+		$contents = iha_orthodox_resources_get_static_text($dt, $header, $lives, $scripture, $trp);
 	}
 
 	return array(
@@ -567,15 +630,15 @@ function orthores_daily_calendar_get_request_content($props) {
  * @param integer $default
  * @return integer
  */
-function orthores_daily_calendar_get_request_var_int($name, $default, $min, $max) {
+function iha_orthodox_resources_get_request_var_int($name, $default, $min, $max) {
 	if ( !isset( $_REQUEST[$name] ) ) {
 		return $default;
 	}
 
-	return orthores_daily_calendar_validate_var_int( wp_unslash($_REQUEST[$name]), $default, $min, $max );
+	return iha_orthodox_resources_validate_var_int( intval( wp_unslash($_REQUEST[$name] ) ), $default, $min, $max );
 }
 
-function orthores_daily_calendar_validate_var_int($value, $default, $min, $max) {
+function iha_orthodox_resources_validate_var_int($value, $default, $min, $max) {
 	if ( !isset( $value ) ) {
 		return $default;
 	}
@@ -586,14 +649,14 @@ function orthores_daily_calendar_validate_var_int($value, $default, $min, $max) 
 	return ( $inrang ) ? $value : $default;
 }
 
-function orthores_daily_calendar_get_request_var_array($name, $default = array()) {
+function iha_orthodox_resources_get_request_var_array($name, $default = array()) {
 	if ( !isset( $_REQUEST[$name] ) ) {
 		return $default;
 	}
 
-    return orthores_daily_calendar_validate_var_array( wp_unslash($_REQUEST[$name]), $default );
+    return iha_orthodox_resources_validate_var_array( rest_sanitize_array( wp_unslash($_REQUEST[$name]) ), $default );
 }
-function orthores_daily_calendar_validate_var_array($value, $default = array()) {
+function iha_orthodox_resources_validate_var_array($value, $default = array()) {
 	if ( !isset( $value ) ) {
 		return $default;
 	}
@@ -609,15 +672,15 @@ function orthores_daily_calendar_validate_var_array($value, $default = array()) 
  * @param string $default
  * @return string
  */
-function orthores_daily_calendar_get_request_var_string($name, $default = "") {
+function iha_orthodox_resources_get_request_var_string($name, $default = "") {
 	if ( !isset( $_REQUEST[$name] ) ) {
 		return $default;
 	}
 
-	return orthores_daily_calendar_validate_var_string(wp_unslash($_REQUEST[$name]), $default);
+	return iha_orthodox_resources_validate_var_string( sanitize_text_field(wp_unslash($_REQUEST[$name] ) ), $default);
 }
 
-function orthores_daily_calendar_validate_var_string($value, $default = "") {
+function iha_orthodox_resources_validate_var_string($value, $default = "") {
 	if (empty( $value )) {
 		return $default;
 	}
@@ -630,7 +693,7 @@ function orthores_daily_calendar_validate_var_string($value, $default = "") {
  *
  * @return boolean
  */
-function orthores_daily_calendar_is_local() {
+function iha_orthodox_resources_is_local() {
   $whitelist = array(
     '127.0.0.1',
     '::1'
@@ -650,8 +713,8 @@ function orthores_daily_calendar_is_local() {
  * @param string $file
  * @return string
  */
-function orthores_daily_calendar_get_static_file_text($file) {
-	$path = ORTHORES_DAILY_CALENDAR_DIR . '/build/static-text/' . $file . '.html';
+function iha_orthodox_resources_get_static_file_text($file) {
+	$path = IHA_ORTHODOX_RESOURCES_DIR . '/build/static-text/' . $file . '.html';
 	$contents = '';
 
 	try {
@@ -674,14 +737,14 @@ function orthores_daily_calendar_get_static_file_text($file) {
  * @param integer $troparion
  * @return string
  */
-function orthores_daily_calendar_get_static_text($date, $header, $lives, $scripture, $troparion) {
+function iha_orthodox_resources_get_static_text($date, $header, $lives, $scripture, $troparion) {
 	$contents = '';
 
-	$contents .= $date ? orthores_daily_calendar_get_static_file_text('date') : '';
-	$contents .= $header ? orthores_daily_calendar_get_static_file_text('header') : '';
-	$contents .= $lives ? orthores_daily_calendar_get_static_file_text('lives-' . $lives) : '';
-	$contents .= $scripture ? orthores_daily_calendar_get_static_file_text('scripture-' . $scripture) : '';
-	$contents .= $troparion ? orthores_daily_calendar_get_static_file_text('troparion-' . $troparion) : '';
+	$contents .= $date ? iha_orthodox_resources_get_static_file_text('date') : '';
+	$contents .= $header ? iha_orthodox_resources_get_static_file_text('header') : '';
+	$contents .= $lives ? iha_orthodox_resources_get_static_file_text('lives-' . $lives) : '';
+	$contents .= $scripture ? iha_orthodox_resources_get_static_file_text('scripture-' . $scripture) : '';
+	$contents .= $troparion ? iha_orthodox_resources_get_static_file_text('troparion-' . $troparion) : '';
 
 	return $contents;
 }
@@ -695,13 +758,13 @@ function orthores_daily_calendar_get_static_text($date, $header, $lives, $script
  * @param string $lang
  * @return void string
  */
-function orthores_daily_calendar_normalize_popup_urls( $html, $path, $lang ) {
+function iha_orthodox_resources_normalize_popup_urls( $html, $path, $lang ) {
 	
 	if ( ! is_string( $html ) || empty($html) ) {
 		return '';
 	}
 
-	$host = orthores_daily_calendar_get_allowed_paths( $lang )[0];
+	$host = iha_orthodox_resources_get_allowed_paths( $lang )[0];
 
 	// ensure DOMDocument handles UTF-8 encoding correctly - this will get filtered out
 	$html = '<meta http-equiv="content-type" content="text/html; charset=utf-8">' . $html;
@@ -737,14 +800,14 @@ function orthores_daily_calendar_normalize_popup_urls( $html, $path, $lang ) {
  * @param string $lang
  * @return string
  */
-function orthores_daily_calendar_get_popup_path( $url, $lang ) {
+function iha_orthodox_resources_get_popup_path( $url, $lang ) {
 	// break url path down
 	$path = wp_parse_url($url, PHP_URL_PATH);
 	$info = pathinfo($path);
 	$file = $info['basename'];
 
 	// create path for remote content
-	$root_path = orthores_daily_calendar_get_popup_url($lang);
+	$root_path = iha_orthodox_resources_get_popup_url($lang);
 	$parts = explode("/calendar/", $path);
 	$file_path = $parts[1] ?? '';
 	
@@ -756,21 +819,21 @@ function orthores_daily_calendar_get_popup_path( $url, $lang ) {
 
 
 // For logged-in users
-add_action('wp_ajax_orthocalbl_popup', 'orthores_daily_calendar_ajax_popup_content');
+add_action('wp_ajax_orthores_daily_calendar_popup', 'iha_orthodox_resources_ajax_popup_content');
 // For non-logged-in users
-add_action('wp_ajax_nopriv_orthocalbl_popup', 'orthores_daily_calendar_ajax_popup_content');
-function orthores_daily_calendar_ajax_popup_content() {
+add_action('wp_ajax_nopriv_orthores_daily_calendar_popup', 'iha_orthodox_resources_ajax_popup_content');
+function iha_orthodox_resources_ajax_popup_content() {
 
     // EXIT & send back error
-	if ( !isset( $_REQUEST['sec_pop'] ) || !wp_verify_nonce( wp_unslash($_REQUEST['sec_pop']), 'orthocalbl-popup' ) ) {
-		wp_send_json_error( wp_kses_post(ORTHORES_DAILY_CALENDAR_NONCE_MESSAGE) );
+	if ( !isset( $_REQUEST['sec_pop'] ) || !wp_verify_nonce( sanitize_text_field(wp_unslash($_REQUEST['sec_pop'])), 'orthores-daily-calendar-popup' ) ) {
+		wp_send_json_error( wp_kses_post(IHA_ORTHODOX_RESOURCES_NONCE_MESSAGE) );
 	}
 
-	$contents = ORTHORES_DAILY_CALENDAR_DEFAULT_MESSAGE;
+	$contents = IHA_ORTHODOX_RESOURCES_DEFAULT_MESSAGE;
 
-	$cachebuster = orthores_daily_calendar_get_request_var_int('cachebuster', 0, 0, 1);
-	$lang = orthores_daily_calendar_get_request_var_string('language', 'en');
-	$popup = orthores_daily_calendar_get_request_var_string('popup', '');
+	$cachebuster = iha_orthodox_resources_get_request_var_int('cb', 0, 0, 1);
+	$lang = iha_orthodox_resources_get_request_var_string('language', IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE);
+	$popup = iha_orthodox_resources_get_request_var_string('popup', '');
 
 	if ( empty($popup) ) {
 		wp_send_json_error(array(
@@ -781,11 +844,11 @@ function orthores_daily_calendar_ajax_popup_content() {
 	}
 
 	// popup content path
-	$remote_path = orthores_daily_calendar_get_popup_path( $popup, $lang );
+	$remote_path = iha_orthodox_resources_get_popup_path( $popup, $lang );
 
 	// create unique cache key for reducing remote api calls
 	$cache_key = sprintf(
-		'orthores_daily_calendar_%s_%s',
+		'iha_orthodox_resources_%s_%s',
 		$lang,
 		wp_parse_url($remote_path, PHP_URL_PATH)
 	);
@@ -809,7 +872,7 @@ function orthores_daily_calendar_ajax_popup_content() {
 		array(
 			'timeout'     => 15,
 			'redirection' => 3,
-			'user-agent'  => 'Orthodox Calendar Block/' . ORTHORES_DAILY_CALENDAR_VERSION . '; ' . home_url( '/' ),
+			'user-agent'  => 'Orthodox Calendar Block/' . IHA_ORTHODOX_RESOURCES_VERSION . '; ' . home_url( '/' ),
 		)
 	);
 
@@ -828,9 +891,9 @@ function orthores_daily_calendar_ajax_popup_content() {
 		$srcPath = join("/", $parts);			// combine parts
 
 		// fix relative urls
-		$contents = orthores_daily_calendar_normalize_popup_urls( $contents, $srcPath, $lang );
+		$contents = iha_orthodox_resources_normalize_popup_urls( $contents, $srcPath, $lang );
 		// make sure the content is clean
-		$contents = orthores_daily_calendar_sanitize_html( $contents, $lang );
+		$contents = iha_orthodox_resources_sanitize_html( $contents, $lang );
 
 		// store contents to avoid redundant requests
 		set_transient( $cache_key, $contents, DAY_IN_SECONDS );

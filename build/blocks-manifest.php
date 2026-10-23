@@ -1,7 +1,7 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
-	'orthodox-resources-daily-calendar' => array(
+	'daily-calendar' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
 		'name' => 'orthodox-resources/daily-calendar',
@@ -136,7 +136,7 @@ return array(
 			),
 			'interactivity' => true
 		),
-		'textdomain' => 'orthores',
+		'textdomain' => 'iha-orthodox-resources',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',

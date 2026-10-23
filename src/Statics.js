@@ -2,12 +2,12 @@ import { __ } from "@wordpress/i18n";
 
 // supported languages
 export const languages = [
-    { "label" : __("English", "orthores"), "value": "en" },
-    { "label" : __("Russian", "orthores"), "value": "ru" }
+    { "label" : __("English", "iha-orthodox-resources"), "value": "en" },
+    { "label" : __("Russian", "iha-orthodox-resources"), "value": "ru" }
 ];
 
 // loading message
-export const msgLoading = __("Loading...", "orthores");
+export const msgLoading = __("Loading...", "iha-orthodox-resources");
 
 // attributes to filter out
 export const badStrings = ["btn_", "text_"];

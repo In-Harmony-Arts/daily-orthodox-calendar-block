@@ -52,11 +52,11 @@ const OCInspectorControls = ( { props }) => {
     return (
         <InspectorControls>
             <PanelBody
-                title={__("Settings", "orthores")}
+                title={__("Settings", "iha-orthodox-resources")}
                 initialOpen={true}
             >
                 <ToggleControl
-                    label={__("Edit with live info", "orthores")}
+                    label={__("Edit with live info", "iha-orthodox-resources")}
                     checked={li}
                     onChange={(value) => setAttributes({ li: value ? 1 : 0 })}
                 />
@@ -68,7 +68,7 @@ const OCInspectorControls = ( { props }) => {
                 />
                 {multipleLanguages && (
                     <SelectControl
-                        label={__("Default Language", "orthores")}
+                        label={__("Default Language", "iha-orthodox-resources")}
                         value={dl}
                         onChange={(value) => setAttributes({ dl: value })}
                         help={__(
@@ -78,12 +78,12 @@ const OCInspectorControls = ( { props }) => {
                         options={[
                             {
                                 value: "en",
-                                label: __("English", "orthores"),
+                                label: __("English", "iha-orthodox-resources"),
                                 disabled: !ln.includes("en"),
                             },
                             {
                                 value: "ru",
-                                label: __("Russian", "orthores"),
+                                label: __("Russian", "iha-orthodox-resources"),
                                 disabled: !ln.includes("ru"),
                             },
                         ]}
@@ -91,38 +91,39 @@ const OCInspectorControls = ( { props }) => {
                 )}
                 <h3>Control Buttons</h3>
                 <ToggleControl
-                    label={__("Show today button", "orthores")}
+                    label={__("Show today button", "iha-orthodox-resources")}
                     checked={btn_today}
                     onChange={(value) => setAttributes({ btn_today: value ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show day button", "orthores")}
+                    label={__("Show day button", "iha-orthodox-resources")}
                     checked={btn_day}
                     onChange={(value) => setAttributes({ btn_day: value ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show date picker", "orthores")}
+                    label={__("Show date picker", "iha-orthodox-resources")}
                     checked={dp}
                     onChange={(datepick) => setAttributes({ dp: datepick ? 1 : 0 })}
                 />
+                <hr />
+                <h3>Content options</h3>
                 <ToggleControl
-                    label={__("Show date", "orthores")}
+                    label={__("Show date", "iha-orthodox-resources")}
                     checked={dt}
                     onChange={(value) => setAttributes({ dt: value ? 1 : 0 })}
                 />
                 <ToggleControl
-                    label={__("Show a heading before", "orthores")}
+                    label={__("Show a heading before", "iha-orthodox-resources")}
                     help={
                         hh
-                            ? __("Display header", "orthores")
-                            : __("No header", "orthores")
+                            ? __("Display header", "iha-orthodox-resources")
+                            : __("No header", "iha-orthodox-resources")
                     }
                     checked={hh}
                     onChange={(value) => setAttributes({ hh: value ? 1 : 0 })}
                 />
-                <h3>Content options</h3>
                 <SelectControl
-                    label={__("Display Lives of Saints", "orthores")}
+                    label={__("Display Lives of Saints", "iha-orthodox-resources")}
                     value={ll}
                     onChange={(value) => setAttributes({ ll: value })}
                     help={__(
@@ -132,7 +133,7 @@ const OCInspectorControls = ( { props }) => {
                     options={[
                         {
                             value: 0,
-                            label: __("Do not display", "orthores"),
+                            label: __("Do not display", "iha-orthodox-resources"),
                         },
                         {
                             value: 1,
@@ -179,7 +180,7 @@ const OCInspectorControls = ( { props }) => {
                     ]}
                 />
                 <SelectControl
-                    label={__("Scripture Readings", "orthores")}
+                    label={__("Scripture Readings", "iha-orthodox-resources")}
                     value={ss}
                     onChange={(value) => setAttributes({ ss: value })}
                     help={__(
@@ -189,15 +190,15 @@ const OCInspectorControls = ( { props }) => {
                     options={[
                         {
                             value: 0,
-                            label: __("Do not display", "orthores"),
+                            label: __("Do not display", "iha-orthodox-resources"),
                         },
                         {
                             value: 1,
-                            label: __("display with header", "orthores"),
+                            label: __("display with header", "iha-orthodox-resources"),
                         },
                         {
                             value: 2,
-                            label: __("display without header", "orthores"),
+                            label: __("display without header", "iha-orthodox-resources"),
                         },
                         {
                             value: 3,
@@ -216,32 +217,32 @@ const OCInspectorControls = ( { props }) => {
                     ]}
                 />
                 <SelectControl
-                    label={__("Display Troparion", "orthores")}
+                    label={__("Display Troparion", "iha-orthodox-resources")}
                     value={tt}
                     onChange={(value) => setAttributes({ tt: value })}
-                    help={__("How to display the Troparion", "orthores")}
+                    help={__("How to display the Troparion", "iha-orthodox-resources")}
                     options={[
                         {
                             value: 0,
-                            label: __("Do not display", "orthores"),
+                            label: __("Do not display", "iha-orthodox-resources"),
                         },
                         {
                             value: 1,
-                            label: __("display with header", "orthores"),
+                            label: __("display with header", "iha-orthodox-resources"),
                         },
                         {
                             value: 2,
-                            label: __("display without header", "orthores"),
+                            label: __("display without header", "iha-orthodox-resources"),
                         },
                     ]}
                 />
             </PanelBody>
             <PanelBody
-                title={__("Text", "orthores")}
+                title={__("Text", "iha-orthodox-resources")}
                 initialOpen={false}
             >
                 <TextControl
-                    label={__("Previous Button Text", "orthores")}
+                    label={__("Previous Button Text", "iha-orthodox-resources")}
                     value={text_prev}
                     onChange={(value) => setAttributes({ text_prev: value })}
                 />
@@ -254,7 +255,7 @@ const OCInspectorControls = ( { props }) => {
                     onChange={(value) => setAttributes({ text_prev_acc: value })}
                 />
                 <TextControl
-                    label={__("Current Button Text", "orthores")}
+                    label={__("Current Button Text", "iha-orthodox-resources")}
                     value={text_curr}
                     onChange={(value) => setAttributes({ text_curr: value })}
                 />
@@ -267,7 +268,7 @@ const OCInspectorControls = ( { props }) => {
                     onChange={(value) => setAttributes({ text_curr_acc: value })}
                 />
                 <TextControl
-                    label={__("Next Button Text", "orthores")}
+                    label={__("Next Button Text", "iha-orthodox-resources")}
                     value={text_next}
                     onChange={(value) => setAttributes({ text_next: value })}
                 />
@@ -280,12 +281,12 @@ const OCInspectorControls = ( { props }) => {
                     onChange={(value) => setAttributes({ text_next_acc: value })}
                 />
                 <TextControl
-                    label={__("Date Picker Text", "orthores")}
+                    label={__("Date Picker Text", "iha-orthodox-resources")}
                     value={text_date}
                     onChange={(value) => setAttributes({ text_date: value })}
                 />
                 <TextControl
-                    label={__("Date Picker Text", "orthores")}
+                    label={__("Date Picker Text", "iha-orthodox-resources")}
                     value={text_date}
                     onChange={(value) => setAttributes({ text_date: value })}
                 />

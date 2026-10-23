@@ -5,82 +5,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$orthores_atts = rest_sanitize_array( $attributes );
+
+$iha_orthodox_resources_date = getdate();
+$iha_orthodox_resources_str_date = $iha_orthodox_resources_date['mon'] . "/" . $iha_orthodox_resources_date['mday'] . "/" . $iha_orthodox_resources_date['year'];
+$iha_orthodox_resources_dp_date = $iha_orthodox_resources_date['year'] . "-" . $iha_orthodox_resources_date['mon'] . "-" . $iha_orthodox_resources_date['mday'];
 
 
-$date = getdate();
-$str_date = $date['mon'] . "/" . $date['mday'] . "/" . $date['year'];
-$dp_date = $date['year'] . "-" . $date['mon'] . "-" . $date['mday'];
-
-$is_editor = (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && ('edit' === $_REQUEST['context']));
-$liveinfo = orthores_daily_calendar_validate_var_int(intval($attributes['li']), 1, 0, 1);
-
-$dt = orthores_daily_calendar_validate_var_int($orthores_atts['dt'] ?? 1, 1, 0, 1);
-$header = orthores_daily_calendar_validate_var_int($orthores_atts['hh'] ?? 1, 1, 0, 1);
-$lives = orthores_daily_calendar_validate_var_int(intval($attributes['ll']), 3, 0, 6);
-$scripture = orthores_daily_calendar_validate_var_int(intval($attributes['ss']), 1, 0, 4);
-$trp = orthores_daily_calendar_validate_var_int(intval($attributes['tt']), 0, 0, 2);
-$default_langs = array('en', 'ru');
-$langs = orthores_daily_calendar_validate_var_array($attributes['ln'], $default_langs);
-$multi_langs = isset($langs[1]); // just need to know that more than 1 value is set
-$default_lang = 'en';
-$default_lang = !$multi_langs ? $langs[0] : orthores_daily_calendar_validate_var_string(esc_html($attributes['dl']), $default_lang);
-$lang = !$multi_langs ? $langs[0] : orthores_daily_calendar_validate_var_string(esc_html($attributes['lang']), $default_lang);
-
-// fetching context props
-$fetch_context = array(
-    'isLoading'         => false,
-    'contentHtml'       => "",
-    'errorHtml'         => "",
-    'oldQsps'           => "",
-    'loadingText'       => __("Loading...", 'orthores'),
+$iha_orthodox_resources_cal_props = array(
+    'dt'		=> iha_orthodox_resources_validate_var_int(intval($attributes['dt'] ?? 1), 1, 0, 1),
+    'hh'		=> iha_orthodox_resources_validate_var_int(intval($attributes['hh'] ?? 1), 1, 0, 1),
+    'll'		=> iha_orthodox_resources_validate_var_int(intval($attributes['ll']), 3, 0, 6),
+    'ss'		=> iha_orthodox_resources_validate_var_int(intval($attributes['ss']), 1, 0, 4),
+    'tt'		=> iha_orthodox_resources_validate_var_int(intval($attributes['tt']), 0, 0, 2),
+    'ln'        => iha_orthodox_resources_validate_var_array($attributes['ln'], iha_orthodox_resources_get_language_codes()),
+    'lang'		=> iha_orthodox_resources_get_language_default($attributes),
 );
 
 // instance context
-$context = array(
-    'currentDate'           => $str_date,
-    'dpDate'                => $dp_date,
-    'showDatePicker'        => false,
-    'popupUrl'              => "",
-    'dt'			        => $dt,
-    'hh'			        => $header,
-    'll'			        => $lives,
-    'ss'			        => $scripture,
-    'tt'			        => $trp,
-    'ln'                    => $langs,
-    'lang'			        => $lang,
-    'content'               => array_slice($fetch_context, 0),
-    'popup'                 => array_slice($fetch_context, 0),
+$iha_orthodox_resources_context = array_merge(
+    $iha_orthodox_resources_cal_props,
+    array(
+        'currentDate'           => $iha_orthodox_resources_str_date,
+        'dpDate'                => $iha_orthodox_resources_dp_date,
+        'showDatePicker'        => false,
+        'popupUrl'              => "",
+        'content'               => iha_orthodox_resources_get_fetch_context(),
+        'popup'                 => iha_orthodox_resources_get_fetch_context(),
+    ),
 );
 
-$props = array(
-    'month'			=> $date['mon'],
-    'today'			=> $date['mday'],
-    'year'			=> $date['year'],
-    'editor'		=> $is_editor ? 1 : 0,
-    'liveinfo'		=> $liveinfo ? 1 : 0,
-    'dt'			=> $dt,
-    'hh'			=> $header,
-    'll'			=> $lives,
-    'ss'			=> $scripture,
-    'tt'			=> $trp,
-    'ln'            => $langs,
-    'lang'			=> $lang,
-    'dl'			=> $default_lang,
-);
+if ( iha_orthodox_resources_is_editor() ) {
+    $iha_orthodox_resources_props = array_merge(
+        $iha_orthodox_resources_cal_props,
+        array(
+            'month'			=> $iha_orthodox_resources_date['mon'],
+            'today'			=> $iha_orthodox_resources_date['mday'],
+            'year'			=> $iha_orthodox_resources_date['year'],
+            'editor'		=> 1,
+            'li'		    => iha_orthodox_resources_validate_var_int(intval($attributes['li']), 1, 0, 1),
+        )
+    );
 
-// $editor_context = array_slice($fetch_context, 0);
+    $iha_orthodox_resources_resp = iha_orthodox_resources_get_request_content($iha_orthodox_resources_props);
 
-$resp = array(
-    'success'   => false,
-    'data'      => "",
-);
-
-if ( $is_editor ) {
-    $resp = orthores_daily_calendar_get_request_content($props);
-    if ($resp['success'] == true) {
-        $context['content']['contentHtml'] = $resp['data'];
-        $context['cachebuster'] = 0;
+    if ($iha_orthodox_resources_resp['success'] == true) {
+        $iha_orthodox_resources_context['content']['contentHtml'] = $iha_orthodox_resources_resp['data'];
+        $iha_orthodox_resources_context['cb'] = 0;
     }
 }
 
@@ -88,12 +58,11 @@ if ( $is_editor ) {
 <div
     <?php echo get_block_wrapper_attributes(); ?>
     data-wp-interactive="orthores/daily-calendar"
-    <?php echo wp_interactivity_data_wp_context( $context ); ?>
+    <?php echo wp_interactivity_data_wp_context( $iha_orthodox_resources_context ); ?>
 >
     <div
         class="ordc-info"
         data-wp-watch="callbacks.fetchCalendarInfo"
-        <?php // echo wp_interactivity_data_wp_context( $editor_context ); ?>
     >
         <div
             class="ordc-buttons-bar"
@@ -153,19 +122,19 @@ if ( $is_editor ) {
                 </div>
             <?php } ?>
             <?php // button -- language toggle
-            if ($multi_langs) { ?>
+            if (iha_orthodox_resources_get_multiple_languages($attributes)) { ?>
                 <button
                     type="button"
                     class="ordc-button lang-toggle"
                     data-wp-on--click="actions.toggleLanguage"
-                ><span class="screen-reader-text"><?php echo esc_html($attributes['text_language_acc']); ?></span><span class="display-text" data-wp-text="context.lang"></span></button>
+                ><span class="screen-reader-text"><?php echo esc_html($attributes['text_language_acc']); ?></span><span class="display-text" data-wp-text="context.lang"><?php echo esc_html(iha_orthodox_resources_get_language_default($attributes)); ?></span></button>
             <?php } ?>
         </div>
         <div class="ordc-info-container fetch-container">
             <div
                 class="ordc-info-loading loading"
-                data-wp-bind--hidden="!state.isLoading"
-                data-wp-text="context.loadingText"
+                data-wp-bind--hidden="!context.content.isLoading"
+                data-wp-text="state.loadingText"
             ></div>
             <div
                 class="ordc-info-error error"
@@ -175,29 +144,28 @@ if ( $is_editor ) {
             <div
                 class="ordc-info-content content"
                 data-wp-html="context.content.contentHtml"
-                data-wp-bind--hidden="<?php echo $is_editor ? "false" : "!state.showContent"; ?>"
+                data-wp-bind--hidden="<?php echo iha_orthodox_resources_is_editor() ? "false" : "!state.showContent"; ?>"
                 data-wp-on--click="actions.handleLinkClick"
-            ><?php echo ($resp['success'] === true) ? $resp['data'] : ""; ?></div>
+            ><?php echo wp_kses( $iha_orthodox_resources_context['content']['contentHtml'], iha_orthodox_resources_get_allowed_html() ); ?></div>
         </div>
     </div>
     <div
         class="ordc-popup fade-in"
         data-wp-class--hidden="!state.showPopup"
         data-wp-watch="callbacks.fetchPopupInfo"
-        <?php // echo wp_interactivity_data_wp_context( $fetch_context ); ?>
     >
         <div class="ordc-buttons-bar">
             <button
                 type="button"
                 class="ordc-button ordc-button-close"
-                data-wp-bind--disabled="state.isLoading"
+                data-wp-bind--disabled="context.popup.isLoading"
                 data-wp-on--click="actions.closePopup"
             ><span class="screen-reader-text"><?php echo esc_html($attributes['text_close_acc']); ?></span><?php echo esc_html($attributes['text_close']); ?></button>
         </div>
         <div class="ordc-popup-container fetch-container" >
             <div
                 class="ordc-popup-loading loading"
-                data-wp-bind--hidden="!state.isLoading"
+                data-wp-bind--hidden="!context.popup.isLoading"
                 data-wp-text="context.popup.loadingText"
             ></div>
             <div
@@ -207,7 +175,7 @@ if ( $is_editor ) {
             ></div>
             <div
                 class="ordc-popup-content content"
-                data-wp-bind--hidden="!state.showContent"
+                data-wp-class--hidden="!state.showContent"
                 data-wp-html="context.popup.contentHtml"
             ></div>
         </div>

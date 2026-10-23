@@ -55,32 +55,18 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__;
 let __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!*******************************************************!*\
-  !*** ./src/orthodox-resources-daily-calendar/view.js ***!
-  \*******************************************************/
+/*!************************************!*\
+  !*** ./src/daily-calendar/view.js ***!
+  \************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interactivity */ "@wordpress/interactivity");
 
 const oneDay = 24 * 60 * 60 * 1000;
-const setDate = date => {
-  const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-  const newDate = new Date(date).toLocaleDateString("en-US");
-  context.currentDate = newDate;
-};
-const dateIncrement = days => {
-  const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-  const currentDay = new Date(context.currentDate);
-  const timeOffset = days * oneDay;
-  currentDay.setTime(currentDay.getTime() + timeOffset);
-  setDate(currentDay);
-};
+const blockClass = '.wp-block-orthodox-resources-daily-calendar';
 const ocGetTwoDigitInt = num => {
   return num < 10 ? "0" + num : "" + num;
 };
-const setLang = lang => {
-  const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-  context.lang = lang;
-};
+;
 const getCacheBuster = () => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get("cachebuster") || 0;
@@ -93,9 +79,9 @@ const setElementChildHtmlByClass = (element, selector, html) => {
     child.scrollTop = 0;
   }
 };
-const getContextContainer = (context, ref) => {
-  if (!context || !ref) return false;
-  const isinfo = ref.classList.contains('ordc-info-content');
+const getContextContainer = (context, className) => {
+  if (!context || className == "") return false;
+  const isinfo = className.indexOf('ordc-info-content') > -1;
   const container = isinfo ? 'content' : 'popup';
   return context[container];
 };
@@ -106,29 +92,26 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
   state: {
     get hasContent() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      const {
-        ref
-      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      const container = getContextContainer(context, ref);
+      const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+      const container = getContextContainer(context, element.attributes.class);
       return !isEmpty(container?.contentHtml);
     },
     get hasError() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      const {
-        ref
-      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      const container = getContextContainer(context, ref);
+      const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+      const container = getContextContainer(context, element.attributes.class);
       return !isEmpty(container?.errorHtml);
     },
-    get isLoading() {
+    get loadingText() {
+      const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
+      return config?.translations?.loading ?? "Loading...";
+    },
+    get showContent() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      const container = getContextContainer(context, ref);
-      console.log('isLoading() context', context);
-      console.log('isLoading() element', element);
-      console.log('isLoading() ref', ref);
-      console.log('isLoading() container', container);
-      return !!container?.isLoading;
+      const container = getContextContainer(context, element.attributes.class);
+      if (!container) return false;
+      return !isEmpty(container.contentHtml) && !container.isLoading && isEmpty(container.errorHtml);
     },
     get showPopup() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
@@ -136,14 +119,26 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
     }
   },
   actions: {
+    setDate(date) {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      const newDate = new Date(date).toLocaleDateString("en-US");
+      context.currentDate = newDate;
+    },
+    dateIncrement(days) {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      const currentDay = new Date(context.currentDate);
+      const timeOffset = days * oneDay;
+      currentDay.setTime(currentDay.getTime() + timeOffset);
+      orthoresDcStore.actions.setDate(currentDay);
+    },
     dateToday() {
-      setDate(new Date());
+      orthoresDcStore.actions.setDate(new Date());
     },
     dateNext() {
-      dateIncrement(1);
+      orthoresDcStore.actions.dateIncrement(1);
     },
     datePrevious() {
-      dateIncrement(-1);
+      orthoresDcStore.actions.dateIncrement(-1);
     },
     toggleDatePicker() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
@@ -159,42 +154,34 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       const offsetDate = new Date(selectedDate.getTime() + oneDay);
       setDate(offsetDate);
     },
+    setLang(lang) {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      context.lang = lang;
+    },
     toggleLanguage() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const ln = context.ln;
       const index = ln.indexOf(context.lang);
       const nextIndex = index + 1 < ln.length ? index + 1 : 0;
-      setLang(ln[nextIndex]);
+      orthoresDcStore.actions.setLang(ln[nextIndex]);
     },
     setPopupUrl(url) {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       context.popupUrl = url;
     },
     handleLinkClick: (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.withSyncEvent)(function (event) {
-      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      const {
-        ref
-      } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
       event.preventDefault();
       const link = event.target.closest('a[target]');
       if (!link?.href) return;
       orthoresDcStore.actions.setPopupUrl(link.href);
       window.addEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
-
-      // const orcd = event.target.closest('.wp-block-orthodox-resources-daily-calendar');
-
-      // // need dela so popup becomes visible
-      // setTimeout(() => {
-      // 	const popup = orcd.getElementsByClassName('ordc-popup')[0];
-      // 	popup?.focus();
-      // }, 1000);
     }),
     handleKeyDown: event => {
       if (event.key === "Escape") {
         const {
           ref
         } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-        const orcd = ref.closest('.wp-block-orthodox-resources-daily-calendar');
+        const orcd = ref.closest(blockClass);
         const close = orcd.getElementsByClassName('ordc-button-close')[0];
         close.click();
       }
@@ -207,12 +194,11 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
         ref
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
       orthoresDcStore.actions.setPopupUrl("");
-      const orcd = ref.closest('.wp-block-orthodox-resources-daily-calendar');
+      const orcd = ref.closest(blockClass);
       window.removeEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
       setTimeout((0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.withScope)(() => {
         if (popup.isLoading) return;
         const popupEl = orcd.getElementsByClassName('ordc-popup')[0];
-        const info = orcd.getElementsByClassName('ordc-info')[0];
         orthoresDcStore.actions.setContentHtml("", popup, popupEl);
       }), 200);
     },
@@ -296,7 +282,7 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       const dd = ocGetTwoDigitInt(currentDay.getDate());
       const yy = currentDay.getFullYear();
       const cachebuster = getCacheBuster();
-      const qsps = "&month=" + mm + "&today=" + dd + "&year=" + yy + "&dt=" + context.dt + "&hh=" + context.hh + "&ll=" + context.ll + "&tt=" + context.tt + "&ss=" + context.ss + "&lang=" + context.lang + "&sec_req=" + config.sec_req + "&cachebuster=" + cachebuster;
+      const qsps = "&month=" + mm + "&today=" + dd + "&year=" + yy + "&dt=" + context.dt + "&hh=" + context.hh + "&ll=" + context.ll + "&tt=" + context.tt + "&ss=" + context.ss + "&lang=" + context.lang + "&sec_req=" + config.sec_req + "&cb=" + cachebuster;
       orthoresDcStore.actions.fetchData(config.url_day, qsps, context.content, ref);
     },
     fetchPopupInfo: () => {
@@ -317,7 +303,7 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       if (popup.contentHtml != "" || popup.isLoading || popupUrl == "") {
         return;
       }
-      const qsps = "&popup=" + encodeURI(popupUrl) + "&language=" + lang + "&sec_pop=" + sec_pop + "&cachebuster=" + getCacheBuster();
+      const qsps = "&popup=" + encodeURI(popupUrl) + "&language=" + lang + "&sec_pop=" + sec_pop + "&cb=" + getCacheBuster();
       orthoresDcStore.actions.fetchData(url_popup, qsps, popup, ref);
     }
   } // callbacks

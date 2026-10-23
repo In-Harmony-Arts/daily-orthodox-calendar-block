@@ -8,30 +8,12 @@ import {
 } from "@wordpress/interactivity";
 
 const oneDay = 24 * 60 * 60 * 1000;
+const blockClass = '.wp-block-orthodox-resources-daily-calendar';
 
-const setDate = (date) => {
-	const context = getContext();
-	const newDate = new Date(date).toLocaleDateString("en-US");
-
-	context.currentDate = newDate;
-};
-
-const dateIncrement = (days) => {
-	const context = getContext();
-	const currentDay = new Date(context.currentDate);
-	const timeOffset = days * oneDay;
-	currentDay.setTime(currentDay.getTime() + timeOffset);
-	setDate(currentDay);
-};
 
 const ocGetTwoDigitInt = (num) => {
 	return num < 10 ? "0" + num : "" + num;
-};
-
-const setLang = (lang) => {
-	const context = getContext();
-	context.lang = lang;
-};
+};;
 
 const getCacheBuster = () => {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -50,10 +32,10 @@ const setElementChildHtmlByClass = (element, selector, html) => {
 	}
 }
 
-const getContextContainer = (context, ref) => {
-	if (!context || !ref) return false;
+const getContextContainer = (context, className) => {
+	if (!context || className == "") return false;
 
-	const isinfo = ref.classList.contains('ordc-info-content');
+	const isinfo = className.indexOf('ordc-info-content') > -1;
 	const container = isinfo ? 'content' : 'popup';
 
 	return context[container];
@@ -67,27 +49,33 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 	state: {
 		get hasContent() {
 			const context = getContext();
-			const { ref } = getElement();
-			const container = getContextContainer(context, ref);
+			const element = getElement();
+			const container = getContextContainer(context, element.attributes.class);
 
 			return !isEmpty(container?.contentHtml);
 		},
 		get hasError() {
 			const context = getContext();
-			const { ref } = getElement();
-			const container = getContextContainer(context, ref);
+			const element = getElement();
+			const container = getContextContainer(context, element.attributes.class);
 
 			return !isEmpty(container?.errorHtml);
 		},
-		get isLoading() {
+		get loadingText() {
+			const config = getConfig();
+
+			return config?.translations?.loading ?? "Loading...";
+			
+		},
+		get showContent() {
 			const context = getContext();
 			const element = getElement();
-			const container = getContextContainer(context, ref);
-			console.log('isLoading() context', context);
-			console.log('isLoading() element', element);
-			console.log('isLoading() ref', ref);
-			console.log('isLoading() container', container);
-			return !!container?.isLoading;
+
+			const container = getContextContainer(context, element.attributes.class);
+
+			if (!container) return false;
+
+			return !isEmpty(container.contentHtml) && !container.isLoading && isEmpty(container.errorHtml);
 		},
 		get showPopup() {
 			const context = getContext();
@@ -96,14 +84,28 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 		}
 	},
 	actions: {
+		setDate(date) {
+			const context = getContext();
+			const newDate = new Date(date).toLocaleDateString("en-US");
+
+			context.currentDate = newDate;
+		},
+		dateIncrement(days) {
+			const context = getContext();
+			const currentDay = new Date(context.currentDate);
+			const timeOffset = days * oneDay;
+
+			currentDay.setTime(currentDay.getTime() + timeOffset);
+			orthoresDcStore.actions.setDate(currentDay);
+		},
 		dateToday() {
-			setDate(new Date());
+			orthoresDcStore.actions.setDate(new Date());
 		},
 		dateNext() {
-			dateIncrement(1);
+			orthoresDcStore.actions.dateIncrement(1);
 		},
 		datePrevious() {
-			dateIncrement(-1);
+			orthoresDcStore.actions.dateIncrement(-1);
 		},
 		toggleDatePicker() {
 			const context = getContext();
@@ -122,6 +124,10 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 
 			setDate(offsetDate);
 		},
+		setLang(lang) {
+			const context = getContext();
+			context.lang = lang;
+		},
 		toggleLanguage() {
 			const context = getContext();
 			const ln = context.ln;
@@ -129,7 +135,7 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const index = ln.indexOf(context.lang);
 			const nextIndex = index + 1 < ln.length ? index + 1 : 0;
 
-			setLang(ln[nextIndex]);
+			orthoresDcStore.actions.setLang(ln[nextIndex]);
 		},
 		setPopupUrl(url) {
 			const context = getContext();
@@ -137,9 +143,6 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			context.popupUrl = url;
 		},
 		handleLinkClick: withSyncEvent(function (event) {
-			const context = getContext();
-			const { ref } = getElement();
-
 			event.preventDefault();
 
 			const link = event.target.closest('a[target]');
@@ -149,19 +152,11 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			orthoresDcStore.actions.setPopupUrl(link.href);
 
 			window.addEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
-
-			// const orcd = event.target.closest('.wp-block-orthodox-resources-daily-calendar');
-
-			// // need dela so popup becomes visible
-			// setTimeout(() => {
-			// 	const popup = orcd.getElementsByClassName('ordc-popup')[0];
-			// 	popup?.focus();
-			// }, 1000);
 		}),
 		handleKeyDown: (event) => {
 			if (event.key === "Escape") {
 				const { ref } = getElement();
-				const orcd = ref.closest('.wp-block-orthodox-resources-daily-calendar');
+				const orcd = ref.closest(blockClass);
 				const close = orcd.getElementsByClassName('ordc-button-close')[0];
 
 				close.click();
@@ -173,7 +168,7 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 
 			orthoresDcStore.actions.setPopupUrl("");
 
-			const orcd = ref.closest('.wp-block-orthodox-resources-daily-calendar');
+			const orcd = ref.closest(blockClass);
 
 			window.removeEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
 
@@ -182,7 +177,6 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 					if (popup.isLoading) return;
 
 					const popupEl = orcd.getElementsByClassName('ordc-popup')[0];
-					const info = orcd.getElementsByClassName('ordc-info')[0];
 
                     orthoresDcStore.actions.setContentHtml("", popup, popupEl);
                 } ),
@@ -304,7 +298,7 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 				context.lang +
 				"&sec_req=" +
 				config.sec_req +
-				"&cachebuster=" +
+				"&cb=" +
 				cachebuster;
 
 			orthoresDcStore.actions.fetchData(config.url_day, qsps, context.content, ref);
@@ -322,7 +316,7 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const qsps = "&popup=" + encodeURI(popupUrl) +
 				"&language=" + lang +
 				"&sec_pop=" + sec_pop +
-				"&cachebuster=" + getCacheBuster();
+				"&cb=" + getCacheBuster();
 
 			orthoresDcStore.actions.fetchData(url_popup, qsps, popup, ref);
 		},
