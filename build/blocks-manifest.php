@@ -1,15 +1,15 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
-	'orthodox-calendar-block' => array(
+	'daily-calendar' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
-		'name' => 'orthodox-calendar-block/orthodox-calendar-block',
-		'version' => '0.11.1',
-		'title' => 'Orthodox Calendar',
+		'name' => 'orthodox-resources/daily-calendar',
+		'version' => '1.0.0',
+		'title' => 'Daily Orthodox Calendar',
 		'category' => 'widgets',
 		'icon' => 'calendar-alt',
-		'description' => 'Displays the daily Orthodox Calendar information',
+		'description' => 'Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar',
 		'example' => array(
 			
 		),
@@ -48,6 +48,14 @@ return array(
 			'dl' => array(
 				'type' => 'string',
 				'default' => 'en'
+			),
+			'lang' => array(
+				'type' => 'string',
+				'default' => 'en'
+			),
+			'li' => array(
+				'type' => 'integer',
+				'default' => 0
 			),
 			'btn_language' => array(
 				'type' => 'integer',
@@ -93,22 +101,6 @@ return array(
 				'type' => 'string',
 				'default' => 'Pick Date'
 			),
-			'text_week_prev' => array(
-				'type' => 'string',
-				'default' => '❰❰'
-			),
-			'text_week_prev_acc' => array(
-				'type' => 'string',
-				'default' => 'Previous Week'
-			),
-			'text_week_next' => array(
-				'type' => 'string',
-				'default' => '❱❱'
-			),
-			'text_week_next_acc' => array(
-				'type' => 'string',
-				'default' => 'Previous Week'
-			),
 			'text_language' => array(
 				'type' => 'string',
 				'default' => '”'
@@ -127,17 +119,29 @@ return array(
 			)
 		),
 		'supports' => array(
+			'html' => false,
+			'spacing' => array(
+				'margin' => true,
+				'padding' => true,
+				'blockGap' => true
+			),
 			'color' => array(
+				'background' => true,
 				'text' => true,
-				'background' => true
+				'gradients' => false
+			),
+			'typography' => array(
+				'fontSize' => true,
+				'lineHeight' => false
 			),
 			'interactivity' => true
 		),
-		'textdomain' => 'orthodox-calendar-block',
-		'viewScript' => 'file:./view.js',
+		'textdomain' => 'iha-orthodox-resources',
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php',
+		'viewScriptModule' => 'file:./view.js',
 		'styles' => array(
 			array(
 				'name' => 'none',

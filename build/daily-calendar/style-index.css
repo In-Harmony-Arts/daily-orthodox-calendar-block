@@ -1,0 +1,308 @@
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/daily-calendar/style.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-orthodox-resources-daily-calendar {
+  font-family: arial, helvetica, sans-serif;
+  position: relative;
+  height: 100%;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-buttons-bar {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: start;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-buttons-bar .ocb-dp {
+  margin: 4px 2px;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-button {
+  background-color: #808080;
+  border: none;
+  color: #fff;
+  margin: 4px 2px;
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 12pt;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-button.lang-toggle {
+  text-transform: uppercase;
+  margin: auto 0 auto auto;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-button--svg svg {
+  height: 24px;
+  width: 24px;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-button-close {
+  margin: 0 0 0 auto;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  visibility: visible;
+  opacity: 1;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup-loading {
+  display: block;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup-content {
+  width: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup .ordc-buttons-bar {
+  border-bottom: 2px solid #e3e3e3;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup .dataheader {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup .ofd_los_header {
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #fff;
+  background: #fff;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+.wp-block-orthodox-resources-daily-calendar .ordc-popup .ofd_los_body {
+  min-width: 1em;
+}
+.wp-block-orthodox-resources-daily-calendar .fetch-container {
+  display: block;
+  width: 100%;
+  overflow-y: scroll;
+  padding: 0 20px 10px 10px;
+}
+.wp-block-orthodox-resources-daily-calendar .fetch-container .content table td {
+  vertical-align: top;
+}
+.wp-block-orthodox-resources-daily-calendar .hidden {
+  display: none;
+}
+.wp-block-orthodox-resources-daily-calendar .fade-in {
+  transition: opacity 0.5s linear;
+  visibility: visible;
+  opacity: 1;
+}
+.wp-block-orthodox-resources-daily-calendar .fade-in.hidden {
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+  pointer-events: none;
+}
+.wp-block-orthodox-resources-daily-calendar .normaltext,
+.wp-block-orthodox-resources-daily-calendar .minortext {
+  font-weight: 400;
+}
+.wp-block-orthodox-resources-daily-calendar .dataheader,
+.wp-block-orthodox-resources-daily-calendar .headerheader,
+.wp-block-orthodox-resources-daily-calendar .headerfast,
+.wp-block-orthodox-resources-daily-calendar .headernofast,
+.wp-block-orthodox-resources-daily-calendar .scriptureheader,
+.wp-block-orthodox-resources-daily-calendar .troparionheader {
+  font-weight: 700;
+}
+.wp-block-orthodox-resources-daily-calendar a {
+  font-size: 0.9em;
+  font-weight: 700;
+  text-decoration: none;
+}
+.wp-block-orthodox-resources-daily-calendar p.pdataheader,
+.wp-block-orthodox-resources-daily-calendar p.pheaderheader,
+.wp-block-orthodox-resources-daily-calendar p.pscriptureheader,
+.wp-block-orthodox-resources-daily-calendar p.ptroparionheader {
+  word-spacing: 0;
+  text-indent: 0;
+  line-height: 1;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+.wp-block-orthodox-resources-daily-calendar p.pheaderheader,
+.wp-block-orthodox-resources-daily-calendar p.pscriptureheader,
+.wp-block-orthodox-resources-daily-calendar p.ptroparionheader {
+  border-bottom: 1px solid;
+}
+.wp-block-orthodox-resources-daily-calendar p.pdataheader {
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom: 2em;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .minortext {
+  color: #757575;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .dataheader {
+  color: #369;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .headerheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .headerfast {
+  color: #008000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .headernofast {
+  color: #ff5050;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .scriptureheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .troparionheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .troparionseparator {
+  background-color: #33c;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue p.pdataheader {
+  line-height: 1.2;
+  margin-top: 1.5em;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue p.pheaderheader {
+  line-height: 1.2;
+  margin-top: 1.5em;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue p.pscriptureheader {
+  line-height: 1.2;
+  margin-top: 1.5em;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue p.ptroparionheader {
+  line-height: 1.2;
+  margin-top: 1.5em;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .ordc-button {
+  color: #656565;
+  background-color: transparent;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .ordc-button:hover {
+  background-color: transparent;
+  color: #8c8c8c;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-blue .ordc-button:active {
+  position: relative;
+  top: 1pt;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:link {
+  color: rgb(0, 0, 255);
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:visited {
+  color: rgb(0, 0, 255);
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:hover {
+  color: rgb(153, 153, 153);
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:link.main {
+  color: #333;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:visited.main {
+  color: #333;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:hover.main {
+  color: #699;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey a:active.main {
+  color: #f00;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .normaltext {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .minortext {
+  color: #757575;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .dataheader {
+  color: #699;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .headerheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .headerfast {
+  color: #008000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .headernofast {
+  color: #ff5050;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .scriptureheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .troparionheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-grey .troparionseparator {
+  background-color: #33c;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:link {
+  color: rgb(0, 0, 255);
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:visited {
+  color: rgb(0, 0, 255);
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:hover {
+  color: rgb(153, 153, 153);
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:link.main {
+  color: #800000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:visited.main {
+  color: #800000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:hover.main {
+  color: #c60;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red a:active.main {
+  color: #f00;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .normaltext {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .minortext {
+  color: #757575;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .dataheader {
+  color: #f30;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .headerheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .headerfast {
+  color: #008000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .headernofast {
+  color: #ff5050;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .scriptureheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .troparionheader {
+  color: #000;
+}
+.wp-block-orthodox-resources-daily-calendar.is-style-red .troparionseparator {
+  background-color: #800000;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

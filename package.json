@@ -1,18 +1,18 @@
 {
-	"name": "orthodox-calendar-block",
-	"version": "0.11.1",
-	"description": "Displays the daily Orthodox Calendar information",
+	"name": "iha-orthodox-resources",
+	"version": "1.0.0",
+	"description": "Resources for Orthodox Christian websites",
 	"author": "Dustin Vietzke",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "npm run copy-assets && wp-scripts build --blocks-manifest",
+		"build": "npm run copy-assets && wp-scripts build --experimental-modules --blocks-manifest",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "npm run copy-assets && wp-scripts plugin-zip",
-		"start": "npm run copy-assets && wp-scripts start --blocks-manifest",
+		"start": "npm run copy-assets && wp-scripts start --experimental-modules --blocks-manifest",
 		"copy-assets": "node src/build/copy-assets.js"
 	},
 	"dependencies": {
@@ -21,6 +21,7 @@
 		"@wordpress/components": "^40.0.0",
 		"@wordpress/element": "^8.5.0",
 		"@wordpress/i18n": "latest",
+		"@wordpress/interactivity": "^6.56.0",
 		"@wordpress/server-side-render": "^6.29.0"
 	},
 	"devDependencies": {

@@ -2,7 +2,7 @@
 import { msgLoading } from "../Statics";
 import OCButtonBar from "./OCButtonsBar";
 
-const Popup = ({displayBoxBtnAtts}) => {
+const OCPopup = ({displayBoxBtnAtts}) => {
 
     return (
         <div className={"display-box hidden fade-in "} >
@@ -13,4 +13,4 @@ const Popup = ({displayBoxBtnAtts}) => {
     );
 }
 
-export default Popup;
+export default OCPopup;
