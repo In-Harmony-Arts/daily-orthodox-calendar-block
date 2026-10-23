@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       IHA Orthodox Resources
- * Description:       "Displays the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar"
+ * Description:       "This plugin adds resources for use with Orthodox Christian websites"
  * Version:           1.0.0
  * Requires at least: 6.8.0
  * Requires PHP:      7.4
@@ -23,7 +23,7 @@ define( 'IHA_ORTHODOX_RESOURCES_ALLOWED_HOST', 'www.holytrinityorthodox.com' );
 define( 'IHA_ORTHODOX_RESOURCES_NONCE_MESSAGE', '<p>Nonce shall pass.</p>' );
 define( 'IHA_ORTHODOX_RESOURCES_DEFAULT_MESSAGE', '<p>Blessed is he who comes in the name of the LORD.</p>' );
 define( 'IHA_ORTHODOX_RESOURCES_ERROR_MESSAGE', '<p>An error occurred</p>' );
-define( 'IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE', 'en' );
+define( 'IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE', "en" );
 
 
 /**
@@ -160,7 +160,7 @@ function iha_orthodox_resources_get_popup_url( $lang ) {
 	// https://www.holytrinityorthodox.com/htc/ocalendar/ru/los/September/20-01.htm
 	$rootPath = "https://" . IHA_ORTHODOX_RESOURCES_ALLOWED_HOST . "/";
 	$calendarPath = "htc/ocalendar/";
-	$langPath = ($lang == "IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE") ? "" :  $lang . "/";
+	$langPath = ($lang == IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE) ? "" :  $lang . "/";
 
 	return $rootPath . $calendarPath . $langPath;
 }
@@ -510,7 +510,7 @@ function iha_orthodox_resources_get_request_content($props) {
 
 	// default to English if bad language code sent
 	if ( ! iha_orthodox_resources_validate_languate_code($lang) ) {
-		$lang = "IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE";
+		$lang = IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE;
 	}
 
 	// EXIT & send back our static stored info for editing
@@ -832,7 +832,7 @@ function iha_orthodox_resources_ajax_popup_content() {
 	$contents = IHA_ORTHODOX_RESOURCES_DEFAULT_MESSAGE;
 
 	$cachebuster = iha_orthodox_resources_get_request_var_int('cb', 0, 0, 1);
-	$lang = iha_orthodox_resources_get_request_var_string('language', IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE);
+	$lang = iha_orthodox_resources_get_request_var_string('lang', IHA_ORTHODOX_RESOURCES_DEFAULT_LANGUAGE);
 	$popup = iha_orthodox_resources_get_request_var_string('popup', '');
 
 	if ( empty($popup) ) {
@@ -842,10 +842,13 @@ function iha_orthodox_resources_ajax_popup_content() {
 			'code' => 403,
 		));
 	}
-
 	// popup content path
 	$remote_path = iha_orthodox_resources_get_popup_path( $popup, $lang );
-
+	debug_log(array(
+		'popup' => $popup,
+		'lang' => $lang,
+		'remote_path' => $remote_path,
+	));
 	// create unique cache key for reducing remote api calls
 	$cache_key = sprintf(
 		'iha_orthodox_resources_%s_%s',

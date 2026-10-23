@@ -314,7 +314,7 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			}
 
 			const qsps = "&popup=" + encodeURI(popupUrl) +
-				"&language=" + lang +
+				"&lang=" + lang +
 				"&sec_pop=" + sec_pop +
 				"&cb=" + getCacheBuster();
 

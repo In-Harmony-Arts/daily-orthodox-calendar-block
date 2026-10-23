@@ -303,7 +303,7 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       if (popup.contentHtml != "" || popup.isLoading || popupUrl == "") {
         return;
       }
-      const qsps = "&popup=" + encodeURI(popupUrl) + "&language=" + lang + "&sec_pop=" + sec_pop + "&cb=" + getCacheBuster();
+      const qsps = "&popup=" + encodeURI(popupUrl) + "&lang=" + lang + "&sec_pop=" + sec_pop + "&cb=" + getCacheBuster();
       orthoresDcStore.actions.fetchData(url_popup, qsps, popup, ref);
     }
   } // callbacks
