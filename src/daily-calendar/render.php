@@ -139,7 +139,7 @@ if ( iha_orthodox_resources_is_editor() ) {
             <div
                 class="ordc-info-error error"
                 data-wp-bind--hidden="!state.hasError"
-                data-wp-text="context.content.errorHtml"
+                data-wp-text="state.errorHtml"
             ></div>
             <div
                 class="ordc-info-content content"

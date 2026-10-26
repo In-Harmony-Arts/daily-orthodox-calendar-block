@@ -52,6 +52,8 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const element = getElement();
 			const container = getContextContainer(context, element.attributes.class);
 
+			if (!container) return false;
+
 			return !isEmpty(container?.contentHtml);
 		},
 		get hasError() {
@@ -59,13 +61,21 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const element = getElement();
 			const container = getContextContainer(context, element.attributes.class);
 
-			return !isEmpty(container?.errorHtml);
+			if (!container) return false;
+
+			return !isEmpty(container.errorHtml);
+		},
+		get errorHtml() {
+			const context = getContext();
+			const element = getElement();
+			const container = getContextContainer(context, element.attributes.class);
+
+			return container?.errorHtml ?? "";
 		},
 		get loadingText() {
 			const config = getConfig();
 
 			return config?.translations?.loading ?? "Loading...";
-			
 		},
 		get showContent() {
 			const context = getContext();
@@ -192,19 +202,18 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 
 			setElementChildHtmlByClass(ref, "content", html);
 		},
-		setFetchErrorMesssage(errmsg, context, ref) {
+		setFetchErrorMesssage(errmsg, container, ref) {
 			const { translations } = getConfig();
 
 			const prepend = translations?.errorMessage || "An error occurred.";
 			const append = errmsg ? "<br />" + errmsg : "";
 			const errorMessage = prepend + append;
 
-			context.errorMessage = errorMessage;
-
+			container.errorHtml = errorMessage;
 			setElementChildHtmlByClass(ref, "error", errorMessage);
 
 			// update status
-			context.oldQsps = "";
+			// context.oldQsps = "";
 		},
 		fetchData(url, qsps, container, ref) {
 			if (!container) {
@@ -217,7 +226,7 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 
 			// update context
 			container.isLoading = true;
-			container.contentHtml = "";
+			orthoresDcStore.actions.setContentHtml("", container, ref);
 			container.oldQsps = qsps;
 
 			const path = url + qsps;

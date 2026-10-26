@@ -471,7 +471,7 @@ function iha_orthodox_resources_ajax_request() {
 	$resp = iha_orthodox_resources_get_request_content($props);
 
 	if ( !$resp['success'] ) {
-    	wp_send_json_error($resp['data']);
+    	wp_send_json_error($resp['data'], $resp['code'] ?? 500);
 	}
 
 	// EXIT & send back content
@@ -585,9 +585,17 @@ function iha_orthodox_resources_get_request_content($props) {
 
 	// this checks for a 200 response code as well
 	$body = wp_remote_retrieve_body( $response );
+	$code = wp_remote_retrieve_response_code( $response );
+	$error = wp_remote_retrieve_response_message( $response );
 
+	if ( $code !== 200 ) {
+		return array(
+			'success' => false,
+			'data' => IHA_ORTHODOX_RESOURCES_ERROR_MESSAGE . '<p>' . $error . '</p>',
+			'code' => $code,
+		);
     // good response from remote server
-	if ( !empty($body) ) {
+	} else if ( !empty($body) ) {
 		// make UTF-8 for translations
 		$contents = iha_orthodox_resources_content_to_utf8( $body );
 

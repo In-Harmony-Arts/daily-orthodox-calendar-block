@@ -94,13 +94,21 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
       const container = getContextContainer(context, element.attributes.class);
+      if (!container) return false;
       return !isEmpty(container?.contentHtml);
     },
     get hasError() {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
       const container = getContextContainer(context, element.attributes.class);
-      return !isEmpty(container?.errorHtml);
+      if (!container) return false;
+      return !isEmpty(container.errorHtml);
+    },
+    get errorHtml() {
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      const element = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+      const container = getContextContainer(context, element.attributes.class);
+      return container?.errorHtml ?? "";
     },
     get loadingText() {
       const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
@@ -209,18 +217,18 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
       }
       setElementChildHtmlByClass(ref, "content", html);
     },
-    setFetchErrorMesssage(errmsg, context, ref) {
+    setFetchErrorMesssage(errmsg, container, ref) {
       const {
         translations
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
       const prepend = translations?.errorMessage || "An error occurred.";
       const append = errmsg ? "<br />" + errmsg : "";
       const errorMessage = prepend + append;
-      context.errorMessage = errorMessage;
+      container.errorHtml = errorMessage;
       setElementChildHtmlByClass(ref, "error", errorMessage);
 
       // update status
-      context.oldQsps = "";
+      // context.oldQsps = "";
     },
     fetchData(url, qsps, container, ref) {
       if (!container) {
@@ -232,7 +240,7 @@ const orthoresDcStore = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__
 
       // update context
       container.isLoading = true;
-      container.contentHtml = "";
+      orthoresDcStore.actions.setContentHtml("", container, ref);
       container.oldQsps = qsps;
       const path = url + qsps;
 
