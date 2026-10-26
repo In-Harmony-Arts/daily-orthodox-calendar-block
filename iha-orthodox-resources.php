@@ -912,6 +912,9 @@ function iha_orthodox_resources_ajax_popup_content() {
 			);
 		}
 
+		
+		$contents = str_replace("вЂ", "&ndash;", $contents);
+
 		$parts = explode("/", $remote_path);	// split parts of url
 		array_pop($parts);						// remove file from path
 		$srcPath = join("/", $parts);			// combine parts
