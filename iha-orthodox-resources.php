@@ -885,13 +885,32 @@ function iha_orthodox_resources_ajax_popup_content() {
 
 	// this checks for a 200 response code as well
 	$body = wp_remote_retrieve_body( $response );
+	$code = wp_remote_retrieve_response_code( $response );
+	$error = wp_remote_retrieve_response_message( $response );
 
+	if ( $code !== 200 ) {
+		return array(
+			'success' => false,
+			'data' => IHA_ORTHODOX_RESOURCES_ERROR_MESSAGE . '<p>' . $error . '</p>',
+			'code' => $code,
+		);
     // good response from remote server
-	if ( !empty($body) ) {
+	} else if ( !empty($body) ) {
 		$contents = $body;
 
 		// remove line endings
-		$contents = str_replace(["\r\n","\r","\n"], "", $contents); 
+		$contents = str_replace(["\r\n","\r","\n"], "", $contents);
+
+		// make UTF-8 for translations
+		$contents = iha_orthodox_resources_content_to_utf8( $body );
+
+		if ( empty($contents) ) {
+			return array(
+				'success' => false,
+				'data' => '<p>Error converting content to UTF-8.</p>',
+				'code' => 500,
+			);
+		}
 
 		$parts = explode("/", $remote_path);	// split parts of url
 		array_pop($parts);						// remove file from path
@@ -901,6 +920,13 @@ function iha_orthodox_resources_ajax_popup_content() {
 		$contents = iha_orthodox_resources_normalize_popup_urls( $contents, $srcPath, $lang );
 		// make sure the content is clean
 		$contents = iha_orthodox_resources_sanitize_html( $contents, $lang );
+		if ( empty($contents) ) {
+			return array(
+				'success' => false,
+				'data' => '<p>Error sanitizing content.</p>',
+				'code' => 500,
+			);
+		}
 
 		// store contents to avoid redundant requests
 		set_transient( $cache_key, $contents, DAY_IN_SECONDS );
