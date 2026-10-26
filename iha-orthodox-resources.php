@@ -852,11 +852,7 @@ function iha_orthodox_resources_ajax_popup_content() {
 	}
 	// popup content path
 	$remote_path = iha_orthodox_resources_get_popup_path( $popup, $lang );
-	debug_log(array(
-		'popup' => $popup,
-		'lang' => $lang,
-		'remote_path' => $remote_path,
-	));
+
 	// create unique cache key for reducing remote api calls
 	$cache_key = sprintf(
 		'iha_orthodox_resources_%s_%s',
