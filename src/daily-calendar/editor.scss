@@ -1,0 +1,61 @@
+.wp-block-orthodox-resources-daily-calendar {
+	font-family: arial, helvetica, sans-serif;
+	position: relative;
+
+	.ordc-buttons-bar {
+		position: relative;
+		top: 0;
+		left: 0;
+		width: 100%;
+		text-align: left;
+		display: flex;
+		justify-content: start;
+		margin-bottom: 1em;
+		flex-wrap: wrap;
+		padding: 5px;
+
+		.ordc-dp {
+			margin: 4px 2px;
+		}
+	}
+
+	.ordc-button {
+		background-color: #808080;
+		border: none;
+		color: #fff;
+		margin: 4px 2px;
+		min-width: 32px;
+		min-height: 32px;
+		font-size: 12pt;
+		text-decoration: none;
+		position: relative;
+		cursor: pointer;
+
+		&.day-current {
+			display: flex;
+			justify-content: center;
+			align-items: baseline;
+		}
+
+		&.lang-toggle {
+			text-transform: uppercase;
+			margin: auto 0 auto auto;
+		}
+
+		&--svg {
+
+			svg {
+				height: 24px;
+				width: 24px;
+			}
+		}
+
+		&-close {
+			margin: 0 0 0 auto;
+		}
+	}
+
+	.hidden {
+		display: none;
+	}
+}
