@@ -5,136 +5,153 @@ import {
 	getElement,
 	withSyncEvent,
 	withScope,
-} from "@wordpress/interactivity";
+} from '@wordpress/interactivity';
 
 const oneDay = 24 * 60 * 60 * 1000;
 const blockClass = '.wp-block-orthodox-resources-daily-calendar';
 
-
-const ocGetTwoDigitInt = (num) => {
-	return num < 10 ? "0" + num : "" + num;
-};;
+const ocGetTwoDigitInt = ( num ) => {
+	return num < 10 ? '0' + num : '' + num;
+};
 
 const getCacheBuster = () => {
-	const urlParams = new URLSearchParams(window.location.search);
+	const urlParams = new URLSearchParams( window.location.search );
 
-	return urlParams.get("cachebuster") || 0;
-}
+	return urlParams.get( 'cachebuster' ) || 0;
+};
 
-const setElementChildHtmlByClass = (element, selector, html) => {
-	if (!element || !selector) return;
+const setElementChildHtmlByClass = ( element, selector, html ) => {
+	if ( ! element || ! selector ) return;
 
-	const child = element.getElementsByClassName(selector)[0];
+	const child = element.getElementsByClassName( selector )[ 0 ];
 
-	if (child) {
+	if ( child ) {
 		child.innerHTML = html;
 		child.scrollTop = 0;
 	}
-}
+};
 
-const getContextContainer = (context, className) => {
-	if (!context || className == "") return false;
+const getContextContainer = ( context, className ) => {
+	if ( ! context || className == '' ) return false;
 
-	const isinfo = className.indexOf('ordc-info-content') > -1;
+	const isinfo = className.indexOf( 'ordc-info-content' ) > -1;
 	const container = isinfo ? 'content' : 'popup';
 
-	return context[container];
-}
+	return context[ container ];
+};
 
-const isEmpty = (value) => {
-	return value === undefined || value === null || value === false || value === "";
-}
+const isEmpty = ( value ) => {
+	return (
+		value === undefined || value === null || value === false || value === ''
+	);
+};
 
-const orthoresDcStore = store("orthores/daily-calendar", {
+const orthoresDcStore = store( 'orthores/daily-calendar', {
 	state: {
 		get hasContent() {
 			const context = getContext();
 			const element = getElement();
-			const container = getContextContainer(context, element.attributes.class);
+			const container = getContextContainer(
+				context,
+				element.attributes.class
+			);
 
-			if (!container) return false;
+			if ( ! container ) return false;
 
-			return !isEmpty(container?.contentHtml);
+			return ! isEmpty( container?.contentHtml );
 		},
 		get hasError() {
 			const context = getContext();
 			const element = getElement();
-			const container = getContextContainer(context, element.attributes.class);
+			const container = getContextContainer(
+				context,
+				element.attributes.class
+			);
 
-			if (!container) return false;
+			if ( ! container ) return false;
 
-			return !isEmpty(container.errorHtml);
+			return ! isEmpty( container.errorHtml );
 		},
 		get errorHtml() {
 			const context = getContext();
 			const element = getElement();
-			const container = getContextContainer(context, element.attributes.class);
+			const container = getContextContainer(
+				context,
+				element.attributes.class
+			);
 
-			return container?.errorHtml ?? "";
+			return container?.errorHtml ?? '';
 		},
 		get loadingText() {
 			const config = getConfig();
 
-			return config?.translations?.loading ?? "Loading...";
+			return config?.translations?.loading ?? 'Loading...';
 		},
 		get showContent() {
 			const context = getContext();
 			const element = getElement();
 
-			const container = getContextContainer(context, element.attributes.class);
+			const container = getContextContainer(
+				context,
+				element.attributes.class
+			);
 
-			if (!container) return false;
+			if ( ! container ) return false;
 
-			return !isEmpty(container.contentHtml) && !container.isLoading && isEmpty(container.errorHtml);
+			return (
+				! isEmpty( container.contentHtml ) &&
+				! container.isLoading &&
+				isEmpty( container.errorHtml )
+			);
 		},
 		get showPopup() {
 			const context = getContext();
 
-			return !isEmpty(context.popupUrl);
-		}
+			return ! isEmpty( context.popupUrl );
+		},
 	},
 	actions: {
-		setDate(date) {
+		setDate( date ) {
 			const context = getContext();
-			const newDate = new Date(date).toLocaleDateString("en-US");
+			const newDate = new Date( date ).toLocaleDateString( 'en-US' );
 
 			context.currentDate = newDate;
 		},
-		dateIncrement(days) {
+		dateIncrement( days ) {
 			const context = getContext();
-			const currentDay = new Date(context.currentDate);
+			const currentDay = new Date( context.currentDate );
 			const timeOffset = days * oneDay;
 
-			currentDay.setTime(currentDay.getTime() + timeOffset);
-			orthoresDcStore.actions.setDate(currentDay);
+			currentDay.setTime( currentDay.getTime() + timeOffset );
+			orthoresDcStore.actions.setDate( currentDay );
 		},
 		dateToday() {
-			orthoresDcStore.actions.setDate(new Date());
+			orthoresDcStore.actions.setDate( new Date() );
 		},
 		dateNext() {
-			orthoresDcStore.actions.dateIncrement(1);
+			orthoresDcStore.actions.dateIncrement( 1 );
 		},
 		datePrevious() {
-			orthoresDcStore.actions.dateIncrement(-1);
+			orthoresDcStore.actions.dateIncrement( -1 );
 		},
 		toggleDatePicker() {
 			const context = getContext();
-			context.showDatePicker = !context.showDatePicker;
+			context.showDatePicker = ! context.showDatePicker;
 		},
-		datepickerOnChange(event) {
+		datepickerOnChange( event ) {
 			const context = getContext();
 
-			if (context.content.isLoading) return;
+			if ( context.content.isLoading ) return;
 
 			const value = event.target.value;
 
 			// convert string date to usable date
-			const selectedDate = new Date(value);
-			const offsetDate = new Date(selectedDate.getTime() + oneDay);
+			const selectedDate = new Date( value );
+			const offsetDate = new Date( selectedDate.getTime() + oneDay );
 
-			setDate(offsetDate);
+			setDate( offsetDate );
 		},
-		setLang(lang) {
+		setLang( lang ) {
 			const context = getContext();
 			context.lang = lang;
 		},
@@ -142,32 +159,36 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const context = getContext();
 			const ln = context.ln;
 
-			const index = ln.indexOf(context.lang);
+			const index = ln.indexOf( context.lang );
 			const nextIndex = index + 1 < ln.length ? index + 1 : 0;
 
-			orthoresDcStore.actions.setLang(ln[nextIndex]);
+			orthoresDcStore.actions.setLang( ln[ nextIndex ] );
 		},
-		setPopupUrl(url) {
+		setPopupUrl( url ) {
 			const context = getContext();
 
 			context.popupUrl = url;
 		},
-		handleLinkClick: withSyncEvent(function (event) {
+		handleLinkClick: withSyncEvent( function ( event ) {
 			event.preventDefault();
 
-			const link = event.target.closest('a[target]');
+			const link = event.target.closest( 'a[target]' );
 
-			if (!link?.href) return;
+			if ( ! link?.href ) return;
 
-			orthoresDcStore.actions.setPopupUrl(link.href);
+			orthoresDcStore.actions.setPopupUrl( link.href );
 
-			window.addEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
-		}),
-		handleKeyDown: (event) => {
-			if (event.key === "Escape") {
+			window.addEventListener(
+				'keydown',
+				orthoresDcStore.actions.handleKeyDown
+			);
+		} ),
+		handleKeyDown: ( event ) => {
+			if ( event.key === 'Escape' ) {
 				const { ref } = getElement();
-				const orcd = ref.closest(blockClass);
-				const close = orcd.getElementsByClassName('ordc-button-close')[0];
+				const orcd = ref.closest( blockClass );
+				const close =
+					orcd.getElementsByClassName( 'ordc-button-close' )[ 0 ];
 
 				close.click();
 			}
@@ -176,93 +197,113 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const { popup } = getContext();
 			const { ref } = getElement();
 
-			orthoresDcStore.actions.setPopupUrl("");
+			orthoresDcStore.actions.setPopupUrl( '' );
 
-			const orcd = ref.closest(blockClass);
+			const orcd = ref.closest( blockClass );
 
-			window.removeEventListener('keydown', orthoresDcStore.actions.handleKeyDown);
+			window.removeEventListener(
+				'keydown',
+				orthoresDcStore.actions.handleKeyDown
+			);
 
 			setTimeout(
-                withScope( () => {
-					if (popup.isLoading) return;
+				withScope( () => {
+					if ( popup.isLoading ) return;
 
-					const popupEl = orcd.getElementsByClassName('ordc-popup')[0];
+					const popupEl =
+						orcd.getElementsByClassName( 'ordc-popup' )[ 0 ];
 
-                    orthoresDcStore.actions.setContentHtml("", popup, popupEl);
-                } ),
-                200
-            );
+					orthoresDcStore.actions.setContentHtml(
+						'',
+						popup,
+						popupEl
+					);
+				} ),
+				200
+			);
 		},
-		setContentHtml(html, context, ref) {
+		setContentHtml( html, context, ref ) {
 			context.contentHtml = html;
 
-			if (html == "") {
-				context.oldQsps = "";
+			if ( html == '' ) {
+				context.oldQsps = '';
 			}
 
-			setElementChildHtmlByClass(ref, "content", html);
+			setElementChildHtmlByClass( ref, 'content', html );
 		},
-		setFetchErrorMesssage(errmsg, container, ref) {
+		setFetchErrorMesssage( errmsg, container, ref ) {
 			const { translations } = getConfig();
 
-			const prepend = translations?.errorMessage || "An error occurred.";
-			const append = errmsg ? "<br />" + errmsg : "";
+			const prepend = translations?.errorMessage || 'An error occurred.';
+			const append = errmsg ? '<br />' + errmsg : '';
 			const errorMessage = prepend + append;
 
 			container.errorHtml = errorMessage;
-			setElementChildHtmlByClass(ref, "error", errorMessage);
+			setElementChildHtmlByClass( ref, 'error', errorMessage );
 
 			// update status
 			// context.oldQsps = "";
 		},
-		fetchData(url, qsps, container, ref) {
-			if (!container) {
+		fetchData( url, qsps, container, ref ) {
+			if ( ! container ) {
 				return;
 			}
 
-			if (qsps === container.oldQsps) {
+			if ( qsps === container.oldQsps ) {
 				return;
 			}
 
 			// update context
 			container.isLoading = true;
-			orthoresDcStore.actions.setContentHtml("", container, ref);
+			orthoresDcStore.actions.setContentHtml( '', container, ref );
 			container.oldQsps = qsps;
 
 			const path = url + qsps;
 
 			// Get data from the server
-			fetch(path, {
-				method: "GET",
-				credentials: "same-origin",
-			})
-				.then((response) => response.json())
-				.then((response) => {
-					if (response?.success && response?.data) {
-						orthoresDcStore.actions.setContentHtml(response.data, container, ref);
+			fetch( path, {
+				method: 'GET',
+				credentials: 'same-origin',
+			} )
+				.then( ( response ) => response.json() )
+				.then( ( response ) => {
+					if ( response?.success && response?.data ) {
+						orthoresDcStore.actions.setContentHtml(
+							response.data,
+							container,
+							ref
+						);
 					} else {
-						orthoresDcStore.actions.setFetchErrorMesssage('Error loading content', container, ref);
+						orthoresDcStore.actions.setFetchErrorMesssage(
+							'Error loading content',
+							container,
+							ref
+						);
 					}
-				})
-				.catch((error) => {
-					orthoresDcStore.actions.setFetchErrorMesssage("Error loading content", container, ref);
-				})
-				.finally(() => {
+				} )
+				.catch( ( error ) => {
+					orthoresDcStore.actions.setFetchErrorMesssage(
+						'Error loading content',
+						container,
+						ref
+					);
+				} )
+				.finally( () => {
 					container.isLoading = false;
-				});
-		}
+				} );
+		},
 	}, // actions
 	callbacks: {
 		setDatePickerFormatedDate: () => {
 			const context = getContext();
 
-			const date = new Date(context.currentDate);
+			const date = new Date( context.currentDate );
 
-			const mm = ocGetTwoDigitInt(date.getMonth() + 1);
-			const dd = ocGetTwoDigitInt(date.getDate());
+			const mm = ocGetTwoDigitInt( date.getMonth() + 1 );
+			const dd = ocGetTwoDigitInt( date.getDate() );
 			const yy = date.getFullYear();
 
-			const value = yy + "-" + mm + "-" + dd;
+			const value = yy + '-' + mm + '-' + dd;
 
 			context.datePickerFormatedDate = value;
 		},
@@ -271,63 +312,77 @@ const orthoresDcStore = store("orthores/daily-calendar", {
 			const config = getConfig();
 
 			// wait for current request to finish
-			if (context.content.isLoading) {
+			if ( context.content.isLoading ) {
 				return;
 			}
 
 			const { ref } = getElement();
 
-			const currentDay = new Date(context.currentDate);
+			const currentDay = new Date( context.currentDate );
 
 			// date props
-			const mm = ocGetTwoDigitInt(currentDay.getMonth() + 1);
-			const dd = ocGetTwoDigitInt(currentDay.getDate());
+			const mm = ocGetTwoDigitInt( currentDay.getMonth() + 1 );
+			const dd = ocGetTwoDigitInt( currentDay.getDate() );
 			const yy = currentDay.getFullYear();
 
 			const cachebuster = getCacheBuster();
 
 			const qsps =
-				"&month=" +
+				'&month=' +
 				mm +
-				"&today=" +
+				'&today=' +
 				dd +
-				"&year=" +
+				'&year=' +
 				yy +
-				"&dt=" +
+				'&dt=' +
 				context.dt +
-				"&hh=" +
+				'&hh=' +
 				context.hh +
-				"&ll=" +
+				'&ll=' +
 				context.ll +
-				"&tt=" +
+				'&tt=' +
 				context.tt +
-				"&ss=" +
+				'&ss=' +
 				context.ss +
-				"&lang=" +
+				'&lang=' +
 				context.lang +
-				"&sec_req=" +
+				'&sec_req=' +
 				config.sec_req +
-				"&cb=" +
+				'&cb=' +
 				cachebuster;
 
-			orthoresDcStore.actions.fetchData(config.url_day, qsps, context.content, ref);
+			orthoresDcStore.actions.fetchData(
+				config.url_day,
+				qsps,
+				context.content,
+				ref
+			);
 		},
 		fetchPopupInfo: () => {
-			const {popup, popupUrl, lang } = getContext();
-			const {sec_pop, url_popup } = getConfig();
+			const { popup, popupUrl, lang } = getContext();
+			const { sec_pop, url_popup } = getConfig();
 			const { ref } = getElement();
 
 			// wait for current request to finish
-			if (popup.contentHtml != "" || popup.isLoading || popupUrl == "") {
+			if (
+				popup.contentHtml != '' ||
+				popup.isLoading ||
+				popupUrl == ''
+			) {
 				return;
 			}
 
-			const qsps = "&popup=" + encodeURI(popupUrl) +
-				"&lang=" + lang +
-				"&sec_pop=" + sec_pop +
-				"&cb=" + getCacheBuster();
+			const qsps =
+				'&popup=' +
+				encodeURI( popupUrl ) +
+				'&lang=' +
+				lang +
+				'&sec_pop=' +
+				sec_pop +
+				'&cb=' +
+				getCacheBuster();
 
-			orthoresDcStore.actions.fetchData(url_popup, qsps, popup, ref);
+			orthoresDcStore.actions.fetchData( url_popup, qsps, popup, ref );
 		},
 	}, // callbacks
-}); // store
+} ); // store

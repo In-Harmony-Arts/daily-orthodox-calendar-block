@@ -32,5 +32,7 @@ registerBlockType( metadata.name, {
 	/**
 	 * Using render.php for all output
 	 */
-	save: () => { return null; },
+	save: () => {
+		return null;
+	},
 } );

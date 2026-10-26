@@ -35,7 +35,7 @@
 		},
 		"ln": {
 			"type": "array",
-			"default": ["en", "ru"]
+			"default": [ "en", "ru" ]
 		},
 		"dl": {
 			"type": "string",

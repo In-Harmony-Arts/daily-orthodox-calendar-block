@@ -1,15 +1,11 @@
-import { msgLoading } from "../Statics";
+import { msgLoading } from '../Statics';
 
+const OCLoading = ( { isLoading } ) => {
+	if ( ! isLoading ) {
+		return null;
+	}
 
-const OCLoading = ({ isLoading }) => {
-    
-    if ( ! isLoading ) {
-        return null;
-    }
-
-    return (
-        <div className="ocContainer">{msgLoading}</div>
-    );
+	return <div className="ocContainer">{ msgLoading }</div>;
 };
 
-export default OCLoading
+export default OCLoading;

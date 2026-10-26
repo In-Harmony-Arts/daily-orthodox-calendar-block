@@ -25,18 +25,18 @@ __webpack_require__.r(__webpack_exports__);
 // supported languages
 
 const languages = [{
-  "label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("English", "iha-orthodox-resources"),
-  "value": "en"
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('English', 'iha-orthodox-resources'),
+  value: 'en'
 }, {
-  "label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Russian", "iha-orthodox-resources"),
-  "value": "ru"
+  label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Russian', 'iha-orthodox-resources'),
+  value: 'ru'
 }];
 
 // loading message
-const msgLoading = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Loading...", "iha-orthodox-resources");
+const msgLoading = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Loading...', 'iha-orthodox-resources');
 
 // attributes to filter out
-const badStrings = ["btn_", "text_"];
+const badStrings = ['btn_', 'text_'];
 
 /**
  * Function to filter out values
@@ -59,7 +59,7 @@ function filterArrayByArray(search, filter) {
       });
     }
     if (keep) {
-      parsedAtts[key] = "" + search[key];
+      parsedAtts[key] = '' + search[key];
     }
   }
   return parsedAtts;
@@ -71,7 +71,7 @@ const blockicon = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__
   viewBox: "0 0 32 32",
   xmlns: "http://www.w3.org/2000/svg",
   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("title", {
-    children: "Orthodox  Cross Calendar"
+    children: "Orthodox Cross Calendar"
   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
     d: "m9 4v1h-4v22h22v-22h-4v-1h-2v1h-10v-1zm-2 3h2v1h2v-1h10v1h2v-1h2v2h-18zm0 4h18v14h-18z",
     fill: "currentColor"
@@ -157,10 +157,10 @@ const OCInspectorControls = ({
   const multipleLanguages = ln.length > 1;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Settings", "iha-orthodox-resources"),
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings', 'iha-orthodox-resources'),
       initialOpen: true,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Edit with live info", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Edit with live info', 'iha-orthodox-resources'),
         checked: li,
         onChange: value => setAttributes({
           li: value ? 1 : 0
@@ -173,37 +173,37 @@ const OCInspectorControls = ({
           ln: value
         })
       }), multipleLanguages && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Default Language", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Default Language', 'iha-orthodox-resources'),
         value: dl,
         onChange: value => setAttributes({
           dl: value
         }),
-        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("The language to show when first loaded", "orthodox-calendar"),
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('The language to show when first loaded', 'orthodox-calendar'),
         options: [{
-          value: "en",
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("English", "iha-orthodox-resources"),
-          disabled: !ln.includes("en")
+          value: 'en',
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('English', 'iha-orthodox-resources'),
+          disabled: !ln.includes('en')
         }, {
-          value: "ru",
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Russian", "iha-orthodox-resources"),
-          disabled: !ln.includes("ru")
+          value: 'ru',
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Russian', 'iha-orthodox-resources'),
+          disabled: !ln.includes('ru')
         }]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
         children: "Control Buttons"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show today button", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show today button', 'iha-orthodox-resources'),
         checked: btn_today,
         onChange: value => setAttributes({
           btn_today: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show day button", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show day button', 'iha-orthodox-resources'),
         checked: btn_day,
         onChange: value => setAttributes({
           btn_day: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show date picker", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show date picker', 'iha-orthodox-resources'),
         checked: dp,
         onChange: datepick => setAttributes({
           dp: datepick ? 1 : 0
@@ -211,159 +211,159 @@ const OCInspectorControls = ({
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
         children: "Content options"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show date", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show date', 'iha-orthodox-resources'),
         checked: dt,
         onChange: value => setAttributes({
           dt: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Show a heading before", "iha-orthodox-resources"),
-        help: hh ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display header", "iha-orthodox-resources") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("No header", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show a heading before', 'iha-orthodox-resources'),
+        help: hh ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Display header', 'iha-orthodox-resources') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('No header', 'iha-orthodox-resources'),
         checked: hh,
         onChange: value => setAttributes({
           hh: value ? 1 : 0
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display Lives of Saints", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Display Lives of Saints', 'iha-orthodox-resources'),
         value: ll,
         onChange: value => setAttributes({
           ll: value
         }),
-        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the lives of the saints", "orthodox-calendar"),
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('How to display the lives of the saints', 'orthodox-calendar'),
         options: [{
           value: 0,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Do not display', 'iha-orthodox-resources')
         }, {
           value: 1,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("all Saints in separate paragraphs", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('all Saints in separate paragraphs', 'orthocalbl')
         }, {
           value: 2,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("all Saints in one paragraph", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('all Saints in one paragraph', 'orthocalbl')
         }, {
           value: 3,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("major Saints in separate paragraphs", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('major Saints in separate paragraphs', 'orthocalbl')
         }, {
           value: 4,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("major Saints in one paragraph", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('major Saints in one paragraph', 'orthocalbl')
         }, {
           value: 5,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("major Saints and New Martyrs in separate paragraphs", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('major Saints and New Martyrs in separate paragraphs', 'orthocalbl')
         }, {
           value: 6,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("major Saints and New Martyrs in one paragraph", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('major Saints and New Martyrs in one paragraph', 'orthocalbl')
         }]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Scripture Readings", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Scripture Readings', 'iha-orthodox-resources'),
         value: ss,
         onChange: value => setAttributes({
           ss: value
         }),
-        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the Scripture Readings", "orthodox-calendar"),
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('How to display the Scripture Readings', 'orthodox-calendar'),
         options: [{
           value: 0,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Do not display', 'iha-orthodox-resources')
         }, {
           value: 1,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('display with header', 'iha-orthodox-resources')
         }, {
           value: 2,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('display without header', 'iha-orthodox-resources')
         }, {
           value: 3,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header and wtih verses", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('display with header and wtih verses', 'orthocalbl')
         }, {
           value: 4,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header and with verses", "orthocalbl")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('display without header and with verses', 'orthocalbl')
         }]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Display Troparion", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Display Troparion', 'iha-orthodox-resources'),
         value: tt,
         onChange: value => setAttributes({
           tt: value
         }),
-        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("How to display the Troparion", "iha-orthodox-resources"),
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('How to display the Troparion', 'iha-orthodox-resources'),
         options: [{
           value: 0,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Do not display", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Do not display', 'iha-orthodox-resources')
         }, {
           value: 1,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display with header", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('display with header', 'iha-orthodox-resources')
         }, {
           value: 2,
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("display without header", "iha-orthodox-resources")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('display without header', 'iha-orthodox-resources')
         }]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Text", "iha-orthodox-resources"),
+      title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Text', 'iha-orthodox-resources'),
       initialOpen: false,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Previous Button Text", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Previous Button Text', 'iha-orthodox-resources'),
         value: text_prev,
         onChange: value => setAttributes({
           text_prev: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Previous Button Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Previous Button Accessibility Text', 'orthocalbl'),
         value: text_prev_acc,
         onChange: value => setAttributes({
           text_prev_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Current Button Text", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Current Button Text', 'iha-orthodox-resources'),
         value: text_curr,
         onChange: value => setAttributes({
           text_curr: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Current Button Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Current Button Accessibility Text', 'orthocalbl'),
         value: text_curr_acc,
         onChange: value => setAttributes({
           text_curr_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Next Button Text", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Next Button Text', 'iha-orthodox-resources'),
         value: text_next,
         onChange: value => setAttributes({
           text_next: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Next Button Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Next Button Accessibility Text', 'orthocalbl'),
         value: text_next_acc,
         onChange: value => setAttributes({
           text_next_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Text", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Date Picker Text', 'iha-orthodox-resources'),
         value: text_date,
         onChange: value => setAttributes({
           text_date: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Text", "iha-orthodox-resources"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Date Picker Text', 'iha-orthodox-resources'),
         value: text_date,
         onChange: value => setAttributes({
           text_date: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Date Picker Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Date Picker Accessibility Text', 'orthocalbl'),
         value: text_date_acc,
         onChange: value => setAttributes({
           text_date_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Language Toggle Button Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Language Toggle Button Accessibility Text', 'orthocalbl'),
         value: text_language_acc,
         onChange: value => setAttributes({
           text_language_acc: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Close Button Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Close Button Accessibility Text', 'orthocalbl'),
         value: text_close,
         onChange: value => setAttributes({
           text_close: value
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Close Button Accessibility Text", "orthocalbl"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Close Button Accessibility Text', 'orthocalbl'),
         value: text_close_acc,
         onChange: value => setAttributes({
           text_close_acc: value
@@ -525,9 +525,9 @@ function Edit({
 }) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const ocicProps = {
-    'attributes': attributes,
-    'useState': _wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState,
-    'setAttributes': setAttributes
+    attributes: attributes,
+    useState: _wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState,
+    setAttributes: setAttributes
   };
   let parsedAtts = (0,_Statics_js__WEBPACK_IMPORTED_MODULE_7__.filterArrayByArray)(attributes, []);
   parsedAtts['editor'] = 1;

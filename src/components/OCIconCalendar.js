@@ -1,4 +1,4 @@
-const OCIconCalendar = ({ title }) => {
+const OCIconCalendar = ( { title } ) => {
 	return (
 		<svg
 			width="1em"
@@ -7,7 +7,7 @@ const OCIconCalendar = ({ title }) => {
 			viewBox="0 0 32 32"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			<title>{title}</title>
+			<title>{ title }</title>
 			<path
 				d="m9 4v1h-4v22h22v-22h-4v-1h-2v1h-10v-1zm-2 3h2v1h2v-1h10v1h2v-1h2v2h-18zm0 4h18v14h-18z"
 				fill="currentColor"

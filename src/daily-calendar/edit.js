@@ -3,36 +3,32 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 /**
  * React hook that is used to mark the block wrapper element.
  * It provides all the necessary props like the class name.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 import { Disabled } from '@wordpress/components';
 
 // import { store, getContext, getConfig } from '@wordpress/interactivity';
 
-import { useState } from "@wordpress/element";
-
-
+import { useState } from '@wordpress/element';
 
 import metadata from './block.json';
 
 /**
  * Load components
  */
-import OCInspectorControls from "../components/OCInspectorControls.js";
+import OCInspectorControls from '../components/OCInspectorControls.js';
 
 /**
  * Static props
  */
-import {
-	filterArrayByArray,
-} from "../Statics.js";
+import { filterArrayByArray } from '../Statics.js';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -40,7 +36,7 @@ import {
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import "./editor.scss";
+import './editor.scss';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -54,22 +50,21 @@ import "./editor.scss";
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 
 	const ocicProps = {
-		'attributes': attributes,
-		'useState': useState,
-		'setAttributes': setAttributes,
+		attributes: attributes,
+		useState: useState,
+		setAttributes: setAttributes,
 	};
 
-	let parsedAtts = filterArrayByArray(attributes, []);
-	parsedAtts['editor'] = 1;
-
+	let parsedAtts = filterArrayByArray( attributes, [] );
+	parsedAtts[ 'editor' ] = 1;
 
 	return (
 		<>
-			<OCInspectorControls props={ocicProps}/>
+			<OCInspectorControls props={ ocicProps } />
 			<div { ...blockProps }>
 				<Disabled>
 					<ServerSideRender
