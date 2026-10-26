@@ -1,7 +1,7 @@
 === IHA Orthodox Resources ===
-Contributors:      In Harmony Arts
+Contributors:      inharmonyarts, Vitzkrieg
 Tags:              daily,orthodox,calendar,saints,scripture
-Requires at least: 6.8.0
+Requires at least: 6.8
 Tested up to:      7.1
 Stable tag:        1.0.0
 License:           GPL-2.0-or-later
@@ -11,14 +11,28 @@ Orthodox Calendar with lives of the saints, icons, troparions and kontakions. Da
 
 == Description ==
 
-The is a Gutenberg Block instance for loading the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar.
+There currently is onlu a Gutenberg Block instance for loading the daily Orthodox Calendar information from https://www.holytrinityorthodox.com/calendar.
 
 There are settings for all of the options for the calendar as well as options for the assocaited link popup window.
 
+There are plans to expand the blocks and/or functionality related to running an Orthodox Christian website in the future.
+
+== External Services ==
+
+The content displayed from this plugin is being provided by The Holy Trinity Orthodox Church server at: https://www.holytrinityorthodox.com/calendar
+All content copyright and/or ownership is of Holy Trinity Orthodox Church or as displayed in the content and not of the author(s) or contributor(s) of this plugin
+There is no account needed for these services.
+
+Terms of Service: https://www.holytrinityorthodox.com/htc/orthodox-calendar/about-calendar/
+
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/orthodox-resources-daily-calendar` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/iha-orthodox-resources` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' screen in WordPress
+
+== Source Code ==
+
+Original source code can be found at: https://github.com/In-Harmony-Arts/daily-orthodox-calendar-block
 
 == Screenshots ==
 
@@ -79,3 +93,4 @@ There are settings for all of the options for the calendar as well as options fo
 
 = 1.0.0 =
 * Overhaul to use render.php and WP Interactivity API
+* Updates for wordpress.org repo submission
