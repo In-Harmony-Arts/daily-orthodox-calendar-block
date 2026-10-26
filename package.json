@@ -16,15 +16,15 @@
 		"copy-assets": "node src/build/copy-assets.js"
 	},
 	"dependencies": {
-		"@wordpress/block-editor": "latest",
-		"@wordpress/blocks": "latest",
-		"@wordpress/components": "^40.0.0",
-		"@wordpress/element": "^8.5.0",
-		"@wordpress/i18n": "latest",
-		"@wordpress/interactivity": "^6.56.0",
-		"@wordpress/server-side-render": "^6.29.0"
+		"@wordpress/block-editor": "^19.0.0",
+		"@wordpress/blocks": "^17.0.0",
+		"@wordpress/components": "^43.0.0",
+		"@wordpress/element": "^10.0.0",
+		"@wordpress/i18n": "^7.0.0",
+		"@wordpress/interactivity": "^8.0.0",
+		"@wordpress/server-side-render": "^7.0.0"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^36.0.0"
+		"@wordpress/scripts": "^37.0.0"
 	}
 }
